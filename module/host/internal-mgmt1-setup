@@ -1,15 +1,33 @@
-ovs-vsctl   add-br internal --   add-port internal mgmt1 --   set interface mgmt1 type=internal --   set interface mgmt1 mac="02\:00\:09\:ba\:e9\:1b"
-systemctl restart systemd-networkd.service && netplan apply --debug
-ovs-clear
+#!/bin/bash
 
-source /tmp/internal-mgmt1-setup
+mac="$(echo "$HOSTNAME internal mgmt1" \
+	| md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
 
-cat <<EOF >/tmp/internal-mgmt1-setup
-ovs-vsctl \
-  add-br internal -- \
-  add-port internal mgmt1 -- \
-  set interface mgmt1 type=internal -- \
-  set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
-systemctl restart systemd-networkd.service && netplan apply --debug
+net_restart () {
+ovs-vsctl add-br   internal                     \
+       -- add-port internal mgmt1               \
+       -- set interface     mgmt1 type=internal \
+       -- set interface     mgmt1 mac="${mac}"
+systemctl restart systemd-networkd.service
 ovs-clear
+}
+
+write_net_mgmt1 () {
+cat <<EOF >/etc/systemd/network/mgmt1.network                                                    
+[Match]
+Name=mgmt1
+[Link]
+MACAddress=${mac}
+[Network]
+Address=10.10.10.2
+Domains=ministack.dev
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+DHCP=no
 EOF
+}
+write_net_mgmt1
+net_restart
+
+#Gateway=$(ip r | awk '/default /{print $3}' | head -n 1)
+#DNS=$(systemd-resolve --status | grep "DNS Server" | awk '{print $3}' | head -n 1)

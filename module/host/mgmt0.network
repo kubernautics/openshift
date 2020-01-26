@@ -1,0 +1,16 @@
+[Match]
+Name=mgmt0
+
+[Network]
+DHCP=no
+DNS=8.8.8.8
+DNS=8.8.4.4
+DNS=1.1.1.1
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Address=10.0.0.2/24
+Gateway=10.0.0.1
+Domains=ministack.dev
+
+[Link]
+MACAddress=02:49:92:7d:ae:1c

@@ -1,0 +1,33 @@
+#!/bin/bash
+write_net_mgmt0 () {
+cat <<EOF >/etc/systemd/network/mgmt0.network                                                    
+[Match]
+Name=mgmt0
+[Link]
+MACAddress=02:49:92:7d:ae:1c
+[Network]
+Address=$(ip a s ${external_NIC} | awk '/inet /{print $2}' | head -n 1)
+Gateway=$(ip r | awk '/default /{print $3}' | head -n 1)
+Domains=ministack.dev
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+DHCP=no
+DNS=$(systemd-resolve --status | grep "DNS Server" | awk '{print $3}' | head -n 1)
+DNS=8.8.8.8
+DNS=1.1.1.1
+EOF
+}
+
+net_restart () {
+mac="$(echo "$HOSTNAME external mgmt0" \
+	| md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+ovs-vsctl add-br external \
+       -- add-port external eth0 \
+       -- add-port external mgmt0 \
+       -- set interface mgmt0 type=internal \
+       -- set interface mgmt0 mac="${mac}"
+systemctl restart systemd-networkd.service
+ovs-clear
+}
+
+net_restart

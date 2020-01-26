@@ -1,0 +1,680 @@
+    1  cd
+    2  clear
+    3  dnf update
+    4  dnf install openssh-server -y
+    5  systemctl status sshd
+    6  systemctl enable --now sshd
+    7  systemctl status sshd
+    8  cat /home/kmorgan/.ssh/authorized_keys 
+    9  clear
+   10  sudo chmod 600 .ssh/*
+   11  exit
+   12  cd 
+   13  dnf update
+   14  systemctl set-default multi-user.target
+   15  reboot
+   16  cd
+   17  clear
+   18  dnf update
+   19  htop
+   20  dnf install tmux htop -y
+   21  clear
+   22  tmux
+   23  htop
+   24  clear
+   25  sudo shutdown -h now
+   26  cd
+   27  clear
+   28  yum install elfutils-devel elfutils-libelf-devel findutils flex gawk gcc gettext gzip hmaccalc hostname java-devel
+   29  clear
+   30  yum install m4 make module-init-tools ncurses-devel net-tools newt-devel numactl-devel openssl
+   31  yum install rpm-build sh-utils tar xmlto xz zlib-devel
+   32  ls
+   33  vim clear
+   34  yum install rpm-build sh-utils tar xmlto xz zlib-develckear
+   35  exit
+   36  cd
+   37  clear
+   38  dnf install -y neofetch
+   39  clear
+   40  ls
+   41  mkdir .bak
+   42  mv anaconda-ks.cfg .bak/
+   43  ls
+   44  git clone git clone https://github.com/snuf/iomemory-vsl
+   45  git clone git clone https://github.com/snuf/iomemory-vsl.git
+   46  clear
+   47  ls
+   48  neofetch
+   49  git clone https://github.com/snuf/iomemory-vsl.git
+   50  cd iomemory-vsl/
+   51  rpmbuild -ba fio-driver.spec
+   52  dnf install kernel-devel
+   53  rpmbuild -ba fio-driver.spec
+   54  dnf install dkms
+   55  rpmbuild -ba fio-driver.spec
+   56  ls root/usr/
+   57  ls root/usr/src/
+   58  ls root/usr/src/iomemory-vsl-3.2.15/
+   59  sudo cp -r root/usr/src/iomemory-vsl-3.2.15/ /usr/src/
+   60  dkms add -m iomemory-vsl -v 3.2.15
+   61  dkms build -m iomemory-vsl -v 3.2.15
+   62  dnf search kernel | grep header
+   63  dnf install kernel-headers
+   64  dkms build -m iomemory-vsl -v 3.2.15
+   65  uname
+   66  uname -a
+   67  dnf install kernel-headers-5.4.7
+   68  dnf install kernel-headers-5.4.12
+   69  dkms build -m iomemory-vsl -v 3.2.15
+   70  dkms build -m iomemory-vsl -v 3.2.15 -k 5.4.7
+   71  dkms build -m iomemory-vsl -v 3.2.15 -k 5.4.7-200
+   72  ls /lib/modules
+   73  dkms build -m iomemory-vsl -v 3.2.15 -k 5.3.7
+   74  ls /lib/modules/
+   75  ls /lib/modules/5.3.7-301.fc31.x86_64/build 
+   76  file /lib/modules/5.3.7-301.fc31.x86_64/build 
+   77  ls /usr/src/kernels/
+   78  ls -s /usr/src/kernels/5.4.13-201.fc31.x86_64/ /lib/modules/
+   79  ls /lib/modules/ -lah
+   80  ls -s /usr/src/kernels/5.4.13-201.fc31.x86_64/ /lib/modules/5.4.13-201.fc31.x86_64
+   81  ls -s /usr/src/kernels/5.4.13-201.fc31.x86_64/ /lib/modules/
+   82  ls /lib/modules
+   83  ln -s /usr/src/kernels/5.4.13-201.fc31.x86_64/ /lib/modules/
+   84  dkms build -m iomemory-vsl -v 3.2.15 -k 5.4.13-201
+   85  dkms build -m iomemory-vsl -v 3.2.15 -k 5.4.13
+   86  ls /lib/modules
+   87  ls /lib/modules/5.4.13-201.fc31.x86_64/
+   88  dkms build -m iomemory-vsl -v 3.2.15 -k 5.4.13-201
+   89  dnf install kernel-headers-5.4.13-201
+   90  dnf install kernel-headers-5.4.13
+   91  dnf search kernel-headers | grep 5.4.13
+   92  clear
+   93  cd
+   94  ls
+   95  dkms build -m iomemory-vsl -v 3.2.15 
+   96  ls /lib/modules/5.4.13-201.fc31.x86_64/
+   97  ls /lib/modules/5.4.12-200.fc31.x86_64/
+   98  ls -lah /lib/modules/5.4.12-200.fc31.x86_64/build 
+   99  ls /usr/src/kernels/
+  100  rm /lib/modules/5.4.12-200.fc31.x86_64/ -rf
+  101  ls /lib/modules
+  102  ln -f /usr/src/kernels/5.4.13-201.fc31.x86_64/ /lib/modules/5.4.13-201.fc31.x86_64
+  103  rm /lib/modules/5.3.7-301.fc31.x86_64 -rf
+  104  dkms build -m iomemory-vsl -v 3.2.15 
+  105  rpm -qa kernel\* |sort -V
+  106  dnf repoquery --installonly --latest-limit=-2 -q
+  107  yum install yum-utils
+  108  package-cleanup --oldkernels --count=1
+  109  package-cleanup --oldkernels
+  110  dnf list installed kernel
+  111  dnf repoquery --installonly --latest-limit=-2 -q
+  112  package-cleanup --oldkernels --count=1
+  113  rpm -qa  kernel
+  114  dnf remove kernel-5.3.7-301.fc31.x86_64
+  115  clear
+  116  rpm -qa  kernel
+  117  uname -a
+  118  dnf install kernel-headers-5.4.12-200.fc31.x86_64
+  119  dnf install kernel-headers
+  120  dnf install kernel-headers
+  121  dnf list installed kernel
+  122  rpm -q kernel
+  123  dnf install kernel-devel
+  124  dnf search kernel
+  125  dnf search kernel | grep -iE "dev|head"
+  126  clear
+  127  dnf search kernel | grep -iE "dev|head"
+  128  clear
+  129  dnf update
+  130  clear
+  131  dnf upgrade
+  132  dnf clean packages
+  133  dnf upgrade
+  134  ls /lib/modules
+  135  rm /lib/modules/5.4.13-201.fc31.x86_64
+  136  dnf upgrade
+  137  history | grep dkms
+  138  dkms build -m iomemory-vsl -v 3.2.15
+  139  ls /lib/modules
+  140  ls /lib/modules/5.4.13-201.fc31.x86_64/
+  141  ls /lib/modules/5.4.13-201.fc31.x86_64/build/
+  142  ls /lib/modules/5.4.13-201.fc31.x86_64/source/
+  143  dnf distro-sync
+  144  dnf update -y && dnf upgrade -y
+  145  clear
+  146  dkms build -m iomemory-vsl -v 3.2.15
+  147  ls
+  148  echo "dkms build -m iomemory-vsl -v 3.2.15" >>iomemory-vsl/run.bash
+  149  clear
+  150  cd
+  151  ls
+  152  mkdir iodrive
+  153  cd iodrive/
+  154  ls
+  155  wget https://dell.fusionio.com/downloads/iomemory-vsl-3.10.0-693.el7.x86_64-3.2.16.1731-1.0.el7.x86_64.rpm
+  156  ls
+  157  wget https://dell.fusionio.com/downloads/fio-common-3.2.16.1731-1.0.el7.x86_64.rpm
+  158  wget https://dell.fusionio.com/downloads/fio-preinstall-3.2.16.1731-1.0.el7.x86_64.rpm
+  159  wget https://dell.fusionio.com/downloads/fio-util-3.2.16.1731-1.0.el7.x86_64.rpm
+  160  clear
+  161  ls
+  162  dnf install ./*
+  163  lsblk
+  164  mkdir /mnt/big
+  165  mount /dev/sdb1 /mnt/big/
+  166  fdisk -L /dev/sdb1
+  167  fdisk -L /dev/sdb2
+  168  clear
+  169  ls
+  170  rm *
+  171  clear
+  172  ls
+  173  pwd
+  174  ip a
+  175  pwd
+  176  mkdir /home/kmorgan/iodrive
+  177  sudo chown kmorgan:kmorgan /home/kmorgan/iodrive/
+  178  mv /home/kmorgan/iodrive/* .
+  179  ls
+  180  dnf install ./*
+  181  cd
+  182  clear
+  183  cd ccio
+  184  exit  
+  185  cd
+  186  clear
+  187  exit
+  188  lsblk
+  189  exit
+  190  lsblk
+  191  exit
+  192  for i in sdc sdd sde sdf sdg sdh; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=512 count=1; done
+  193  clear
+  194  exit
+  195  tmux
+  196  unset TMUX
+  197  tmux
+  198  exit
+  199  cd
+  200  clear
+  201  ls
+  202  rm iomemory-vsl/ rpmbuild/ -rf
+  203  ls
+  204  vim iodrive/log
+  205  clear
+  206  clear
+  207  ls blk
+  208  lsblk
+  209  tmux
+  210  clear
+  211  exit
+  212  cd
+  213  clear
+  214  mdadm --create /dev/md/md0 --verbose --homehost=any --metadata=1.0 --level=0 --raid-devices=6 /dev/sd{c,d,e,f,g,h}
+  215  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  216  mdadm --create /dev/md/md0 --verbose --homehost=any --metadata=1.0 --level=0 --raid-devices=6 /dev/sd{c,d,e,f,g,h}
+  217  mdadm --assemble --scan
+  218  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  219  clear
+  220  mdadm --create --verbose /dev/md0 --level=stripe --raid-devices=6 /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
+  221  modprobe raid0
+  222  clear
+  223  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  224  mdadm --create --verbose /dev/md0 --level=6 --raid-devices=6 /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
+  225  modprobe mdadm
+  226  ls /lib/modules/
+  227  uname -a
+  228  rpm -q kernel
+  229  sudo reboot
+  230  cd
+  231  clear
+  232  lsblk
+  233  clear; lsblk
+  234  watch lsblk
+  235  cd
+  236  tmux
+  237  lsblk
+  238  watch lsblk
+  239  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  240  for i in sdc sdd sde sdf sdg sdh; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=512 count=1; done
+  241  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  242  for i in sdc sdd sde sdf sdg sdh; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=1024 ount=1; done
+  243  for i in sdc sdd sde sdf sdg sdh; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=1024 count=1; done
+  244  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  245   mdadm --detail /dev/md0
+  246   mdadm --stop /dev/md0
+  247  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  248  for i in sdc sdd sde sdf sdg sdh; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=1024 count=1; done
+  249  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h}
+  250  mdadm --create --verbose /dev/md0 --level=stripe --raid-devices=6 /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
+  251  clear
+  252  sudo reboot
+  253   mdadm --detail /dev/md0
+  254   mdadm --stop /dev/md0
+  255  mdadm --scan
+  256  mdadm --describe --scan
+  257  for i in sdc sdd sde sdf sdg sdh sdi; do echo "erasing $i"; dd if=/dev/zero of=/dev/$i bs=1024 count=1; done
+  258  watch lsblk
+  259  ps -ax | grep md
+  260  pkill -KILL mdadm
+  261  ps -ax | grep mdadm
+  262  kill -KILL 55408
+  263  ps -ax | grep mdadm
+  264  clear
+  265  pkill -KILL tmux
+  266  mdadm --zero-superblock /dev/sd{c,d,e,f,g,h,i}
+  267  ps -ax | grep mdadm
+  268  clear
+  269  exit
+  270  watch lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
+  271  watch lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT,UUID
+  272  clear
+  273  cd
+  274  clear
+  275  neofetch
+  276  clear; neofetch
+  277  clear; neofetch
+  278  clear; neofetch
+  279  clear; neofetch
+  280  ip a
+  281  ls /home/kmorgan/
+  282  clear
+  283  exit
+  284  watch lsblk
+  285  cd
+  286  clear
+  287  ls
+  288  tmux
+  289  clear
+  290  tmux
+  291  htop
+  292  clear
+  293  history
+  294  clear
+  295  grubby --update-kernel=ALL --remove-args="quiet splash"
+  296  dnf install grubby
+  297  grubby --update-kernel=ALL --remove-args="quiet splash"
+  298  grubby --update-kernel=ALL --args="kvm-intel.nested=1"
+  299  modprobe -r kvm-intel nested=1
+  300  modprobe -r kvm-intel
+  301  clear
+  302  grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer"
+  303  whereis vim
+  304  update-alternatives --set editor /usr/bin/vim
+  305  dnf search openvswitch
+  306  dnf install openvswitch network-scripts-openvswitch
+  307  clear
+  308  s
+  309  ls
+  310  pwd
+  311  cd /home/kmorgan/
+  312  ls
+  313  cd Documents/
+  314  ls
+  315  cd tghvault/
+  316  ls
+  317  ls usr/
+  318  ls Virtual\ hard\ disks/
+  319  clear
+  320  ls
+  321  ls SOFTWARE/
+  322  ls SOFTWARE/Windows/
+  323  clear
+  324  ls
+  325  ls BACKUP/
+  326  ls BACKUP/DELL_BAK/
+  327  ls BACKUP/DELL_BAK/E7450/
+  328  ls BACKUP/DELL_BAK/E7450/WindowsImageBackup/
+  329  ls BACKUP/DELL_BAK/E7450/WindowsImageBackup/WN7X64-GMJPP32/
+  330  ls BACKUP/DELL_BAK/E7450/WindowsImageBackup/WN7X64-GMJPP32/Backup\ 2015-07-15\ 203256/
+  331  ls
+  332  ls cf/
+  333  ls Documents/
+  334  clear
+  335  ls Documents/
+  336  ls Documents/thegreenhundred_security/
+  337  ls 
+  338  ls etc/
+  339  ls FTP/
+  340  ls iso/
+  341  clear
+  342  ls
+  343  ls laptopback/
+  344  ls laptopback/Camera/
+  345  clear
+  346  ls laptopback/
+  347  ls laptopback/VDH/
+  348  ls
+  349  ls MAYHEM/
+  350  ls MAYHEM/OTHER/
+  351  ls SECURITY/
+  352  ls SECURITY/WWW/
+  353  ls SECURITY/WWW/KEYS/
+  354  clear
+  355  ls
+  356  ls Servers/
+  357  ls Servers/pastebin/
+  358  ls Servers/Owncloud/
+  359  ls Virtual\ hard\ disks/
+  360  clear
+  361  ls
+  362  find ./ -name "*qcow*"
+  363  find ./ -name "*raw*"
+  364  find ./ -name "*img*"
+  365  clear
+  366  ls
+  367  ls -lah
+  368  ls .windows 
+  369  ls -lah
+  370  ls -lah BACKUP/
+  371  clear
+  372  ls
+  373  ls -lah laptopback/
+  374  ls -lah Servers/
+  375  ls Virtual\ hard\ disks/
+  376  clear
+  377  cd
+  378  clear
+  379  ls
+  380  clear
+  381  dnf search network | grep -i systemd
+  382  dnf search systemd
+  383  dnf search systemd | grep netw
+  384  clear
+  385  export external_NIC="eth0"
+  386  cat <<EOF >/etc/systemd/network/${external_NIC}.network                                                    
+  387  [Match]
+  388  Name=${external_NIC}
+  389  [Network]
+  390  DHCP=no
+  391  IPv6AcceptRA=no
+  392  LinkLocalAddressing=no
+  393  EOF
+  394  systemctl enable systemd-resolved.service
+  395  systemctl enable --now systemd-networkd.service
+  396  systemctl status systemd-networkd
+  397  clear
+  398  sudo systemctl disable NetworkManager
+  399  rm /etc/resolv.conf
+  400  ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+  401  cat /etc/resolv.conf 
+  402  ln -f /run/systemd/resolve/resolv.conf /etc/resolv.conf
+  403  find / -name resolv.conf
+  404  umount /mnt/zfs1
+  405  zfs status
+  406  clear
+  407  zfs unmount /mnt/zfs1/
+  408  find / -name resolv.conf
+  409  ln -s /usr/lib/systemd/resolv.conf /etc/
+  410  ln -s /usr/lib/systemd/resolv.conf /etc/ -f
+  411  cat /etc/resolv.conf 
+  412  clear
+  413  ping google.com
+  414  vim /etc/resolv.conf 
+  415  ping google.com
+  416  clear
+  417  mkdir /etc/systemd/network
+  418  ls /etc/systemd
+  419  ls /etc/systemd/network
+  420  export external_NIC="eth0"
+  421  cat <<EOF >/etc/systemd/network/external.network                                                    
+  422  [Match]
+  423  Name=external
+  424  [Network]
+  425  DHCP=no
+  426  IPv6AcceptRA=no
+  427  LinkLocalAddressing=no
+  428  EOF
+  429  cat <<EOF >/etc/systemd/network/internal.network                                                    
+  430  [Match]
+  431  Name=internal
+  432  [Network]
+  433  DHCP=no
+  434  IPv6AcceptRA=no
+  435  LinkLocalAddressing=no
+  436  EOF
+  437  dnf install git
+  438  cat <<EOF >/usr/bin/ovs-clear
+  439  #!/bin/bash
+  440  # ovs-clear - This script will search and destroy orphaned ovs port
+  441  for i in \$(ovs-vsctl show | awk '/error: /{print \$7}'); do
+  442      ovs-vsctl del-port \$i;
+  443  done
+  444  clear && ovs-vsctl show
+  445  EOF
+  446  chmod +x /usr/bin/ovs-clear && ovs-clear
+  447  systemctl list-unit-files | grep openv
+  448  systemctl list-unit-files | grep ovs
+  449  systemctl enable --now ovsdb-server
+  450  systemctl enable --now ovs-vswitchd
+  451  chmod +x /usr/bin/ovs-clear && ovs-clear
+  452  cat <<EOF >/tmp/external-mgmt0-setup
+  453  net_restart () {
+  454  ovs-vsctl   add-br external --   add-port external ${external_NIC} --   add-port external mgmt0 --   set interface mgmt0 type=internal --   set interface mgmt0 mac="$(echo "${HOSTNAME} external mgmt0" | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+  455  systemctl restart systemd-networkd.service && netplan apply --debug
+  456  ovs-clear
+  457  }
+  458  net_restart
+  459  EOF
+  460  mv /tmp/external-mgmt0-setup .
+  461  cat <<EOF >/tmp/internal-mgmt1-setup
+  462  ovs-vsctl   add-br internal --   add-port internal mgmt1 --   set interface mgmt1 type=internal --   set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+  463  systemctl restart systemd-networkd.service && netplan apply --debug
+  464  ovs-clear
+  465  EOF
+  466  mv /tmp/internal-mgmt1-setup .
+  467  clear
+  468  ls
+  469  vim external-mgmt0-setup 
+  470  clear
+  471  dnf install snapd
+  472   ln -s /var/lib/snapd/snap /snap/
+  473  find / -name snapd 2>/dev/null
+  474  ln -s /var/lib/snapd/snap /snap
+  475  rm /snap/
+  476  ls /snap/
+  477  rm --help | grep link
+  478  rm --help 
+  479  man rm
+  480  rm /snap
+  481  ln -s /var/lib/snapd/snap /snap
+  482  snap search vlc
+  483  clear
+  484  snap install lxd
+  485  ip a
+  486  ls .ssh
+  487  cp -r /home/kmorgan/.ssh .
+  488  sudo chown root:root -R .ssh
+  489  ls .ssh
+  490  clear
+  491  bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+  492  ip a
+  493  clear
+  494  snap install snapd
+  495  echo "Warning: /var/lib/snapd/snap/bin was not found in your $PATH" >>~/warning.log
+  496  clear
+  497  usermod -aG lxd kmorgan
+  498  snap list
+  499  cat /proc/cpuinfo | egrep "vmx|svm"
+  500  clear
+  501  dnf install -y libvirt virt-install qemu-kvm virt-top libguestfs-tools libvirt-python libvirt-client qemu-img virt-viewer virt-manager libvirt-daemon-qemu libvirt-daemon-kvm iperf3 libguestfs-tools-c kernel-tools virt-manager
+  502  dnf search libvirt-python
+  503  dnf search libvirt | grep python
+  504  dnf search python3-libvirt
+  505  dnf install -y libvirt virt-install qemu-kvm virt-top libguestfs-tools python3-libvirt libvirt-client qemu-img virt-viewer virt-manager libvirt-daemon-qemu libvirt-daemon-kvm iperf3 libguestfs-tools-c kernel-tools virt-manager
+  506  systemctl enable --now libvirtd
+  507  systemctl status libvirtd
+  508  clear
+  509  sudo shutdown -r now
+  510  ip a
+  511  history
+  512  clear
+  513  ip a
+  514  ls
+  515  vim external-mgmt0-setup 
+  516  echo "options kvm_intel nested=1" |   sudo tee /etc/modprobe.d/qemu-system-x86.conf
+  517  clear
+  518  systemctl status libvirtd
+  519  ovs-vsctl show
+  520  dnf search ovmf
+  521  cat /etc/resolv.conf 
+  522  dnf show ovmf
+  523  dnf info ovmf
+  524  dnf show edk2-ovmf
+  525  dnf info edk2-ovmf
+  526  dnf install edk2-ovmf
+  527  dmesg | grep -E "DMAR|IOMMU"
+  528  lsmod 
+  529  lsmod -a
+  530  lsmod --all
+  531  lsmod -c
+  532  lsmod -v
+  533  lsmod | grep vfio
+  534  clear
+  535  modprobe vfio-pci
+  536  lsmod | grep vfio
+  537  echo 'vfio-pci' > /etc/modules-load.d/vfio-pci.conf
+  538  /usr/libexec/qemu-kvm -machine help
+  539  cat /etc/default/grub 
+  540  vim /etc/default/grub 
+  541  ls
+  542  vim external-mgmt0-setup 
+  543  cp /etc/systemd/network/eth0.network /etc/systemd/network/mgmt0.network
+  544  ln /etc/systemd/network/mgmt0.network .
+  545  ln /etc/systemd/network/eth0.network .
+  546  ln /etc/systemd/network/external.network .
+  547  clear
+  548  ls
+  549  vim mgmt0.network 
+  550  ip a s mgmt0
+  551  vim mgmt0.network 
+  552  systemctl restart systemd-networkd
+  553  ls
+  554  ip a
+  555  clear
+  556  ip a
+  557  vim mgmt0.network 
+  558  cat /run/systemd/resolve/resolv.conf 
+  559  ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
+  560  vim mgmt0.network 
+  561  systemctl restart systemd-networkd
+  562  dnf update
+  563  cat /etc/resolv.conf 
+  564  clear
+  565  ls
+  566  lsblk
+  567  ls /mnt/
+  568  ls /mnt/zfs1/
+  569  zpool list
+  570  zpool destroy zfs1 -f
+  571  ls /mnt/zfs1/
+  572  ls /mnt/
+  573  zpool list
+  574  dd if=/dev/zero of=/dev/sdb bs=1024 count=1
+  575  lsblk
+  576  clear
+  577  mkfs.ext4 /dev/sdb 
+  578  lslbk
+  579  clear
+  580  lsblk
+  581  fdisk
+  582  fdisk /dev/sdb
+  583  clear
+  584  lsbli
+  585  lsblk
+  586  fdisk /dev/sdb
+  587  lsblk
+  588  mkfs.ext4 /dev/sdb1 
+  589  lsblk
+  590  clear
+  591  ls /mnt/
+  592  rm -rf /mnt/zfs1/
+  593  clear
+  594  mount /dev/sdb1 /mnt/big/
+  595  ls /mnt/big/
+  596  clear
+  597  df /
+  598  du -sh /home/kmorgan/Documents/
+  599  clear
+  600  ls
+  601  vim .
+  602  cat external-mgmt0-setup >>internal-mgmt1-setup 
+  603  vim internal-mgmt1-setup 
+  604  vim external-mgmt0-setup 
+  605  vim internal-mgmt1-setup 
+  606  ip a
+  607  clear
+  608  ls
+  609  vim internal-mgmt1-setup 
+  610  vim warning.log 
+  611  lxc version
+  612  lxd version
+  613  clear
+  614  lxc version
+  615  snap snap switch --channel=edge lxd
+  616* snap snap switch --channel=latest/edge
+  617  snap switch --channel=edge lxd
+  618  snap update
+  619  snap upgrade
+  620  snap refresh
+  621  lxc version
+  622  lxd version
+  623  clear
+  624  ls
+  625  vim internal-mgmt1-setup 
+  626  . internal-mgmt1-setup 
+  627  ls
+  628  ip a
+  629  clear
+  630  ls /etc/systemd/network
+  631  ln /etc/systemd/network/internal.network .
+  632  ln /etc/systemd/network/mgmt1.network .
+  633  ls
+  634  mkdir ~/.bak 2>/dev/null ; virsh net-dumpxml default | tee ~/.bak/virsh-net-default-bak.xml
+  635  mkdir -h
+  636  mkdir --help
+  637  clear
+  638  man mkdir
+  639  clear
+  640  virsh net-destroy default && virsh net-undefine default
+  641  cat <<EOF >/tmp/virsh-net-default-on-internal.json
+<network>
+  <name>default</name>
+  <forward mode='bridge'/>
+  <bridge name='internal' />
+  <virtualport type='openvswitch'/>
+</network>
+EOF
+
+  642  cat <<EOF >/tmp/virsh-net-internal-on-internal.json
+<network>
+  <name>internal</name>
+  <forward mode='bridge'/>
+  <bridge name='internal' />
+  <virtualport type='openvswitch'/>
+</network>
+EOF
+
+  643  cat <<EOF >/tmp/virsh-net-external-on-external.json
+<network>
+  <name>external</name>
+  <forward mode='bridge'/>
+  <bridge name='external' />
+  <virtualport type='openvswitch'/>
+</network>
+EOF
+
+  644  for json in virsh-net-default-on-internal.json virsh-net-internal-on-internal.json virsh-net-external-on-external.json; do virsh net-define /tmp/${json}; done
+  645  for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
+  646  sudo virsh net-list --all
+  647  htop
+  648  clear
+  649  dnf install glances -y
+  650  glances
+  651  pip install --upgrade glances
+  652  glances
+  653  clear
+  654  s
+  655  ls
+  656  history | tee build.log
