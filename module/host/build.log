@@ -263,6 +263,10 @@ lxd version
 pip install --upgrade glances
 bash <(curl -Ss https://my-netdata.io/kickstart.sh)
 update-alternatives --set editor /usr/bin/vim
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+ssh-keygen -f ~/.ssh/id_rsa -N ''
+curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 cp -r /home/kmorgan/.ssh ~
 chown root:root -R ~/.ssh
 passwd root
