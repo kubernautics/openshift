@@ -23,13 +23,13 @@ dnf  install -y \
             hmaccalc \
             hostname \
             neofetch \
-            sh-utils \
             findutils \
             rpm-build \
             net-tools \
             zlib-devel \
             java-devel \
             newt-devel \
+            vim-enhanced \
             kernel-tools \
             kernel-devel \
             numactl-devel \
@@ -37,7 +37,6 @@ dnf  install -y \
             kernel-headers \
             openssh-server \
             elfutils-devel \
-            zlib-develckear \
             module-init-tools \
             elfutils-libelf-devel
 
@@ -54,7 +53,6 @@ dnf  install -y \
             virt-viewer         \
             virt-manager        \
             virt-install        \
-            libvirt-python      \
             libvirt-client      \
             python3-libvirt     \
             libguestfs-tools    \
@@ -87,8 +85,17 @@ systemctl set-default multi-user.target
 
 #################################################################################
 # Kernel Modules & Argument Setup
+sed -i 's/GRUB_TERMINAL_OUTPUT="console"/GRUB_TERMINAL_OUTPUT="serial"/g' \
+    /etc/default/grub
+echo \
+  'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"' \
+  >>/etc/default/grub
+
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
+
 grubby --update-kernel=ALL --remove-args="quiet splash"
-grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer"
+grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
 
 echo "options kvm_intel nested=1" | sudo tee /etc/modprobe.d/qemu-system-x86.conf
 modprobe -r kvm-intel
