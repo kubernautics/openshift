@@ -92,7 +92,7 @@ shutdown -r now
 mkdir -p /etc/systemd/network
 export external_NIC="eth0"
 
-cat <<EOF >/etc/systemd/network/${external_NIC}.network
+cat <<EOF >~/${external_NIC}.network
 [Match]
 Name=${external_NIC}
 [Network]
@@ -101,7 +101,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat <<EOF >/etc/systemd/network/external.network
+cat <<EOF >~/external.network
 [Match]
 Name=external
 [Network]
@@ -110,7 +110,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat <<EOF >/etc/systemd/network/mgmt0.network 
+cat <<EOF >~/mgmt0.network 
 [Match]
 Name=mgmt0
 
@@ -129,7 +129,7 @@ Domains=ministack.dev
 #MACAddress=02:49:92:7d:ae:1c
 EOF
 
-cat <<EOF >/etc/systemd/network/internal.network
+cat <<EOF >~/internal.network
 [Match]
 Name=internal
 [Network]
@@ -138,7 +138,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat <<EOF >/etc/systemd/network/mgmt1.network 
+cat <<EOF >~/mgmt1.network 
 [Match]
 Name=mgmt1
 [Network]
@@ -152,7 +152,7 @@ Address=10.99.2.12/24
 #DNS=1.1.1.1
 EOF
 
-cat <<EOF >/tmp/external-mgmt0-setup
+cat <<EOF >~/external-mgmt0-setup
 #!/bin/bash
 run_net_setup () {
  systemctl disable NetworkManager
@@ -174,7 +174,7 @@ ovs-clear
 run_net_setup
 EOF
 
-cat <<EOF >/tmp/internal-mgmt1-setup
+cat <<EOF >~/internal-mgmt1-setup
 #!/bin/bash
 ovs-vsctl add-br internal \
  -- add-port internal mgmt1 \
@@ -198,21 +198,15 @@ EOF
 
 chmod +x /usr/bin/ovs-clear
 
-. /tmp/external-mgmt0-setup
-. /tmp/internal-mgmt1-setup
+ln -f ~/eth0.network     /etc/systemd/network/eth0.network 
+ln -f ~/mgmt0.network    /etc/systemd/network/mgmt0.network 
+ln -f ~/mgmt1.network    /etc/systemd/network/mgmt1.network 
+ln -f ~/external.network /etc/systemd/network/external.network 
+ln -f ~/internal.network /etc/systemd/network/internal.network 
+ln -sfv /run/systemd/resolve/resolv.conf ~/resolv.conf 
 
-ovs-vsctl show
-ovs-clear
-
-ln /etc/systemd/network/eth0.network ~
-ln /etc/systemd/network/mgmt0.network ~
-ln /etc/systemd/network/mgmt1.network ~
-ln /etc/systemd/network/external.network ~
-ln /etc/systemd/network/internal.network ~
-
-ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
-ln /tmp/external-mgmt0-setup ~
-ln /tmp/internal-mgmt1-setup ~
+. ~/external-mgmt0-setup
+. ~/internal-mgmt1-setup
 
 #################################################################################
 # Libvirt KVM
