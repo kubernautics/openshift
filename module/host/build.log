@@ -124,7 +124,6 @@ EOF
 
 cat <<EOF >/tmp/external-mgmt0-setup
 #!/bin/bash
-set -e
 set -x
 run_net_setup () {
  systemctl disable NetworkManager
