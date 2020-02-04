@@ -164,7 +164,8 @@ for i in \$(ovs-vsctl show | awk '/error: /{print \$7}'); do
   ovs-vsctl del-port \$i;
 done
 clear && ovs-vsctl show
-run_ovs_clear}
+}
+run_ovs_clear
 EOF
 
 chmod +x /usr/bin/ovs-clear
