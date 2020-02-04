@@ -154,19 +154,19 @@ EOF
 
 cat <<EOF >/tmp/external-mgmt0-setup
 #!/bin/bash
-set -x
 run_net_setup () {
  systemctl disable NetworkManager
  systemctl stop    NetworkManager
- systemctl enable --now ovs-vswitchd
- ovs-vsctl add-br external \
+ ovs-vsctl add-br external             \
   -- add-port external ${external_NIC} \
   -- add-port external mgmt0           \
   -- set interface mgmt0 type=internal \
-  -- set interface mgmt0 mac="$(echo "${HOSTNAME} external mgmt0" \
-   | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
- rm -rf /etc/resolv.conf
+  -- set interface mgmt0 mac="$(echo "${HOSTNAME} external mgmt0" | md5sum \
+ | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
  ln -fs /usr/lib/systemd/resolv.conf /etc/resolv.conf
+ ln -s /usr/lib/systemd/system/ovs-vswitchd.service \
+       /etc/systemd/system/network-online.target.wants/ovs-vswitchd.service
+ systemctl enable --now ovs-vswitchd
  systemctl enable --now systemd-networkd.service
  systemctl enable --now systemd-resolved.service
 ovs-clear
@@ -176,8 +176,6 @@ EOF
 
 cat <<EOF >/tmp/internal-mgmt1-setup
 #!/bin/bash
-set -e
-set -x
 ovs-vsctl add-br internal \
  -- add-port internal mgmt1 \
  -- set interface mgmt1 type=internal \
@@ -211,9 +209,10 @@ ln /etc/systemd/network/mgmt0.network ~
 ln /etc/systemd/network/mgmt1.network ~
 ln /etc/systemd/network/external.network ~
 ln /etc/systemd/network/internal.network ~
+
+ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
 ln /tmp/external-mgmt0-setup ~
 ln /tmp/internal-mgmt1-setup ~
-ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
 
 #################################################################################
 # Libvirt KVM
