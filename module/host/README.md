@@ -14,8 +14,8 @@
 ### 00\. Install Dependencies:
 
 ```sh
-dnf update -y \
- && dnf -y distro-sync
+dnf update  -y
+dnf install -y 
 ```
 
 ### 00\. Clone the ocp-mini-stack repo:
