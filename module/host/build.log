@@ -113,7 +113,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat /etc/systemd/network/mgmt0.network 
+cat <<EOF >/etc/systemd/network/mgmt0.network 
 [Match]
 Name=mgmt0
 
