@@ -67,13 +67,8 @@ dnf  install -y openvswitch network-scripts-openvswitch
 #################################################################################
 # Install LXD Stack
 dnf  install -y snapd
-sleep 2 ; snap install snapd ; snap install lxd
-snap switch --channel=edge lxd
+sleep 4 ; snap install snapd ; snap install lxd
 ln -s /var/lib/snapd/snap /snap
-snap refresh
-lxd version
-lxc version
-usermod -aG lxd kmorgan
 
 #################################################################################
 # Kernel Modules & Argument Setup
@@ -92,7 +87,7 @@ grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 modprobe -r kvm-intel
 modprobe -r vfio-pci
 
-reboot
+shutdown -r now
 
 #################################################################################
 # Host & Virtual Network Setup
@@ -145,7 +140,8 @@ run_net_setup () {
  ln -fs /usr/lib/systemd/resolv.conf /etc/resolv.conf
  systemctl enable --now systemd-networkd.service
  systemctl enable --now systemd-resolved.service
-ovs-clear}
+ovs-clear
+}
 run_net_setup
 EOF
 
@@ -174,11 +170,11 @@ EOF
 
 chmod +x /usr/bin/ovs-clear
 
-ovs-vsctl show
-ovs-clear
-
 . /tmp/external-mgmt0-setup
 . /tmp/internal-mgmt1-setup
+
+ovs-vsctl show
+ovs-clear
 
 ln /etc/systemd/network/eth0.network ~
 ln /etc/systemd/network/mgmt0.network ~
@@ -230,6 +226,16 @@ for json in virsh-net-default-on-internal.json virsh-net-internal-on-internal.js
 for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
 
 virsh net-list --all
+
+#################################################################################
+# Init LXD
+usermod -aG lxd kmorgan
+
+snap switch --channel=edge lxd
+snap refresh
+
+lxd version
+lxc version
 
 #################################################################################
 # Extra (OPTIONAL)
