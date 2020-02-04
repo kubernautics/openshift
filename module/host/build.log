@@ -95,7 +95,7 @@ shutdown -r now
 mkdir -p /etc/systemd/network
 export external_NIC="eth0"
 
-cat <<EOF >/etc/systemd/network/${external_NIC}.network                                                    
+cat <<EOF >/etc/systemd/network/${external_NIC}.network
 [Match]
 Name=${external_NIC}
 [Network]
@@ -104,7 +104,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat <<EOF >/etc/systemd/network/external.network                                                    
+cat <<EOF >/etc/systemd/network/external.network
 [Match]
 Name=external
 [Network]
@@ -113,7 +113,26 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
 
-cat <<EOF >/etc/systemd/network/internal.network                                                    
+cat /etc/systemd/network/mgmt0.network 
+[Match]
+Name=mgmt0
+
+[Network]
+DHCP=no
+DNS=8.8.8.8
+DNS=8.8.4.4
+DNS=1.1.1.1
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Address=10.0.0.62/24
+Gateway=10.0.0.1
+Domains=ministack.dev
+
+[Link]
+#MACAddress=02:49:92:7d:ae:1c
+EOF
+
+cat <<EOF >/etc/systemd/network/internal.network
 [Match]
 Name=internal
 [Network]
