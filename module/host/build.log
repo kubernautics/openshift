@@ -69,47 +69,30 @@ dnf  install -y openvswitch network-scripts-openvswitch
 dnf  install -y snapd
 sleep 2 ; snap install snapd ; snap install lxd
 snap switch --channel=edge lxd
-snap refresh
-lxc version
-lxd version
 ln -s /var/lib/snapd/snap /snap
+snap refresh
+lxd version
+lxc version
 usermod -aG lxd kmorgan
 
 #################################################################################
-# Extra (OPTIONAL)
-pip install --upgrade glances
-bash <(curl -Ss https://my-netdata.io/kickstart.sh)
-update-alternatives --set editor /usr/bin/vim
-cp -r /home/kmorgan/.ssh ~
-chown root:root -R ~/.ssh
-
-
-#################################################################################
-# SSH Setup
-systemctl enable --now sshd
-chmod 600 .ssh/*
-systemctl set-default multi-user.target
-
-#################################################################################
 # Kernel Modules & Argument Setup
-sed -i 's/GRUB_TERMINAL_OUTPUT="console"/GRUB_TERMINAL_OUTPUT="serial"/g' \
-    /etc/default/grub
-echo \
-  'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"' \
-  >>/etc/default/grub
-
-grub2-mkconfig -o /boot/grub2/grub.cfg
-grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
+echo 'options kvm_intel nested=1' >/etc/modprobe.d/qemu-system-x86.conf
+echo 'vfio-pci'                   >/etc/modules-load.d/vfio-pci.conf
 
 grubby --update-kernel=ALL --remove-args="quiet splash"
 grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
 
-echo 'options kvm_intel nested=1' >/etc/modprobe.d/qemu-system-x86.conf
-echo 'vfio-pci'                   >/etc/modules-load.d/vfio-pci.conf
+sed  -i 's/GRUB_TERMINAL_OUTPUT="console"/GRUB_TERMINAL_OUTPUT="serial"/g'                     /etc/default/grub
+echo    'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"' >>/etc/default/grub
+
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
 modprobe -r kvm-intel
 modprobe -r vfio-pci
 
+reboot
 
 #################################################################################
 # Host & Virtual Network Setup
@@ -145,72 +128,71 @@ LinkLocalAddressing=no
 EOF
 
 cat <<EOF >/tmp/external-mgmt0-setup
-net_restart () {
+#!/bin/bash
+set -e
+set -x
+run_net_setup () {
+ systemctl disable NetworkManager
+ systemctl stop    NetworkManager
+ systemctl enable --now ovs-vswitchd
  ovs-vsctl add-br external \
   -- add-port external ${external_NIC} \
   -- add-port external mgmt0           \
   -- set interface mgmt0 type=internal \
   -- set interface mgmt0 mac="$(echo "${HOSTNAME} external mgmt0" \
    | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
- systemctl restart systemd-networkd.service
+ rm -rf /etc/resolv.conf
+ ln -fs /usr/lib/systemd/resolv.conf /etc/resolv.conf
+ systemctl enable --now systemd-networkd.service
+ systemctl enable --now systemd-resolved.service
 ovs-clear}
-net_restart
+run_net_setup
 EOF
 
-
 cat <<EOF >/tmp/internal-mgmt1-setup
- ovs-vsctl add-br internal \
-  -- add-port internal mgmt1 \
-  -- set interface mgmt1 type=internal \
-  -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" \
-   | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
- systemctl restart systemd-networkd.service
+#!/bin/bash
+set -e
+set -x
+ovs-vsctl add-br internal \
+ -- add-port internal mgmt1 \
+ -- set interface mgmt1 type=internal \
+ -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" \
+  | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+systemctl restart systemd-networkd.service
 ovs-clear
 EOF
 
 cat <<EOF >/usr/bin/ovs-clear
 #!/bin/bash
-# ovs-clear - This script runs search and destroy on orphaned ovs ports
+run_ovs_clear () {
 for i in \$(ovs-vsctl show | awk '/error: /{print \$7}'); do
   ovs-vsctl del-port \$i;
 done
 clear && ovs-vsctl show
+run_ovs_clear}
 EOF
 
 chmod +x /usr/bin/ovs-clear
-. /tmp/external-mgmt0-setup
-. /tmp/internal-mgmt1-setup
+
+ovs-vsctl show
 ovs-clear
 
-systemctl disable NetworkManager
-systemctl enable  systemd-resolved.service
-systemctl enable --now systemd-networkd.service
-systemctl enable --now ovsdb-server
-systemctl enable --now ovs-vswitchd
-ovs-vsctl show
-systemctl stop NetworkManager
-cp /etc/systemd/network/eth0.network /etc/systemd/network/mgmt0.network
-ln /etc/systemd/network/mgmt0.network .
-ln /etc/systemd/network/eth0.network .
-ln /etc/systemd/network/external.network .
-ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
-ln /etc/systemd/network/internal.network .
-ln /etc/systemd/network/mgmt1.network .
+. /tmp/external-mgmt0-setup
+. /tmp/internal-mgmt1-setup
+
+ln /etc/systemd/network/eth0.network ~
+ln /etc/systemd/network/mgmt0.network ~
+ln /etc/systemd/network/mgmt1.network ~
+ln /etc/systemd/network/external.network ~
+ln /etc/systemd/network/internal.network ~
 ln /tmp/external-mgmt0-setup ~
 ln /tmp/internal-mgmt1-setup ~
-systemctl restart systemd-networkd
-rm /etc/resolv.conf
-ln -f -s /usr/lib/systemd/resolv.conf /etc/resolv.conf
+ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf 
 
 #################################################################################
 # Libvirt KVM
-cat /proc/cpuinfo | egrep "vmx|svm"
-dmesg | grep -E "DMAR|IOMMU"
-
 systemctl enable --now libvirtd
-systemctl status libvirtd
-
-/usr/libexec/qemu-kvm -machine help
+systemctl status       libvirtd
 
 mkdir ~/.bak 2>/dev/null \
   ; virsh net-dumpxml default | tee ~/.bak/virsh-net-default-bak.xml \
@@ -247,4 +229,21 @@ for json in virsh-net-default-on-internal.json virsh-net-internal-on-internal.js
 
 for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
 
-sudo virsh net-list --all
+virsh net-list --all
+
+#################################################################################
+# Extra (OPTIONAL)
+pip install --upgrade glances
+bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+update-alternatives --set editor /usr/bin/vim
+cp -r /home/kmorgan/.ssh ~
+chown root:root -R ~/.ssh
+/usr/libexec/qemu-kvm -machine help
+cat /proc/cpuinfo | egrep "vmx|svm"
+dmesg | grep -E "DMAR|IOMMU"
+
+#################################################################################
+# SSH Setup
+systemctl enable --now sshd
+chmod 600 .ssh/*
+systemctl set-default multi-user.target
