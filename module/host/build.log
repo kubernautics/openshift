@@ -67,8 +67,9 @@ dnf  install -y openvswitch network-scripts-openvswitch
 #################################################################################
 # Install LXD Stack
 dnf  install -y snapd
-sleep 4 ; snap install snapd ; snap install lxd
+sleep 4 ; snap install snapd 
 ln -s /var/lib/snapd/snap /snap
+snap install lxd
 
 #################################################################################
 # Kernel Modules & Argument Setup
@@ -253,12 +254,9 @@ virsh net-list --all
 #################################################################################
 # Init LXD
 usermod -aG lxd kmorgan
-
 snap switch --channel=edge lxd
-snap refresh
-
+snap refresh lxd
 lxd version
-lxc version
 
 #################################################################################
 # Extra (OPTIONAL)
@@ -267,7 +265,9 @@ bash <(curl -Ss https://my-netdata.io/kickstart.sh)
 update-alternatives --set editor /usr/bin/vim
 cp -r /home/kmorgan/.ssh ~
 chown root:root -R ~/.ssh
-/usr/libexec/qemu-kvm -machine help
+passwd root
+systemctl set-default multi-user.target
+/usr/bin/qemu-kvm -machine help
 cat /proc/cpuinfo | egrep "vmx|svm"
 dmesg | grep -E "DMAR|IOMMU"
 
