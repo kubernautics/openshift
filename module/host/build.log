@@ -75,17 +75,14 @@ ln -s /var/lib/snapd/snap /snap
 echo 'options kvm_intel nested=1' >/etc/modprobe.d/qemu-system-x86.conf
 echo 'vfio-pci'                   >/etc/modules-load.d/vfio-pci.conf
 
-grubby --update-kernel=ALL --remove-args="quiet splash"
-grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
-
 sed  -i 's/GRUB_TERMINAL_OUTPUT="console"/GRUB_TERMINAL_OUTPUT="serial"/g'                     /etc/default/grub
 echo    'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"' >>/etc/default/grub
 
 grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
-modprobe -r kvm-intel
-modprobe -r vfio-pci
+grubby --update-kernel=ALL --remove-args="quiet splash"
+grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
 
 shutdown -r now
 
@@ -124,7 +121,7 @@ DNS=8.8.4.4
 DNS=1.1.1.1
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-Address=10.0.0.62/24
+Address=10.0.0.149/24
 Gateway=10.0.0.1
 Domains=ministack.dev
 
@@ -139,6 +136,20 @@ Name=internal
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
+EOF
+
+cat <<EOF >/etc/systemd/network/mgmt1.network 
+[Match]
+Name=mgmt1
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Domains=ministack.dev
+Address=10.99.2.12/24
+#Gateway=10.0.0.1
+#DNS=8.8.4.4
+#DNS=1.1.1.1
 EOF
 
 cat <<EOF >/tmp/external-mgmt0-setup
