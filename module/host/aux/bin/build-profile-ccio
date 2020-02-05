@@ -114,12 +114,12 @@ append_bashrc () {
   cp ~/.bashrc ~/bak/.bashrc_$(date +"%s")
 
   # Add profile to /etc/skel/.bashrc file
-  [[ $(grep mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \
-      || echo "source /etc/ccio/mini-stack/profile" >>/etc/skel/.bashrc
+  [[ $(grep ocp-mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \
+      || echo "source ${profile_TARGET}" >>/etc/skel/.bashrc
 
   # Add profile to .bashrc file
-  [[ $(grep mini-stack ~/.bashrc ; echo $?) == 0 ]] \
-      || echo "source /etc/ccio/mini-stack/profile" >> ~/.bashrc
+  [[ $(grep ocp-mini-stack ~/.bashrc ; echo $?) == 0 ]] \
+      || echo "source ${profile_TARGET}" >> ~/.bashrc
 }
 
 #################################################################################
