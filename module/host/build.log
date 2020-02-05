@@ -9,8 +9,6 @@ systemctl enable --now sshd
 
 dnf update  -y
 
-echo "kmorgan ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/kmorgan
-
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
 ssh-keygen -f ~/.ssh/id_rsa -N ''
@@ -21,7 +19,7 @@ shutdown -r now
 
 #################################################################################
 # Install Base Packates
-dnf  install -y xz tar git tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
+dnf install -y xz tar git tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
 
 #################################################################################
 # Kernel Modules & Argument Setup
@@ -54,7 +52,6 @@ snap install lxd
 
 #################################################################################
 # Host & Virtual Network Setup
-
 mkdir -p /etc/systemd/network
 export external_NIC="eth0"
 
@@ -216,3 +213,4 @@ lxd init
 # OPTIONAL: Disable Desktop GUI Environment (CLI & SSH Console Only)
 systemctl set-default multi-user.target
 update-alternatives --set editor /usr/bin/vim
+echo "kmorgan ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/kmorgan
