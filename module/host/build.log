@@ -153,7 +153,7 @@ Address=10.99.2.12/24
 #DNS=1.1.1.1
 EOF
 
-cat <<EOF >/external-mgmt0-setup
+cat <<EOF >~/external-mgmt0-setup
 #!/bin/bash
 run_net_setup () {
  systemctl disable NetworkManager
