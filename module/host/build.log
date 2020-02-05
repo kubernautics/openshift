@@ -1,75 +1,27 @@
 #################################################################################
+# System Setup & User Access
+
+sudo -i 
+passwd root
+mkdir ~/.bak && mv ~/* ~/.bak/
+
+systemctl enable --now sshd
+
+dnf update  -y
+
+echo "kmorgan ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/kmorgan
+
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+ssh-keygen -f ~/.ssh/id_rsa -N ''
+curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys && chown root:root -R ~/.ssh
+
+shutdown -r now
+
+#################################################################################
 # Install Base Packates
-dnf  update  -y
-dnf  install -y \
-            m4 \
-            xz \
-            tar \
-            git \
-            gcc \
-            gzip \
-            gawk \
-            dkms \
-            flex \
-            tmux \
-            htop \
-            make \
-            xmlto \
-            iperf3 \
-            grubby \
-            gettext \
-            openssl \
-            glances \
-            hmaccalc \
-            hostname \
-            neofetch \
-            findutils \
-            rpm-build \
-            net-tools \
-            zlib-devel \
-            java-devel \
-            newt-devel \
-            vim-enhanced \
-            kernel-tools \
-            kernel-devel \
-            numactl-devel \
-            ncurses-devel \
-            kernel-headers \
-            openssh-server \
-            elfutils-devel \
-            module-init-tools \
-            elfutils-libelf-devel
-
-#################################################################################
-# Install Libvirt/KVM/QEMU Tools & Utilities
-dnf  install -y \
-            libvirt             \
-            libvirt             \
-            qemu-kvm            \
-            virt-top            \
-            qemu-kvm            \
-            qemu-img            \
-            edk2-ovmf           \
-            virt-viewer         \
-            virt-manager        \
-            virt-install        \
-            libvirt-client      \
-            python3-libvirt     \
-            libguestfs-tools    \
-            libvirt-daemon-kvm  \
-            libguestfs-tools-c  \
-            libvirt-daemon-qemu 
-
-#################################################################################
-# Install OpenVSwitch Components
-dnf  install -y openvswitch network-scripts-openvswitch
-
-#################################################################################
-# Install LXD Stack
-dnf  install -y snapd
-sleep 2; snap list; sleep 2; install snapd 
-ln -s /var/lib/snapd/snap /snap
-snap install lxd
+dnf  install -y xz tar git tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
 
 #################################################################################
 # Kernel Modules & Argument Setup
@@ -85,7 +37,20 @@ grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 grubby --update-kernel=ALL --remove-args="quiet splash"
 grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
 
-shutdown -r now
+#################################################################################
+# Install Libvirt/KVM/QEMU Tools & Utilities
+dnf  install -y libvirt qemu-kvm virt-top qemu-kvm qemu-img edk2-ovmf virt-viewer virt-manager virt-install libvirt-client python3-libvirt libguestfs-tools libvirt-daemon-kvm libguestfs-tools-c libvirt-daemon-qemu 
+
+#################################################################################
+# Install OpenVSwitch Components
+dnf install -y openvswitch network-scripts-openvswitch
+
+#################################################################################
+# Install LXD Stack
+dnf install -y snapd && snap list
+sleep 2; install snapd 
+ln -s /var/lib/snapd/snap /snap
+snap install lxd
 
 #################################################################################
 # Host & Virtual Network Setup
@@ -114,20 +79,16 @@ EOF
 cat <<EOF >/etc/systemd/network/mgmt0.network 
 [Match]
 Name=mgmt0
-
+[Link]
+#MACAddress=02:49:92:7d:ae:1c
 [Network]
 DHCP=no
-DNS=8.8.8.8
-DNS=8.8.4.4
-DNS=1.1.1.1
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 Address=10.0.0.149/24
 Gateway=10.0.0.1
-Domains=ministack.dev
-
-[Link]
-#MACAddress=02:49:92:7d:ae:1c
+DNS=8.8.8.8
+DNS=8.8.4.4
 EOF
 
 cat <<EOF >/etc/systemd/network/internal.network
@@ -148,15 +109,11 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 Domains=ministack.dev
 Address=10.99.2.12/24
-#Gateway=10.0.0.1
-#DNS=8.8.4.4
-#DNS=1.1.1.1
 EOF
 
 cat <<EOF >~/external-mgmt0-setup
 #!/bin/bash
 run_net_setup () {
- systemctl disable NetworkManager
  systemctl stop    NetworkManager
  systemctl enable --now ovs-vswitchd
  ovs-vsctl add-br external             \
@@ -164,12 +121,11 @@ run_net_setup () {
   -- add-port external mgmt0           \
   -- set interface mgmt0 type=internal \
   -- set interface mgmt0 mac="$(echo "${HOSTNAME} external mgmt0" | md5sum \
- | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+  | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
  ln -fs /usr/lib/systemd/resolv.conf /etc/resolv.conf
- ln -s /usr/lib/systemd/system/ovs-vswitchd.service \
-       /etc/systemd/system/network-online.target.wants/ovs-vswitchd.service
- systemctl enable --now systemd-networkd.service
- systemctl enable --now systemd-resolved.service
+ systemctl restart ovs-vswitchd.service
+ systemctl enable  --now systemd-networkd.service
+ systemctl enable  --now systemd-resolved.service
 ovs-clear
 }
 run_net_setup
@@ -180,8 +136,8 @@ cat <<EOF >~/internal-mgmt1-setup
 ovs-vsctl add-br internal \
  -- add-port internal mgmt1 \
  -- set interface mgmt1 type=internal \
- -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" \
-  | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+ -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" | md5sum \
+ | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
 systemctl restart systemd-networkd.service
 ovs-clear
 EOF
@@ -200,14 +156,19 @@ EOF
 chmod +x /usr/bin/ovs-clear
 
 ln -f /etc/systemd/network/*.network ~
+ln -s /usr/lib/systemd/system/ovsdb-server.service /etc/systemd/system/network-online.target.wants/ovdb-server.service
+ln -s /usr/lib/systemd/system/ovs-vswitchd.service /etc/systemd/system/network-online.target.wants/ovs-vswitchd.service
+
+systemctl disable NetworkManager
 
 . ~/external-mgmt0-setup
 . ~/internal-mgmt1-setup
 
+shutdown -r now
+
 #################################################################################
 # Libvirt KVM
 systemctl enable --now libvirtd
-systemctl status       libvirtd
 
 mkdir ~/.bak 2>/dev/null \
   ; virsh net-dumpxml default | tee ~/.bak/virsh-net-default-bak.xml \
@@ -249,30 +210,9 @@ virsh net-list --all
 #################################################################################
 # Init LXD
 usermod -aG lxd kmorgan
-snap switch --channel=edge lxd
-snap refresh lxd
-lxd version
+lxd init
 
 #################################################################################
-# Extra (OPTIONAL)
-mkdir ~/.bak && mv ~/* ~/.bak/
-pip install --upgrade glances
-bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+# OPTIONAL: Disable Desktop GUI Environment (CLI & SSH Console Only)
+systemctl set-default multi-user.target
 update-alternatives --set editor /usr/bin/vim
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-ssh-keygen -f ~/.ssh/id_rsa -N ''
-curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-cp -r /home/kmorgan/.ssh ~
-chown root:root -R ~/.ssh
-passwd root
-systemctl set-default multi-user.target
-/usr/bin/qemu-kvm -machine help
-cat /proc/cpuinfo | egrep "vmx|svm"
-dmesg | grep -E "DMAR|IOMMU"
-
-#################################################################################
-# SSH Setup
-systemctl enable --now sshd
-chmod 600 .ssh/*
-systemctl set-default multi-user.target
