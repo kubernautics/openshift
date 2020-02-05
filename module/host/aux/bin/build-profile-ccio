@@ -119,7 +119,7 @@ append_bashrc () {
 
   # Add profile to .bashrc file
   [[ $(grep mini-stack ~/.bashrc ; echo $?) == 0 ]] \
-      || echo "source /etc/ccio/mini-stack/profile" >>/etc/skel/.bashrc
+      || echo "source /etc/ccio/mini-stack/profile" >> ~/.bashrc
 }
 
 #################################################################################
