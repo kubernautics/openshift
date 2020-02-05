@@ -67,7 +67,7 @@ dnf  install -y openvswitch network-scripts-openvswitch
 #################################################################################
 # Install LXD Stack
 dnf  install -y snapd
-sleep 4 ; snap install snapd 
+sleep 2; snap list; sleep 2; install snapd 
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 
