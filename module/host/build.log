@@ -158,6 +158,7 @@ cat <<EOF >~/external-mgmt0-setup
 run_net_setup () {
  systemctl disable NetworkManager
  systemctl stop    NetworkManager
+ systemctl enable --now ovs-vswitchd
  ovs-vsctl add-br external             \
   -- add-port external ${external_NIC} \
   -- add-port external mgmt0           \
@@ -167,7 +168,6 @@ run_net_setup () {
  ln -fs /usr/lib/systemd/resolv.conf /etc/resolv.conf
  ln -s /usr/lib/systemd/system/ovs-vswitchd.service \
        /etc/systemd/system/network-online.target.wants/ovs-vswitchd.service
- systemctl enable --now ovs-vswitchd
  systemctl enable --now systemd-networkd.service
  systemctl enable --now systemd-resolved.service
 ovs-clear
