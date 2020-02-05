@@ -34,7 +34,7 @@ dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tool
 #### 02\. Configure SSH & Keys
 ```sh
 ssh-keygen -f ~/.ssh/id_rsa -N ''
-curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys
+curl -L https://github.com/${ccio_SSH_UNAME}.keys | tee -a ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys && chown root:root -R ~/.ssh
 systemctl enable --now sshd
 ```
@@ -149,7 +149,7 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 Domains=ministack.dev
-Address=10.99.2.12/24
+Address=${ocp_ministack_SUBNET}.2/24
 EOF
 ```
 #### 07\. Write 'openshift' OpenShift External NAT Access Bridge Networkd Configuration
@@ -300,11 +300,11 @@ cat <<EOF >~/virsh-net-openshift-on-openshift.xml
 ```
 #### 00\. Define all networks from xml definitions
 ```sh
-for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml; do virsh net-define ~/${xml}; done
+for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml virsh-net-openshift-on-openshift.xml ; do virsh net-define ~/${xml}; done
 ```
 #### 00\. Set all networks to start & autostart
 ```sh
-for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
+for virshet in external default internal openshift; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
 ```
 #### 00\. Verify Networks & Status
 ```sh
@@ -314,7 +314,7 @@ virsh net-list --all
 # Part 04 -- Initialize LXC / LXD Container Service
 #### 00\. Add user to LXD Group
 ```sh
-usermod -aG lxd kmorgan
+usermod -aG lxd ${ministack_UNAME}
 ```
 #### 00\. Initialize LXD Daemon & Base Configuration Settings
 ```sh
@@ -332,5 +332,5 @@ update-alternatives --set editor /usr/bin/vim
 ```
 #### 00\. Disable Password Requirement for Primary User (WARNING: Lab Use Only)
 ```sh
-echo "kmorgan ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/kmorgan
+echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
