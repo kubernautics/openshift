@@ -1,0 +1,86 @@
+oc get pods --all-namespaces
+oc logs oauth-openshift-56d468f864-56xzv -n openshift-authentication
+oc logs console-operator-7fbfcbfb56-cnbtw -n openshift-console-operator
+
+oc login -u kubeadmin -p F4CPG-XCGb7-77kkx-gMqIF
+oc login -u kubeadmin -p $(cat ./auth/kubeadmin-password)
+dnf install httpd-tools
+htpasswd -c -B -b users.htpasswd kmorgan SECRETPWD
+oc create secret generic htpass-secret --from-file=htpasswd=./users.htpasswd -n openshift-config
+oc get secret htpass-secret -ojson
+oc apply -f htpasswd.yaml 
+oc whoami --show-console
+oc adm policy add-cluster-role-to-user cluster-admin kmorgan
+
+ln /etc/systemd/network/eth1.network .
+ln /etc/systemd/network/eth1.network . -f
+
+oc adm policy add-cluster-role-to-user cluster-admin kmorgan
+cp ../htpasswd.yaml .
+cp ../users.htpasswd .
+oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd -n openshift-config
+oc apply -f htpasswd.yaml 
+htpasswd -b users.htpasswd zilliam wajac
+
+sudo ln -f eth1.network /etc/systemd/network/eth1.network 
+
+scp -rp carrier:~/inventory/ethers dnsmasq:~/ethers
+scp -rp carrier:~/inventory/pxelinux.cfg root@172.10.0.8:/tftpboot/
+
+oc options
+echo "export KUBECONFIG=$(pwd)/auth/kubeconfig" >>~/.bashrc
+cp ~/.ccio/ocp4-mini-stack/install-config.yaml ./ocp4/
+openshift-install create manifests
+openshift-install create ignition-configs
+scp bootstrap.ign  master.ign  metadata.json  worker.ign httpd:/var/www/html/ignition/
+vim ~/.ccio/ocp4-mini-stack/install-config.yaml 
+openshift-install create manifests
+grep -ir MastersSchedulable .
+vim manifests/cluster-scheduler-02-config.yml 
+openshift-install create ignition-configs --dir=.
+oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd -n openshift-config
+openshift-install wait-for bootstrap-complete
+openshift-install wait-for install-complete
+oc whoami --show-console
+
+virsh console bootstrap.ocp4.ministack.dev
+ssh core@worker02.ocp4.ministack.dev -i ~/.ssh/id_rsa
+virsh console worker02.ocp4.ministack.dev
+
+oc get csr -ojson | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+
+dig master1.ocp4.ministack.dev
+nslookup worker01
+ping worker01.ocp4.ministack.dev
+curl http://tftp.ministack.dev:8080/ipxe?
+dig https://oauth-openshift.apps.ocp4.ministack.dev/oauth/token +short
+curl --insecure https://oauth-openshift.apps.ocp4.ministack.dev/oauth/token 
+
+watch -c oc get csr
+watch -c oc get pods
+watch -c oc api-resources 
+watch -c oc get endpoints -A 
+watch -c oc get clusterversion
+watch -c oc get clusteroperators
+
+oc status
+oc get pods
+oc get nodes
+oc get namespaces
+oc get namespace openshift-console-operator -oyaml
+oc get namespace openshift-authentication -oyaml
+oc project openshift-authentication
+
+lxc file pull -r gateway/etc/config .
+scp bootstrap.ign metadata.json worker.ign httpd:/var/www/html/ignition/
+for i in build-tftp  eth1.network  tftp.service; do scp tftp:~/$i .; done
+for i in build-httpd  eth1.network; do scp httpd:~/$i .; done
+for i in eth1.network  haproxy.cfg; do scp haproxy:~/$i .; done
+for i in dnsmasq.conf ethers gw02.ministack.privkey gw02.ministack.pubkey hosts; do lxc file pull gateway/root/$i .; done
+for i in build-dnsmasq build.log  dnsmasq.conf  dnsmasq.leases  eth1.network  ethers  hosts  resolv.conf; do scp dnsmasq:~/$i .; done
+for i in build.log  dnsmasq.conf  dnsmasq.leases  eth1.network  ethers  hosts  resolv.conf; do scp dnsmasq:/root/$i .; done
+for i in build.log  eth1.network  haproxy.cfg; do scp haproxy:/root/$i .; done
+for i in build-hostapd.log  hostapd.conf  ifcfg-eth0  ifcfg-hostapd  iwlist; do scp hostapd:/root/$i .; done
+for i in bootstrap.ign  httpd-build_a00.log  stage-install-config-yaml.sh  stage-pull-secrets.sh; do scp httpd:/root/$i .; done
+for i in AC1E00  AC1E01  build.log  build-tftp  default  eth1.network  README.md  tftp.service; do scp tftp:/root/$i .; done
