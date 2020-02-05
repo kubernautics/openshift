@@ -245,6 +245,92 @@ systemctl disable NetworkManager
 shutdown -r now
 ```
 --------------------------------------------------------------------------------
-#### 00\. A
+# Part 03 -- Create Libvirt OpenVSwitch Configurations
+#### 00\. Enable Libvirt Service
 ```sh
+systemctl enable --now libvirtd
+```
+#### 00\. Backup & Destroy 'default' NAT Libvirt Bridge
+```sh
+mkdir ~/.bak 2>/dev/null \
+  ; virsh net-dumpxml default | tee ~/.bak/virsh-net-default-bak.xml \
+  ; virsh net-destroy default && virsh net-undefine default
+    
+```
+#### 00\. Write 'external' Network Profile xml
+```sh
+cat <<EOF >~/virsh-net-external-on-external.xml
+<network>
+  <name>external</name>
+  <forward mode='bridge'/>
+  <bridge name='external' />
+  <virtualport type='openvswitch'/>
+</network>
+```
+#### 00\. Write 'default' Network Profile .xml
+```sh
+cat <<EOF >~/virsh-net-default-on-internal.xml
+<network>
+  <name>default</name>
+  <forward mode='bridge'/>
+  <bridge name='internal' />
+  <virtualport type='openvswitch'/>
+</network>
+EOF
+```
+#### 00\. Write 'internal' Network Profile xml
+```sh
+cat <<EOF >~/virsh-net-internal-on-internal.xml
+<network>
+  <name>internal</name>
+  <forward mode='bridge'/>
+  <bridge name='internal' />
+  <virtualport type='openvswitch'/>
+</network>
+```
+#### 00\. Write 'openshift' Network Profile xml
+```sh
+cat <<EOF >~/virsh-net-openshift-on-openshift.xml
+<network>
+  <name>openshift</name>
+  <forward mode='bridge'/>
+  <bridge name='openshift' />
+  <virtualport type='openvswitch'/>
+</network>
+```
+#### 00\. Define all networks from xml definitions
+```sh
+for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml; do virsh net-define ~/${xml}; done
+```
+#### 00\. Set all networks to start & autostart
+```sh
+for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
+```
+#### 00\. Verify Networks & Status
+```sh
+virsh net-list --all
+```
+--------------------------------------------------------------------------------
+# Part 04 -- Initialize LXC / LXD Container Service
+#### 00\. Add user to LXD Group
+```sh
+usermod -aG lxd kmorgan
+```
+#### 00\. Initialize LXD Daemon & Base Configuration Settings
+```sh
+lxd init
+```
+--------------------------------------------------------------------------------
+# Optional Configuration Settings 
+#### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
+```sh
+systemctl set-default multi-user.target
+```
+#### 00\. Set VIM as Default Editor
+```sh
+update-alternatives --set editor /usr/bin/vim
+```
+#### 00\. Disable Password Requirement for Primary User (WARNING: Lab Use Only)
+```sh
+echo "kmorgan ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/kmorgan
 ```

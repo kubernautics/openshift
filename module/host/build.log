@@ -160,6 +160,7 @@ systemctl disable NetworkManager
 
 . ~/external-mgmt0-setup
 . ~/internal-mgmt1-setup
+. ~/openshift-bridge-setup
 
 shutdown -r now
 
@@ -171,7 +172,7 @@ mkdir ~/.bak 2>/dev/null \
   ; virsh net-dumpxml default | tee ~/.bak/virsh-net-default-bak.xml \
   ; virsh net-destroy default && virsh net-undefine default
 
-cat <<EOF >~/virsh-net-default-on-internal.json
+cat <<EOF >~/virsh-net-default-on-internal.xml
 <network>
   <name>default</name>
   <forward mode='bridge'/>
@@ -180,7 +181,7 @@ cat <<EOF >~/virsh-net-default-on-internal.json
 </network>
 EOF
 
-cat <<EOF >~/virsh-net-internal-on-internal.json
+cat <<EOF >~/virsh-net-internal-on-internal.xml
 <network>
   <name>internal</name>
   <forward mode='bridge'/>
@@ -189,7 +190,7 @@ cat <<EOF >~/virsh-net-internal-on-internal.json
 </network>
 EOF
 
-cat <<EOF >~/virsh-net-external-on-external.json
+cat <<EOF >~/virsh-net-external-on-external.xml
 <network>
   <name>external</name>
   <forward mode='bridge'/>
@@ -198,7 +199,7 @@ cat <<EOF >~/virsh-net-external-on-external.json
 </network>
 EOF
 
-for json in virsh-net-default-on-internal.json virsh-net-internal-on-internal.json virsh-net-external-on-external.json; do virsh net-define ~/${json}; done
+for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml; do virsh net-define ~/${xml}; done
 
 for virshet in external default internal; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
 
