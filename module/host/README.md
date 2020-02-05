@@ -1,4 +1,4 @@
-# Part 01 -- Host System Setup
+# Stage 00 -- Host System Setup
 ## Review checklist of prerequisites:
 1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
 2. You have no data on this system
@@ -16,63 +16,59 @@ sudo -i
 passwd root
 mkdir ~/.bak && mv ~/* ~/.bak/
 ```
-
-#### 00\. Configure SSH & Keys
+#### 01\. Run System Updates & Install Base Packages
+```sh
+dnf update  -y
+dnf install -y xz tar git tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
+```
+#### 02\. Configure SSH & Keys
 ```sh
 ssh-keygen -f ~/.ssh/id_rsa -N ''
 curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys && chown root:root -R ~/.ssh
 systemctl enable --now sshd
 ```
-
-#### 00\. Set SELinux to Permissive
+#### 03\. Set SELinux to Permissive
 ```sh
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 ```
-
-#### 00\. Run System Updates & Install Base Packages
-```sh
-dnf update  -y
-dnf install -y xz tar git tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
-```
-#### 00\. Install Libvirt / Qemu / KVM & Utilities
+#### 04\. Install Libvirt / Qemu / KVM & Utilities
 ```sh
 dnf  install -y libvirt qemu-kvm virt-top qemu-kvm qemu-img edk2-ovmf virt-viewer virt-manager virt-install libvirt-client python3-libvirt libguestfs-tools libvirt-daemon-kvm libguestfs-tools-c libvirt-daemon-qemu 
 ```
-#### 00\. Install OpenVSwitch Packages
+#### 05\. Install OpenVSwitch Packages
 ```sh
 dnf install -y openvswitch network-scripts-openvswitch
 ```
-#### 00\. Install LXC via LXD Container Stack
+#### 06\. Install LXC via LXD Container Stack
 ```sh
 dnf install -y snapd && snap list & sleep 3
 install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 ```
-#### 00\. Configure Kernel Module
+#### 07\. Configure Kernel Module
 ```sh
 echo 'options kvm_intel nested=1' >/etc/modprobe.d/qemu-system-x86.conf
 echo 'vfio-pci'                   >/etc/modules-load.d/vfio-pci.conf
 ```
-#### 00\. Configure Grub Menu
+#### 08\. Configure Grub Menu
 ```sh
 sed  -i 's/GRUB_TERMINAL_OUTPUT="console"/GRUB_TERMINAL_OUTPUT="serial"/g'                     /etc/default/grub
 echo    'GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"' >>/etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 ```
-#### 00\. Configure Kernel Arguments
+#### 09\. Configure Kernel Arguments
 ```sh
 grubby --update-kernel=ALL --remove-args="quiet splash"
 grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kvm_intel.nested=1 net.ifnames=0 biosdevname=0 pci=noaer console=ttyS0,115200n8"
 ```
-## 00\. Reboot
+#### 10\. Reboot
 ```sh
 shutdown -r now
 ```
-
 --------------------------------------------------------------------------------
 ## 00\. A
 ```sh
