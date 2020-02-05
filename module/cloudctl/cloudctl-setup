@@ -1,0 +1,73 @@
+#!/bin/bash
+
+rpm --nodeps --allmatches -e fedora-release-container
+
+dnf update -y && dnf distrosync -y
+
+dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client && snap list && sleep 2
+dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y
+dnf install -y xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks
+snap install snapd
+dnf clean all
+
+ln -s /var/lib/snapd/snap /snap
+snap install lxd
+
+virsh net-destroy default
+virsh net-undefine default
+virsh net-list --all
+
+sudo timedatectl set-timezone America/Denver
+
+nmcli con del ens3
+nmcli device set eth0 managed yes
+nmcli -p device
+nmcli con show
+
+systemctl unmask systemd-logind
+systemctl enable systemd-logind
+systemctl set-default graphical.target
+systemctl disable firewalld
+systemctl enable --now sshd
+systemctl enable xrdp.service
+systemctl enable xrdp-sesman.service
+
+
+firewall-cmd --add-port=22/tcp --add-port=3389/tcp --add-service=http/tcp --add-service=https/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-ports
+firewall-cmd --state
+
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+reboot
+
+echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
+useradd --groups wheel --create-home kmorgan
+usermod -aG lxd ${ministack_UNAME}
+passwd kmorgan
+
+login kmorgan
+
+ssh-keygen -b 4086 -t rsa -f ~/.ssh/id_rsa -q -P '' 
+curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys 
+chmod 600 ~/.ssh/authorized_keys 
+
+rm -rf ~/Videos ~/Templates ~/Public ~/Pictures ~/Music/ ~/Desktop
+update-alternatives --set editor /usr/bin/vim
+
+lxc remote add msbase 10.0.0.2
+lxc remote switch msbase
+lxc list
+
+virsh connect qemu+ssh://root@10.10.20.2/system
+virsh connect qemu+ssh://root@10.10.20.2/system list
+virsh -c qemu+ssh://root@10.10.20.2/system list --all
+
+echo 'alias virsh="virsh -c qemu+ssh://root@10.10.20.2/system"' >>.bashrc 
+virsh list --all
+
+# REFRENCE
+#chmod 600 ~/.ssh/config 
+#dd if=/dev/zero of=11GB.dd bs=1024 count=1024000

@@ -84,3 +84,62 @@ for i in build.log  eth1.network  haproxy.cfg; do scp haproxy:/root/$i .; done
 for i in build-hostapd.log  hostapd.conf  ifcfg-eth0  ifcfg-hostapd  iwlist; do scp hostapd:/root/$i .; done
 for i in bootstrap.ign  httpd-build_a00.log  stage-install-config-yaml.sh  stage-pull-secrets.sh; do scp httpd:/root/$i .; done
 for i in AC1E00  AC1E01  build.log  build-tftp  default  eth1.network  README.md  tftp.service; do scp tftp:/root/$i .; done
+#!/bin/bash
+
+wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/latest/rhcos-4.2.0-x86_64-metal-bios.raw.gz
+wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/4.2.0/rhcos-4.2.0-x86_64-installer-initramfs.img
+wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/4.2.0/rhcos-4.2.0-x86_64-installer-kernel
+
+wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.6/openshift-install-linux-4.1.6.tar.gz
+wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.0.tar.gz
+
+tar xvf openshift-install-linux-4.2.0.tar.gz 
+cp openshift-install /usr/bin/openshift-install
+
+source secrets/pull-secret && echo $PullSecret 
+
+openshift-install create manifests --dir $(pwd) 
+
+openshift-install create ignition-configs --dir=$(pwd) --log-level debug
+
+curl --insecure https://api.ocp4.ministack.dev:6443/healthz
+curl --insecure https://api.ocp4.ministack.dev:6443/version
+curl --insecure https://api.ocp4.ministack.dev:6443/api/v1/namespaces
+curl --insecure https://api.ocp4.ministack.dev:22623/config/master -Ik  
+curl --insecure https://api-int.ocp4.ministack.dev:22623/config/master
+curl --insecure https://bootstrap.ocp4.ministack.dev:6443/oapi/
+curl --insecure https://bootstrap.ocp4.ministack.dev:6443/healthz
+curl --insecure https://bootstrap.ocp4.ministack.dev:6443/version
+curl --insecure https://master1.ocp4.ministack.dev:6443/healthz
+curl --insecure https://master1.ocp4.ministack.dev:6443/version
+
+export KUBECONFIG=$(pwd)/auth/kubeconfig
+openshift-install wait-for bootstrap-complete --log-level debug
+
+oc login -u kubeadmin
+oc whoami --show-token
+oc whoami --show-console 
+oc status --suggest
+
+dig bootstrap
+dig bootstrap.ocp4.ministack.dev
+dig bootstrap
+dig bootstrap.ocp4.ministack.dev
+dig bootstrap
+dig bootstrap.ocp4.ministack.dev
+dig bootstrap
+dig bootstrap.ocp4.ministack.dev
+dig bootstrap
+nslookup carrier
+dig carrier
+
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.0 tftp:/tftpboot/
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.0 tftp:/tftpboot
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.0/ tftp:/tftpboot/pxelinux.0
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.0/* tftp:/tftpboot/pxelinux.0/
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.0/ tftp:/tftpboot/pxelinux.cfg
+scp -rp carrier.ministack.dev:/root/inventory/pxelinux.cfg tftp:/tftpboot/
+scp -rp carrier.ministack.dev:/root/inventory/ethers dnsmasq:/etc/
+
+htpasswd -c -B -b </path/to/users.htpasswd> <user_name> <password>
+htpasswd -c -B -b users.htpasswd kmorgan PASSWD

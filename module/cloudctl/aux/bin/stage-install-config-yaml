@@ -1,6 +1,6 @@
 #!/bin/bash
-mkdir -p /var/www/html/ignition 2>/dev/null
-source $(pwd)/src/stage-pull-secrets.sh
+mkdir -p ~/ccio/tmp/ignition 2>/dev/null
+source ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/stage-pull-secrets
 cat <<EOF >~/ignition/install-config.yaml
 apiVersion: v1
 baseDomain: braincraft.io
