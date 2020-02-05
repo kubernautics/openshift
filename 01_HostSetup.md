@@ -12,7 +12,7 @@
 ```sh
 sudo -i 
 dnf update -y && dnf install git -y
-git clone git@github.com:containercraft/ocp-mini-stack.git ~/.ccio
+git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio
 ```
 #### 00\. Build CCIO User Profile
 ```sh
