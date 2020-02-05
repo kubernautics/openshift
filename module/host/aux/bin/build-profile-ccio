@@ -1,16 +1,13 @@
 #!/bin/bash
 #################################################################################
 load_vars () {
-project_NAME="mini-stack"
+project_NAME="ocp-mini-stack"
 base_PATH="/etc/ccio"
 full_PATH="${base_PATH}/${project_NAME}"
 profile_TARGET="${full_PATH}/profile"
 
 # Check/Create Directory Path
 [[ -f ${full_PATH} ]] || mkdir -p ${full_PATH}
-
-# Check/Install whois package for salting the password
-[[ $(dpkg -l | grep whois ; echo $?) == 0 ]] || apt install whois -y
 
 clear
 }
@@ -22,7 +19,7 @@ echo "    Please enter a valid /24 subnet:
       "
 read -p '    Subnet: ' input_SUBNET
 
-ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
+ocp_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
 
 }
 
@@ -50,9 +47,9 @@ prompt_provider_uname () {
 echo "    
     Please configure a supported service with your username & ssh public keys
     Supported options:
-      GitHub     (enter 'gh')
-      Launchpad  (enter 'lp')"
-read -p '    gh/lp : ' provider_SSHPUBKEY ;
+      GitHub   (enter 'gh')
+      Gitlab   (enter 'gl')"
+read -p '    gh/gl : '   provider_SSHPUBKEY ;
 read -p '    username: ' provider_UNAME
 echo ""
 
@@ -70,7 +67,7 @@ fi
 
 #################################################################################
 mk_pwd () {
-read -sp '    New Password: ' new_pwd ; echo "" ;
+read -sp '    New Password: '    new_pwd ; echo "" ;
 read -sp '    Confirm New PWD: ' chk_pwd
 salt_pwd
 }
@@ -88,12 +85,12 @@ mk_pwd
 write_profile () {
 cat <<EOF > ${profile_TARGET}
 # SSH Provider Configuration
-export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS launchpad:lp github:gh
+export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS gitlab:gl github:gh
 export ccio_SSH_UNAME="${provider_UNAME}"
 
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
-export ministack_SUBNET="${ministack_SUBNET}"
+export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
 
 echo '>>>> CCIO Profile Loaded!'

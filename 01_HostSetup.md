@@ -7,7 +7,7 @@
 4. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
 5. Recommended: Follow these guides using ssh to copy/paste commands as you read along
 --------------------------------------------------------------------------------
-# Part 00 Clone Project
+# Part 00 -- Clone Project
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo -i 
@@ -19,7 +19,7 @@ git clone git@github.com:containercraft/ocp-mini-stack.git ~/.ccio
  . ~/.ccio/module/host/aux/bin/build-profile-ccio
 ```
 --------------------------------------------------------------------------------
-# Part 01 System Setup & User Access
+# Part 01 -- System Setup & User Access
 #### 00\. Change to Root & Backup User Files
 ```sh
 sudo -i 
@@ -80,7 +80,7 @@ grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kv
 shutdown -r now
 ```
 --------------------------------------------------------------------------------
-## Part 02 Create Host Virtual Network Architecture
+## Part 02 -- Create Host Virtual Network Architecture
 #### 00\. Create Network Config Directory
 ```sh
 mkdir -p /etc/systemd/network
