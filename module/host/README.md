@@ -277,7 +277,7 @@ cat <<EOF >~/virsh-net-external-on-external.xml
   <virtualport type='openvswitch'/>
 </network>
 EOF
-
+    
 ```
 #### 00\. Write 'default' Network Profile .xml
 ```sh
@@ -289,7 +289,7 @@ cat <<EOF >~/virsh-net-default-on-internal.xml
   <virtualport type='openvswitch'/>
 </network>
 EOF
-
+     
 ```
 #### 00\. Write 'internal' Network Profile xml
 ```sh
@@ -301,7 +301,7 @@ cat <<EOF >~/virsh-net-internal-on-internal.xml
   <virtualport type='openvswitch'/>
 </network>
 EOF
-
+    
 ```
 #### 00\. Write 'ocp-mini-stack' Network Profile xml
 ```sh
@@ -313,7 +313,7 @@ cat <<EOF >~/virsh-net-ocp-mini-stack-on-ocp-mini-stack.xml
   <virtualport type='openvswitch'/>
 </network>
 EOF
-
+    
 ```
 #### 00\. Define all networks from xml definitions
 ```sh
