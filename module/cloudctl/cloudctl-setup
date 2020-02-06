@@ -1,69 +1,105 @@
 #!/bin/bash
 
-echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
-useradd --groups wheel,lxd,ccio --create-home ${ministack_UNAME}
-usermod -aG lxd ${ministack_UNAME}
-passwd kmorgan
-ssh-keygen -b 4086 -t rsa -f ~/.ssh/id_rsa -q -P '' 
-curl -L https://github.com/usrbinkat.keys | tee -a ~/.ssh/authorized_keys 
-chmod 600 ~/.ssh/authorized_keys 
+ . ~/.ccio/module/cloudctl/aux/bin/build-cloudctl-profile
 
-nmcli con del ens3
-nmcli -p device
-nmcli con show
+lxc init images:fedora/31 cloudctl -p cloudctl
+lxc start cloudctl
+
+lxc file push -r ~/.ssh    cloudctl/root/
+lxc file push -r ~/.bashrc cloudctl/root/
+lxc file push -r ~/.bashrc cloudctl/etc/skel/
+
+lxc exec cloudctl -- /bin/bash -c "groupadd ccio -f --gid $(grep ccio /etc/group | cut -d ':' -f 3)"
+lxc exec cloudctl -- /bin/bash -c "usermod -a -G ccio root"
+
+lxc exec cloudctl -- /bin/bash -c "useradd --groups wheel,ccio --create-home ${ministack_UNAME}"
+lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
+lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
+lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}"
+
+lxc file push /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
+
+lxc config device add cloudctl ccio-home disk source=~/.ccio path=/home/${ministack_UNAME}/.ccio
+
+lxc exec cloudctl -- /bin/bash -c "rpm --nodeps --allmatches -e fedora-release-container"
+lxc exec cloudctl -- /bin/bash -c "dnf update -y && dnf distrosync -y"
+lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* && snap list && sleep 2"
+lxc exec cloudctl -- /bin/bash -c "dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing"
+lxc exec cloudctl -- /bin/bash -c "dnf install -y xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
+
+lxc exec cloudctl -- /bin/bash -c "systemctl unmask systemd-logind"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable NetworkManager"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable systemd-logind"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp.service"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp-sesman.service"
+lxc exec cloudctl -- /bin/bash -c "systemctl set-default graphical.target"
+lxc exec cloudctl -- /bin/bash -c "systemctl disable firewalld"
+
+lxc exec cloudctl -- /bin/bash -c "virsh net-destroy default"
+lxc exec cloudctl -- /bin/bash -c "virsh net-list --all"
+lxc exec cloudctl -- /bin/bash -c "virsh net-undefine default"
+
+lxc exec cloudctl -- /bin/bash -c "ln -s /var/lib/snapd/snap /snap"
+lxc exec cloudctl -- /bin/bash -c "snap install snapd"
+lxc exec cloudctl -- /bin/bash -c "snap install lxd"
+lxc exec cloudctl -- /bin/bash -c "usermod -a -G lxd ${ministack_UNAME}"
+
+lxc exec cloudctl -- /bin/bash -c "sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config"
+lxc exec cloudctl -- /bin/bash -c "update-alternatives --set editor /usr/bin/vim"
+
+lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
+
+ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $2}')
+
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
+lxc exec cloudctl -- /bin/bash -c ""
 
 #################################################################################
 # Setup Fedora Workstation GUI Env & XRDP
 rpm --nodeps --allmatches -e fedora-release-container
-
 dnf update -y && dnf distrosync -y
-
-dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client && snap list && sleep 2
-dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y
+dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* && snap list && sleep 2
+dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing
 dnf install -y xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks
-snap install snapd
-dnf clean all
 
-virsh net-destroy default
-virsh net-undefine default
-virsh net-list --all
+#lxc remote add msbase 10.0.0.2
+#lxc remote switch msbase
+#lxc list
+#virsh connect qemu+ssh://root@10.10.20.2/system
+#virsh connect qemu+ssh://root@10.10.20.2/system list
+#virsh -c qemu+ssh://root@10.10.20.2/system list --all
+#echo 'alias virsh="virsh -c qemu+ssh://root@10.10.20.2/system"' >>.bashrc 
+#virsh list --all
 
-ln -s /var/lib/snapd/snap /snap
-snap install lxd
+# NetworkManager
+#nmcli con del ens3
+#nmcli -p device
+#nmcli con show
+#nmcli con del ens3
+#nmcli device set eth0 managed yes
+#nmcli device set eth1 managed yes
+#nmcli connection add type ethernet con-name eth1 ifname eth1 ipv4 ${ocp_ministack_SUBNET}.3/24 ipv4.dns "8.8.8.8 8.8.4.4"
 
-firewall-cmd --add-port=22/tcp --add-port=3389/tcp --add-service=http/tcp --add-service=https/tcp --permanent
-firewall-cmd --reload
-firewall-cmd --list-ports
-firewall-cmd --state
-
-setenforce 0
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-
-reboot
-
-rm -rf ~/Videos ~/Templates ~/Public ~/Pictures ~/Music/ ~/Desktop
-update-alternatives --set editor /usr/bin/vim
-
-lxc remote add msbase 10.0.0.2
-lxc remote switch msbase
-lxc list
-
-virsh connect qemu+ssh://root@10.10.20.2/system
-virsh connect qemu+ssh://root@10.10.20.2/system list
-virsh -c qemu+ssh://root@10.10.20.2/system list --all
-
-echo 'alias virsh="virsh -c qemu+ssh://root@10.10.20.2/system"' >>.bashrc 
-virsh list --all
-
-systemctl unmask systemd-logind
-systemctl enable systemd-logind
-systemctl set-default graphical.target
-systemctl disable firewalld
-systemctl enable --now sshd
-systemctl enable xrdp.service
-systemctl enable xrdp-sesman.service
+#grep ccio /etc/group
+#lxc config device add cloudctl ccio disk source=~/.ccio path=/home/${ministack_UNAME}/.ccio shift=true
+#lxc config set c1 raw.idmap "both 1000 1000"
 
 # REFRENCE
-#chmod 600 ~/.ssh/config 
 #dd if=/dev/zero of=11GB.dd bs=1024 count=1024000
 #sudo timedatectl set-timezone America/Denver
+#firewall-cmd --add-port=22/tcp --add-port=3389/tcp --add-service=http/tcp --add-service=https/tcp --permanent
+#firewall-cmd --reload
+#firewall-cmd --list-ports
+#firewall-cmd --state
