@@ -99,6 +99,7 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
+    
 ```
 #### 03\. Write 'external' External Bridge Networkd Configuration
 ```sh
@@ -110,6 +111,7 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
+    
 ```
 #### 04\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
 ```sh
@@ -127,6 +129,7 @@ Gateway=$(ip r | awk '/default /{print $3}' | head -n 1)
 DNS=8.8.8.8
 DNS=8.8.4.4
 EOF
+    
 ```
 #### 05\. Write 'internal' Internal Bridge Networkd Configuration
 ```sh
@@ -138,6 +141,7 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
+    
 ```
 #### 06\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
 ```sh
@@ -151,6 +155,7 @@ LinkLocalAddressing=no
 Domains=ministack.dev
 Address=${ocp_ministack_SUBNET}.2/24
 EOF
+    
 ```
 #### 07\. Write 'ocp-mini-stack' OpenShift Internal Bridge Networkd Configuration
 ```sh
@@ -162,6 +167,7 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 EOF
+    
 ```
 #### 08\. Write External Network Build & Hand Off OneShot Utility
 ```sh
@@ -184,6 +190,7 @@ ovs-clear
 }
 run_net_setup
 EOF
+    
 ```
 #### 09\. Write Internal Network Build & Hand Off OneShot Utility
 ```sh
@@ -197,6 +204,7 @@ ovs-vsctl add-br internal \
 systemctl restart systemd-networkd.service
 ovs-clear
 EOF
+    
 ```
 #### 10\. Write OCP-MINI-STACK Network Build OneShot Utility
 ```sh
@@ -206,6 +214,7 @@ ovs-vsctl add-br ocp-mini-stack
 systemctl restart systemd-networkd.service
 ovs-clear
 EOF
+    
 ```
 #### 11\. Write OpenVSwitch Cleaning Maintenance Utility
 ```sh
@@ -219,6 +228,7 @@ clear && ovs-vsctl show
 }
 run_ovs_clear
 EOF
+    
 ```
 ```sh
 chmod +x /usr/bin/ovs-clear
