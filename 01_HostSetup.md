@@ -58,6 +58,7 @@ snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 snap set lxd shiftfs.enable=true
+systemctl enable --now snap.lxd.daemon
 systemctl reload snap.lxd.daemon
 ```
 #### 07\. Configure Kernel Modules
