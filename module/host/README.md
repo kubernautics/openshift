@@ -54,7 +54,7 @@ dnf install -y openvswitch network-scripts-openvswitch
 #### 06\. Install LXC via LXD Container Stack
 ```sh
 dnf install -y snapd fuse-overlayfs criu fuse3 fuse3-devel && sleep 3 && snap list && sleep 3
-install snapd
+snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 snap set lxd shiftfs.enable=true
