@@ -58,7 +58,6 @@ lxc exec cloudctl -- /bin/bash -c "nmcli con up eth1"
 #### 00\. Set System Services
 ```sh
 lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now libvirtd.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl unmask systemd-logind"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable systemd-logind"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp.service"
@@ -66,11 +65,14 @@ lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp-sesman.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl set-default graphical.target"
 lxc exec cloudctl -- /bin/bash -c "systemctl disable firewalld"
 ```
-#### 00\. Destroy local libvirt network bridge
+#### 00\. Destroy local libvirt network bridge & mask services
 ```sh
+lxc exec cloudctl -- /bin/bash -c "systemctl enable --now libvirtd.service"
 lxc exec cloudctl -- /bin/bash -c "virsh net-destroy default"
 lxc exec cloudctl -- /bin/bash -c "virsh net-undefine default"
 lxc exec cloudctl -- /bin/bash -c "virsh net-list --all"
+lxc exec cloudctl -- /bin/bash -c "systemctl disable libvirtd.service"
+lxc exec cloudctl -- /bin/bash -c "systemctl mask libvirtd.service"
 ```
 #### 00\. Install LXC / LXD Stack
 ```sh
