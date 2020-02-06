@@ -388,6 +388,8 @@ echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNA
 ```
 --------------------------------------------------------------------------------
 # REFRENCE DO NOT USE
-snap set lxd shiftfs.enable=true
-systemctl enable --now snap.lxd.daemon
-systemctl reload snap.lxd.daemon
+```
+#snap set lxd shiftfs.enable=true
+#systemctl enable --now snap.lxd.daemon
+#systemctl reload snap.lxd.daemon
+```
