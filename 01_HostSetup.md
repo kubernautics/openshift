@@ -23,9 +23,8 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 # Part 01 -- System Setup & User Access
 #### 00\. Change to Root & Backup User Files
 ```sh
-sudo -i 
 passwd root
-mkdir ~/.bak && mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
+mkdir ~/.bak 2>/dev/null ; mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
