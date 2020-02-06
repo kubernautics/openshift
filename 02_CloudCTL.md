@@ -77,8 +77,7 @@ lxc exec cloudctl -- /bin/bash -c "systemctl mask libvirtd.service"
 #### 00\. Install LXC / LXD Stack
 ```sh
 lxc exec cloudctl -- /bin/bash -c "ln -s /var/lib/snapd/snap /snap"
-lxc exec cloudctl -- /bin/bash -c "snap refresh"
-lxc exec cloudctl -- /bin/bash -c "snap install snapd ; sleep 2 ; snap install snapd"
+lxc exec cloudctl -- /bin/bash -c "snap refresh ; snap install snapd ; sleep 2 ; snap install snapd"
 lxc exec cloudctl -- /bin/bash -c "snap install lxd"
 ```
 #### 00\. Add user to required groups
