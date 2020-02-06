@@ -352,7 +352,10 @@ WARNING: cgroup v2 is not fully supported yet, proceeding with partial confineme
 Would you like to use LXD clustering? (yes/no) [default=no]: no
 Do you want to configure a new storage pool? (yes/no) [default=yes]: yes
 Name of the new storage pool [default=default]: default
-Name of the storage backend to use (btrfs, ceph, dir, lvm) [default=btrfs]: dir
+Name of the storage backend to use (btrfs, ceph, dir, lvm) [default=btrfs]: btrfs
+Create a new BTRFS pool? (yes/no) [default=yes]: yes
+Would you like to use an existing block device? (yes/no) [default=no]: no
+Size in GB of the new loop device (1GB minimum) [default=15GB]: 32
 Would you like to connect to a MAAS server? (yes/no) [default=no]: no
 Would you like to create a new local network bridge? (yes/no) [default=yes]: no
 Would you like to configure LXD to use an existing bridge or host interface? (yes/no) [default=no]: yes
@@ -363,7 +366,7 @@ Port to bind LXD to [default=8443]: 8443
 Trust password for new clients: 
 Again: 
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes] yes
-Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: no
+Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: yes
 ```
 #### 00\. Reboot
 ```sh
