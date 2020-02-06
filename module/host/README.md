@@ -330,6 +330,25 @@ usermod -aG lxd ${ministack_UNAME}
 ```sh
 lxd init
 ```
+  - Example Init Configuration:
+```sh
+WARNING: cgroup v2 is not fully supported yet, proceeding with partial confinement
+Would you like to use LXD clustering? (yes/no) [default=no]: no
+Do you want to configure a new storage pool? (yes/no) [default=yes]: yes
+Name of the new storage pool [default=default]: default
+Name of the storage backend to use (btrfs, ceph, dir, lvm) [default=btrfs]: dir
+Would you like to connect to a MAAS server? (yes/no) [default=no]: no
+Would you like to create a new local network bridge? (yes/no) [default=yes]: no
+Would you like to configure LXD to use an existing bridge or host interface? (yes/no) [default=no]: yes
+Name of the existing bridge or host interface: external
+Would you like LXD to be available over the network? (yes/no) [default=no]: yes
+Address to bind LXD to (not including port) [default=all]: all
+Port to bind LXD to [default=8443]: 8443
+Trust password for new clients: 
+Again: 
+Would you like stale cached images to be updated automatically? (yes/no) [default=yes] yes
+Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: no
+```
 --------------------------------------------------------------------------------
 # Optional Configuration Settings 
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
