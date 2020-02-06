@@ -113,7 +113,8 @@ echo "
 #################################################################################
 write_append () {
 cat <<EOF >> $1
-case $- in *i*)
+# Source profile only for interactive sessions (Fixes qemu+ssh header size error)
+case \$- in *i*)
         source /etc/ccio/ocp-mini-stack/profile
 esac
 EOF

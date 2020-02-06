@@ -19,7 +19,7 @@ chmod -R 774 .ccio
 ```
 #### 00\. Build CCIO User Profile
 ```sh
- . ~/.ccio/module/host/aux/bin/build-profile-ccio
+ . ~/.ccio/ocp-mini-stack/module/host/aux/bin/build-profile-ccio
 ```
 --------------------------------------------------------------------------------
 # Part 01 -- System Setup & User Access

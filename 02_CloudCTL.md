@@ -3,7 +3,7 @@
 # Part 00 -- Build LXD CloudCtl Container
 #### 00\. Write LXD CloudCtl Profile
 ```sh
- . ~/.ccio/module/cloudctl/aux/bin/build-cloudctl-profile
+ . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/build-cloudctl-profile
 ```
 #### 00\. Create & Start CloudCtl Container
 ```sh
