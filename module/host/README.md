@@ -57,6 +57,10 @@ dnf install -y snapd fuse-overlayfs criu fuse3 fuse3-devel && sleep 3 && snap li
 snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
+snap switch --channel edge lxd
+snap refresh lxd
+lxc profile set default security.privileged=true
+lxc profile device set default eth0 nictype bridged
 ```
 #### 07\. Configure Kernel Modules
 ```sh

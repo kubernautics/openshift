@@ -21,13 +21,19 @@ lxc file push -r ~/.bashrc cloudctl/etc/skel/
 lxc exec cloudctl -- /bin/bash -c "groupadd ccio -f --gid $(grep ccio /etc/group | cut -d ':' -f 3)"
 lxc exec cloudctl -- /bin/bash -c "usermod -a -G ccio root"
 ```
-#### 00\. Create Primary User & Add sudoer permissions
+#### 00\. Create Primary User
 ```sh
 lxc exec cloudctl -- /bin/bash -c "useradd --groups wheel,ccio --create-home ${ministack_UNAME}"
 lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
+```
+#### 00\. Add sudoer permissions
+```sh
+lxc file push     /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
 lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
+```
+#### 00\. Workaround -- .cache creation permissions issue fix
+```sh
 lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh && rm -rf /home/${ministack_UNAME}/.cache"
-lxc file push /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
 ```
 #### 00\. Attach .ccio home path to CloudCtl container
 ```sh
