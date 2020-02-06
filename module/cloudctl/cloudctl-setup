@@ -78,3 +78,14 @@ lxc remote switch msbase
 #firewall-cmd --reload
 #firewall-cmd --list-ports
 #firewall-cmd --state
+#### REFRENCE DO NOT USE
+#### 00\. Enable Software Management Actions
+#```sh
+#cat <<EOF > /etc/polkit-1/localauthority/50-local.d/45-allow-repo-refresh.pkla
+#Identity=unix-user:*
+#Action=org.freedesktop.packagekit.*
+#ResultAny=no
+#ResultInactive=no
+#ResultActive=yes
+#EOF
+#```
