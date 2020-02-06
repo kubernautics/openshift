@@ -26,7 +26,7 @@ lxc exec cloudctl -- /bin/bash -c "usermod -a -G ccio root"
 lxc exec cloudctl -- /bin/bash -c "useradd --groups wheel,ccio --create-home ${ministack_UNAME}"
 lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
 lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
-lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh"
+lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh && rm -rf /home/${ministack_UNAME}/.cache"
 lxc file push /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
 ```
 #### 00\. Attach .ccio home path to CloudCtl container
@@ -38,24 +38,23 @@ lxc config device add cloudctl ccio-home disk source=~/.ccio path=/home/${minist
 lxc exec cloudctl -- /bin/bash -c "rpm --nodeps --allmatches -e fedora-release-container"
 lxc exec cloudctl -- /bin/bash -c "dnf update -y && dnf distrosync -y"
 lxc exec cloudctl -- /bin/bash -c "dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing"
-lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks"
+lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks && snap refresh"
 ```
 #### 00\. Setup NetworkManager Configuration
 ```sh
 lxc exec cloudctl -- /bin/bash -c "systemctl disable systemd-networkd"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable --now NetworkManager"
-lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth0 ifname eth0 ipv4.method auto"
-lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth1 ifname eth1 ip4 ${ocp_ministack_SUBNET}.3/24 ipv4.dns '8.8.8.8 8.8.4.4'"
+lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth0 ifname eth0 ipv4.method auto connection.autoconnect yes"
+lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth1 ifname eth1 ip4 ${ocp_ministack_SUBNET}.3/24 ipv4.dns '8.8.8.8 8.8.4.4' connection.autoconnect yes"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth0"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth1"
 ```
 #### 00\. Set System Services
 ```sh
+lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
+lxc exec cloudctl -- /bin/bash -c "systemctl enable --now libvirtd.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl unmask systemd-logind"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable systemd-logind"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable libvirtd.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp-sesman.service"
 lxc exec cloudctl -- /bin/bash -c "systemctl set-default graphical.target"
@@ -71,7 +70,7 @@ lxc exec cloudctl -- /bin/bash -c "virsh net-list --all"
 ```sh
 lxc exec cloudctl -- /bin/bash -c "ln -s /var/lib/snapd/snap /snap"
 lxc exec cloudctl -- /bin/bash -c "snap refresh"
-lxc exec cloudctl -- /bin/bash -c "snap install snapd"
+lxc exec cloudctl -- /bin/bash -c "snap install snapd && sleep 2 && snap install snapd"
 lxc exec cloudctl -- /bin/bash -c "snap install lxd"
 ```
 #### 00\. Add user to required groups
@@ -88,7 +87,7 @@ lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
 ```
 #### 00\. SSH to CloudCtl as User
 ```sh
-ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $2}')
+ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $1}')
 ```
 #### 00\. Setup Libvirt Access
 ```sh
@@ -99,4 +98,14 @@ virsh list --all
 ```sh
 lxc remote add msbase ${ocp_ministack_SUBNET}.2
 lxc remote switch msbase
+```
+#### 00\. Enable Software Management Actions
+```sh
+cat <<EOF > /etc/polkit-1/localauthority/50-local.d/45-allow-repo-refresh.pkla
+Identity=unix-user:*
+Action=org.freedesktop.packagekit.*
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+EOF
 ```

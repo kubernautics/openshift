@@ -21,7 +21,7 @@ devices:
     path: /
     pool: default
     type: disk
-  ccio-etc-dir:
+  ccio-etc:
     path: /etc/ccio
     source: /etc/ccio
     type: disk
