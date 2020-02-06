@@ -101,7 +101,7 @@ Name=${external_NIC}
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-EOF    
+EOF
 ```
 #### 03\. Write 'external' External Bridge Networkd Configuration
 ```sh
@@ -112,7 +112,7 @@ Name=external
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-EOF    
+EOF
 ```
 #### 04\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
 ```sh
@@ -129,7 +129,7 @@ Address=10.0.0.149/24
 Gateway=10.0.0.1
 DNS=8.8.8.8
 DNS=8.8.4.4
-EOF    
+EOF
 ```
 #### 05\. Write 'internal' Internal Bridge Networkd Configuration
 ```sh
@@ -140,7 +140,7 @@ Name=internal
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-EOF    
+EOF
 ```
 #### 06\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
 ```sh
@@ -153,7 +153,7 @@ IPv6AcceptRA=no
 LinkLocalAddressing=no
 Domains=ministack.dev
 Address=${ocp_ministack_SUBNET}.2/24
-EOF    
+EOF
 ```
 #### 07\. Write 'openshift' OpenShift External NAT Access Bridge Networkd Configuration
 ```sh
@@ -164,7 +164,7 @@ Name=openshift
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-EOF    
+EOF
 ```
 #### 08\. Write External Network Build & Hand Off OneShot Utility
 ```sh
@@ -186,7 +186,7 @@ run_net_setup () {
 ovs-clear
 }
 run_net_setup
-EOF    
+EOF
 ```
 #### 09\. Write Internal Network Build & Hand Off OneShot Utility
 ```sh
@@ -199,7 +199,7 @@ ovs-vsctl add-br internal \
  | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
 systemctl restart systemd-networkd.service
 ovs-clear
-EOF    
+EOF
 ```
 #### 10\. Write OpenShift Network Build OneShot Utility
 ```sh
@@ -208,7 +208,7 @@ cat <<EOF >~/openshift-bridge-setup
 ovs-vsctl add-br internal
 systemctl restart systemd-networkd.service
 ovs-clear
-EOF    
+EOF
 ```
 #### 11\. Write OpenVSwitch Cleaning Maintenance Utility
 ```sh
@@ -221,7 +221,7 @@ done
 clear && ovs-vsctl show
 }
 run_ovs_clear
-EOF    
+EOF
 ```
 ```sh
 chmod +x /usr/bin/ovs-clear
@@ -269,7 +269,7 @@ cat <<EOF >~/virsh-net-external-on-external.xml
   <bridge name='external' />
   <virtualport type='openvswitch'/>
 </network>
-EOF    
+EOF
 
 ```
 #### 00\. Write 'default' Network Profile .xml
@@ -281,7 +281,7 @@ cat <<EOF >~/virsh-net-default-on-internal.xml
   <bridge name='internal' />
   <virtualport type='openvswitch'/>
 </network>
-EOF    
+EOF
 
 ```
 #### 00\. Write 'internal' Network Profile xml
@@ -293,7 +293,7 @@ cat <<EOF >~/virsh-net-internal-on-internal.xml
   <bridge name='internal' />
   <virtualport type='openvswitch'/>
 </network>
-EOF    
+EOF
 
 ```
 #### 00\. Write 'openshift' Network Profile xml
@@ -305,7 +305,7 @@ cat <<EOF >~/virsh-net-openshift-on-openshift.xml
   <bridge name='openshift' />
   <virtualport type='openvswitch'/>
 </network>
-EOF    
+EOF
 
 ```
 #### 00\. Define all networks from xml definitions
