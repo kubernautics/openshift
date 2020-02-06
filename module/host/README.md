@@ -26,6 +26,10 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 passwd root
 mkdir ~/.bak 2>/dev/null ; mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
+#### 00\. Change to Root & Backup User Files
+```sh
+systemctl set-hostname base.ministack.dev
+```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
 dnf update -y && dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
@@ -391,9 +395,3 @@ update-alternatives --set editor /usr/bin/vim
 echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
 --------------------------------------------------------------------------------
-# REFRENCE DO NOT USE
-```
-#snap set lxd shiftfs.enable=true
-#systemctl enable --now snap.lxd.daemon
-#systemctl reload snap.lxd.daemon
-```
