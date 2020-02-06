@@ -327,6 +327,15 @@ for virshet in external default internal ocp-mini-stack; do virsh net-start ${vi
 ```sh
 virsh net-list --all
 ```
+  - Example Output:
+```sh
+ Name             State    Autostart   Persistent
+---------------------------------------------------
+ default          active   yes         yes
+ external         active   yes         yes
+ internal         active   yes         yes
+ ocp-mini-stack   active   yes         yes
+```
 --------------------------------------------------------------------------------
 # Part 04 -- Initialize LXC / LXD Container Service
 #### 00\. Add user to LXD Group
