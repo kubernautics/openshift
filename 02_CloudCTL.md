@@ -99,6 +99,8 @@ virsh list --all
 lxc remote add msbase ${ocp_ministack_SUBNET}.2
 lxc remote switch msbase
 ```
+---------------------------------------------------------------------------------
+#### REFRENCE DO NOT USE
 #### 00\. Enable Software Management Actions
 ```sh
 cat <<EOF > /etc/polkit-1/localauthority/50-local.d/45-allow-repo-refresh.pkla
