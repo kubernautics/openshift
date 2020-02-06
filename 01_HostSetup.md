@@ -122,13 +122,13 @@ Name=mgmt0
 [Link]
 #MACAddress=02:49:92:7d:ae:1c
 [Network]
-DHCP=ipv4
+DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-#Address=10.0.0.149/24
-#Gateway=10.0.0.1
-#DNS=8.8.8.8
-#DNS=8.8.4.4
+Address=$(ip a s ${external_NIC} | awk '/inet /{print $2}' | head -n 1)
+Gateway=$(ip r | awk '/default /{print $3}' | head -n 1)
+DNS=8.8.8.8
+DNS=8.8.4.4
 EOF
 ```
 #### 05\. Write 'internal' Internal Bridge Networkd Configuration
