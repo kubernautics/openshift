@@ -9,12 +9,12 @@ description: ccio mini-stack fedora cloudctl container profile
 devices:
   eth0:
     name: eth0
-    nictype: macvlan
+    nictype: bridged
     parent: external
     type: nic
   eth1:
     name: eth1
-    nictype: macvlan
+    nictype: bridged
     parent: internal
     type: nic
   root:

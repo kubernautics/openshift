@@ -111,6 +111,14 @@ echo "
 }
 
 #################################################################################
+write_append () {
+cat <<EOF >> $1
+case $- in *i*)
+        source /etc/ccio/ocp-mini-stack/profile
+esac
+EOF
+}
+
 append_bashrc () {
   # Backup existing .bashrc
   [[ ! -d ~/bak ]] && mkdir ~/bak/
@@ -118,11 +126,11 @@ append_bashrc () {
 
   # Add profile to /etc/skel/.bashrc file
   [[ $(grep ocp-mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \
-      || echo "source ${profile_TARGET}" >>/etc/skel/.bashrc
+      || write_append "/etc/skel/.bashrc"
 
   # Add profile to .bashrc file
   [[ $(grep ocp-mini-stack ~/.bashrc ; echo $?) == 0 ]] \
-      || echo "source ${profile_TARGET}" >> ~/.bashrc
+      || write_append "$HOME/.bashrc"
 }
 
 #################################################################################
