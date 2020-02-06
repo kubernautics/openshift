@@ -14,7 +14,7 @@ lxc exec cloudctl -- /bin/bash -c "usermod -a -G ccio root"
 
 lxc exec cloudctl -- /bin/bash -c "useradd --groups wheel,ccio --create-home ${ministack_UNAME}"
 lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
-lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/                                                                                                                                                                        snapd
+lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
 lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh"
 
 lxc file push /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
@@ -52,7 +52,6 @@ lxc exec cloudctl -- /bin/bash -c "ln -s /var/lib/snapd/snap /snap"
 lxc exec cloudctl -- /bin/bash -c "snap refresh"
 lxc exec cloudctl -- /bin/bash -c "snap install snapd"
 lxc exec cloudctl -- /bin/bash -c "snap install lxd"
-
 
 lxc exec cloudctl -- /bin/bash -c "useradd --groups wheel,ccio,kvm,libvirt --create-home ${ministack_UNAME}"
 
