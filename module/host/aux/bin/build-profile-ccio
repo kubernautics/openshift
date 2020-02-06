@@ -126,8 +126,8 @@ EOF
 
 append_bashrc () {
   # Backup existing .bashrc
-  [[ ! -d ~/bak ]] && mkdir ~/bak/
-  cp ~/.bashrc ~/bak/.bashrc_$(date +"%s")
+  [[ ! -d ~/.bak ]] && mkdir ~/.bak/
+  cp ~/.bashrc ~/.bak/.bashrc_$(date +"%s")
 
   # Add profile to /etc/skel/.bashrc file
   [[ $(grep ocp-mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \

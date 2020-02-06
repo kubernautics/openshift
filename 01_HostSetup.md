@@ -25,7 +25,7 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 ```sh
 sudo -i 
 passwd root
-mkdir ~/.bak && mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/
+mkdir ~/.bak && mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
