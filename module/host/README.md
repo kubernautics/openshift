@@ -155,11 +155,11 @@ Domains=ministack.dev
 Address=${ocp_ministack_SUBNET}.2/24
 EOF
 ```
-#### 07\. Write 'openshift' OpenShift External NAT Access Bridge Networkd Configuration
+#### 07\. Write 'ocp-mini-stack' OpenShift Internal Bridge Networkd Configuration
 ```sh
-cat <<EOF >/etc/systemd/network/openshift.network
+cat <<EOF >/etc/systemd/network/ocp-mini-stack.network
 [Match]
-Name=openshift
+Name=ocp-mini-stack
 [Network]
 DHCP=no
 IPv6AcceptRA=no
@@ -201,11 +201,11 @@ systemctl restart systemd-networkd.service
 ovs-clear
 EOF
 ```
-#### 10\. Write OpenShift Network Build OneShot Utility
+#### 10\. Write OCP-MINI-STACK Network Build OneShot Utility
 ```sh
-cat <<EOF >~/openshift-bridge-setup
+cat <<EOF >~/ocp-mini-stack-bridge-setup
 #!/bin/bash
-ovs-vsctl add-br internal
+ovs-vsctl add-br ocp-mini-stack
 systemctl restart systemd-networkd.service
 ovs-clear
 EOF
@@ -240,7 +240,7 @@ systemctl disable NetworkManager
 ```sh
  . ~/external-mgmt0-setup
  . ~/internal-mgmt1-setup
- . ~/openshift-bridge-setup
+ . ~/ocp-mini-stack-bridge-setup
 
 ```
 #### 15\. Reboot
@@ -296,13 +296,13 @@ cat <<EOF >~/virsh-net-internal-on-internal.xml
 EOF
 
 ```
-#### 00\. Write 'openshift' Network Profile xml
+#### 00\. Write 'ocp-mini-stack' Network Profile xml
 ```sh
-cat <<EOF >~/virsh-net-openshift-on-openshift.xml
+cat <<EOF >~/virsh-net-ocp-mini-stack-on-ocp-mini-stack.xml
 <network>
-  <name>openshift</name>
+  <name>ocp-mini-stack</name>
   <forward mode='bridge'/>
-  <bridge name='openshift' />
+  <bridge name='ocp-mini-stack' />
   <virtualport type='openvswitch'/>
 </network>
 EOF
@@ -310,11 +310,11 @@ EOF
 ```
 #### 00\. Define all networks from xml definitions
 ```sh
-for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml virsh-net-openshift-on-openshift.xml ; do virsh net-define ~/${xml}; done
+for xml in virsh-net-default-on-internal.xml virsh-net-internal-on-internal.xml virsh-net-external-on-external.xml virsh-net-ocp-mini-stack-on-ocp-mini-stack.xml ; do virsh net-define ~/${xml}; done
 ```
 #### 00\. Set all networks to start & autostart
 ```sh
-for virshet in external default internal openshift; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
+for virshet in external default internal ocp-mini-stack; do virsh net-start ${virshet}; virsh net-autostart ${virshet}; done
 ```
 #### 00\. Verify Networks & Status
 ```sh
