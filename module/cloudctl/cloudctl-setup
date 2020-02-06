@@ -89,3 +89,9 @@ lxc remote switch msbase
 #ResultActive=yes
 #EOF
 #```
+# REFRENCE DO NOT USE
+#```
+##snap set lxd shiftfs.enable=true
+##systemctl enable --now snap.lxd.daemon
+##systemctl reload snap.lxd.daemon
+#```
