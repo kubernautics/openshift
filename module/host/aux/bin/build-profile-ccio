@@ -99,6 +99,10 @@ sed -i "s/\"/\'/g" ${profile_TARGET}
 
 groupadd ccio -f -K GID_MIN=7000 -K GID_MAX=9000
 chown -R root:ccio ${base_PATH}
+
+mkdir -p ~/.ccio 2>/dev/null
+chown -R root:ccio ~/.ccio
+chmod -R 774 ~/.ccio
 }
 
 #################################################################################
@@ -160,8 +164,6 @@ info_print
 append_bashrc
 req_source_profile
 
-chown -R root:ccio ~/.ccio
-chmod -R 774 ~/.ccio
 }
 
 #################################################################################
