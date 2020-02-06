@@ -34,7 +34,7 @@ lxc file push     /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
 ```sh
 lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
 lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh && rm -rf /home/${ministack_UNAME}/.cache"
-lxc exec cloudctl -- su -l ${ministack_UNAME} /bin/bash -c "ssh-keyscan -H root@${ocp_ministack_SUBNET}.2 >>~/.ssh/known_hosts"
+lxc exec cloudctl -- su -l ${ministack_UNAME} /bin/bash -c "ssh-keyscan -H ${ocp_ministack_SUBNET}.2 >>~/.ssh/known_hosts"
 lxc exec cloudctl -- su -l ${ministack_UNAME} /bin/bash -c "ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname"
 ```
 #### 00\. Attach .ccio home path to CloudCtl container
