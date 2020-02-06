@@ -29,10 +29,10 @@ lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
 #### 00\. Add sudoer permissions
 ```sh
 lxc file push     /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
-lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
 ```
-#### 00\. Workaround -- .cache creation permissions issue fix
+#### 00\. Push SSH assets to 'ministack_UNAME' and set permissions
 ```sh
+lxc file push -r ~/.ssh cloudctl/home/${ministack_UNAME}/
 lxc exec cloudctl -- /bin/bash -c "chown -R ${ministack_UNAME}:${ministack_UNAME} /home/${ministack_UNAME}/.ssh && rm -rf /home/${ministack_UNAME}/.cache"
 ```
 #### 00\. Attach .ccio home path to CloudCtl container
