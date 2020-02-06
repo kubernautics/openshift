@@ -57,9 +57,6 @@ dnf install -y snapd fuse-overlayfs criu fuse3 fuse3-devel && sleep 3 && snap li
 snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
-snap set lxd shiftfs.enable=true
-systemctl enable --now snap.lxd.daemon
-systemctl reload snap.lxd.daemon
 ```
 #### 07\. Configure Kernel Modules
 ```sh
@@ -349,6 +346,10 @@ Again:
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes] yes
 Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: no
 ```
+#### 00\. Reboot
+```sh
+shutdown -r now
+```
 --------------------------------------------------------------------------------
 # Optional Configuration Settings 
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
@@ -363,3 +364,8 @@ update-alternatives --set editor /usr/bin/vim
 ```sh
 echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
+--------------------------------------------------------------------------------
+# REFRENCE DO NOT USE
+snap set lxd shiftfs.enable=true
+systemctl enable --now snap.lxd.daemon
+systemctl reload snap.lxd.daemon
