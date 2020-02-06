@@ -5,14 +5,17 @@
 2. You are familiar with and able to ssh between machines
 3. You have created an ssh key pair
 4. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
-5. Recommended: Follow these guides using ssh to copy/paste commands as you read along
+5. Recommended: Follow these guides using ssh to copy/paste commands as you read along    
+     
 --------------------------------------------------------------------------------
 # Part 00 -- Clone Project
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo -i 
 dnf update -y && dnf install git -y
-git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio
+git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
+chown -R root:ccio .ccio
+chmod -R 774 .ccio
 ```
 #### 00\. Build CCIO User Profile
 ```sh
@@ -34,6 +37,7 @@ dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tool
 #### 02\. Configure SSH & Keys
 ```sh
 ssh-keygen -f ~/.ssh/id_rsa -N ''
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 curl -L https://github.com/${ccio_SSH_UNAME}.keys | tee -a ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys && chown root:root -R ~/.ssh
 systemctl enable --now sshd
@@ -53,10 +57,12 @@ dnf install -y openvswitch network-scripts-openvswitch
 ```
 #### 06\. Install LXC via LXD Container Stack
 ```sh
-dnf install -y snapd && snap list & sleep 3
+dnf install -y snapd fuse-overlayfs criu fuse3 fuse3-devel && snap list & sleep 3
 install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
+snap set lxd shiftfs.enable=true
+systemctl reload snap.lxd.daemon
 ```
 #### 07\. Configure Kernel Modules
 ```sh

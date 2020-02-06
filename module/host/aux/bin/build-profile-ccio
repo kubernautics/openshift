@@ -96,6 +96,9 @@ export ministack_UNAME="${ministack_UNAME}"
 echo '>>>> CCIO Profile Loaded!'
 EOF
 sed -i "s/\"/\'/g" ${profile_TARGET}
+
+groupadd ccio -f -K GID_MIN=7000 -K GID_MAX=9000
+chown -R root:ccio ${base_PATH}
 }
 
 #################################################################################
