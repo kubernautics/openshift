@@ -23,7 +23,6 @@ devices:
     type: disk
   ccio-etc-dir:
     path: /etc/ccio
-    shift: "true"
     source: /etc/ccio
     type: disk
 name: cloudctl
