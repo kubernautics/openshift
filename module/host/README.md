@@ -29,8 +29,7 @@ mkdir ~/.bak && mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
-dnf update  -y
-dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
+dnf update -y && dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
 ```
 #### 02\. Configure SSH & Keys
 ```sh
