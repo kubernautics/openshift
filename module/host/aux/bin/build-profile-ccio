@@ -159,6 +159,9 @@ write_profile
 info_print
 append_bashrc
 req_source_profile
+
+chown -R root:ccio ~/.ccio
+chmod -R 774 ~/.ccio
 }
 
 #################################################################################
