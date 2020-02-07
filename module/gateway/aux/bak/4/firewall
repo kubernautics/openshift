@@ -1,22 +1,19 @@
 
-config include
-	option path '/etc/firewall.user'
-
 config redirect
 	option target 'DNAT'
 	option src 'wan'
 	option dest 'lan'
 	option proto 'tcp udp'
 	option src_dport '2022'
-	option name 'base-host-ssh'
-	option dest_ip '10.10.10.2'
-	option dest_port '22'
+	option name 'carrier-host-ssh'
+	option dest_ip '10.10.20.119'
+	option dest_port '2022'
 
 config redirect
 	option src 'wan'
 	option src_dport '8081'
 	option dest 'lan'
-	option dest_ip '10.10.10.1'
+	option dest_ip '10.10.20.1'
 	option dest_port '80'
 	option proto 'tcp'
 
@@ -27,9 +24,9 @@ config redirect
 	option proto 'tcp'
 	option src_dport '22'
 	option dest_port '22'
-	option name 'cloudctl-bastion-ssh'
+	option name 'carrier-ssh'
 	option reflection '0'
-	option dest_ip '10.10.10.3'
+	option dest_ip '10.10.20.3'
 
 config redirect
 	option target 'DNAT'
@@ -38,8 +35,8 @@ config redirect
 	option proto 'tcp'
 	option src_dport '3389'
 	option dest_port '3389'
-	option name 'cloudctl-bastion-rdp'
-	option dest_ip '10.10.10.3'
+	option name 'xrdp-cloudctl'
+	option dest_ip '10.10.20.3'
 
 config redirect
 	option target 'DNAT'
@@ -57,7 +54,7 @@ config redirect
 	option dest 'lan'
 	option proto 'tcp udp'
 	option src_dport '6443'
-	option dest_ip '10.10.10.119'
+	option dest_ip '10.10.20.119'
 	option dest_port '6443'
 	option name 'api-ocp4'
 
@@ -69,7 +66,7 @@ config redirect
 	option src_dport '443'
 	option dest_port '443'
 	option name 'ocp4-443'
-	option dest_ip '10.10.10.100'
+	option dest_ip '10.10.20.100'
 
 config defaults
 	option syn_flood '1'
@@ -82,16 +79,16 @@ config zone
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
-	option network 'lan wg01 ocpministack'
+	option network 'lan openshift wg01'
 
 config zone
 	option name 'wan'
 	option input 'REJECT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
-	option network 'wan wan6'
-	option mtu_fix '1'
 	option masq '1'
+	option mtu_fix '1'
+	option network 'wan wan6'
 
 config forwarding
 	option src 'lan'
@@ -191,4 +188,17 @@ config rule
 	option dest_port '500'
 	option proto 'udp'
 	option target 'ACCEPT'
+
+config include
+	option path '/etc/firewall.user'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp udp'
+	option src_dport '2122'
+	option dest_ip '10.10.20.99'
+	option dest_port '22'
+	option name 'buildah-ssh'
 
