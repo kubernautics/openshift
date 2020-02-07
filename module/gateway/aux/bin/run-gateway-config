@@ -41,6 +41,9 @@ echo "
             ~~~~~~~~~~~~~~~~~~~~~
                 !!!WARNING!!!
             ~~~~~~~~~~~~~~~~~~~~~
+
+      # NEXT:
+      Please reboot your host machine
 "
 EOF
 
@@ -122,7 +125,7 @@ stage_gateway_config
 load_config_files
 build_squid_service
 build_wg_service 
-restart_gateway
+#restart_gateway
 echo_wan_webui_url 
 }
 
