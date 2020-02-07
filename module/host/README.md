@@ -55,6 +55,11 @@ dnf  install -y libvirt qemu-kvm virt-top qemu-kvm qemu-img edk2-ovmf virt-viewe
 ```sh
 dnf install -y openvswitch network-scripts-openvswitch
 ```
+#### 05\. Install Wireguard Packages for Ensign Kingpin Overlay Network
+```sh
+sudo dnf copr enable jdoss/wireguard -y && sudo dnf update -y
+sudo dnf install -y wireguard-dkms wireguard-tools
+```
 #### 06\. Install LXC via LXD Container Stack
 ```sh
 dnf install -y snapd fuse-overlayfs criu fuse3 fuse3-devel && sleep 3 && snap list && sleep 3
@@ -65,6 +70,7 @@ snap switch --channel edge lxd
 snap refresh lxd
 lxc profile set default security.privileged=true
 lxc profile device set default eth0 nictype bridged
+lxc profile copy default original
 ```
 #### 07\. Configure Kernel Modules
 ```sh
