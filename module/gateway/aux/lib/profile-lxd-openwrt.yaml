@@ -1,18 +1,20 @@
 config:
+  boot.autostart: "true"
   linux.kernel_modules: wireguard,ip6_udp_tunnel,udp_tunnel
   security.privileged: "true"
 description: Default LXD profile
 devices:
   eth0:
-    name: eth0
     nictype: bridged
     parent: external
     type: nic
   eth1:
+    name: eth1
     nictype: bridged
     parent: internal
     type: nic
   eth2:
+    name: eth2
     nictype: bridged
     parent: ocp-mini-stack
     type: nic
