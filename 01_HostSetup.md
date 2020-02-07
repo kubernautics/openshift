@@ -376,6 +376,10 @@ Again:
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes] yes
 Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: yes
 ```
+#### 00\. Backup original container profile
+```sh
+lxc profile copy default original
+```
 #### 00\. Reboot
 ```sh
 shutdown -r now

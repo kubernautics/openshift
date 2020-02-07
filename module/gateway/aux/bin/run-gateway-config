@@ -1,0 +1,697 @@
+#!/bin/bash
+#################################################################################
+# OpenWRT LXD Gateway Configuration Loader                         # alpha v0.01
+#################################################################################
+# Build Directory
+build_DIR='/tmp/openwrt/etc/config'
+
+#################################################################################
+# Print Login Information
+echo_wan_webui_url () {
+echo '    Starting Gateway...'
+
+# Write User Notification Script
+cat <<EOF >/tmp/where_am_i.sh
+#!/bin/bash
+wan_IP=\$(ip address show eth0 | awk -F'[ /]' '/inet /{print \$6}')
+
+echo "
+            ~~~~~~~~~~~~~~~~~~~~~
+                !!!WARNING!!!
+            ~~~~~~~~~~~~~~~~~~~~~
+
+     OpenWRT Gateway WebUI Enabled on WAN
+
+    This is not a secure configuration
+    Public access to webui is potentially dangerous
+    Only use this configuration in trusted networks
+
+
+      OpenWRT Webui Now accessible at:
+
+      # INTERNAL:
+      http://${ministack_SUBNET}.1/cgi-bin/luci/
+      http://${ministack_SUBNET}.1/cgi-bin/cachemgr.cgi
+
+      # EXTERNAL:
+      http://\${wan_IP}:8080/cgi-bin/luci/
+
+      # User:Password {root:admin}
+
+            ~~~~~~~~~~~~~~~~~~~~~
+                !!!WARNING!!!
+            ~~~~~~~~~~~~~~~~~~~~~
+"
+EOF
+
+# Load User Notification
+lxc file edit gateway/tmp/where_am_i.sh < <(cat /tmp/where_am_i.sh)
+
+# Run User Notification
+lxc exec gateway -- /bin/bash -c 'source /tmp/where_am_i.sh'
+
+}
+
+
+#################################################################################
+restart_gateway () {
+
+	# Print Status
+	echo '    Please Wait while the gateway restarts...'
+
+	# Stop & Restart Gateway
+	lxc stop gateway
+	sleep 2
+	lxc start gateway
+	sleep 8
+}
+
+#################################################################################
+# Build Squid HTTP Proxy Service
+build_squid_service () {
+echo '    Configuring Squid HTTP Caching Proxy'
+  lxc exec gateway -- /bin/bash -c 'wget -O /etc/squid/squid.conf https://git.io/Jer9Z'
+  lxc exec gateway -- /bin/bash -c 'echo "/etc/squid/squid.conf" >>/etc/sysupgrade.conf'
+  lxc exec gateway -- /bin/bash -c 'mkdir -p /tmp/squid/cache'
+  lxc exec gateway -- /bin/bash -c 'touch /tmp/squid/mime.conf'
+  lxc exec gateway -- /bin/bash -c 'mkdir -p /usr/lib/squid/log_file_daemon'
+  lxc exec gateway -- /bin/bash -c 'chmod 0777 -R /tmp/squid/'
+  lxc exec gateway -- /bin/bash -c '/etc/init.d/squid enable'
+  lxc exec gateway -- /bin/bash -c '/etc/init.d/squid stop'
+  lxc exec gateway -- /bin/bash -c 'squid -z'
+  lxc exec gateway -- /bin/bash -c '/etc/init.d/squid enable'
+  lxc exec gateway -- /bin/bash -c '/etc/init.d/squid start'
+  lxc exec gateway -- /bin/bash -c 'squid -k reconfigure'
+clear
+}
+
+#################################################################################
+# Inject config files
+load_config_files () {
+
+  # Inventory Staged Configuration Files
+  config_LIST=$( ls ${build_DIR}/ )
+
+  # Push Config to 'gateway' container
+  for i in ${config_LIST}; do
+	lxc file push ${build_DIR}/${i} gateway/etc/config/
+  done
+}
+
+#################################################################################
+run_prep () {
+  
+  # Backup Gateway Config
+  lxc exec gateway -- /bin/bash -c 'mkdir /root/bak/ 2>/dev/null'
+  lxc exec gateway -- /bin/bash -c 'cp -r /etc/config /root/bak/'
+  lxc exec gateway -- /bin/bash -c 'cp /etc/squid/squid.conf /root/bak/'
+
+  # Snapshot Gateway
+  lxc snapshot gateway pre_config_$(date +"%s")
+}
+
+#################################################################################
+run () {
+run_prep
+stage_gateway_config
+load_config_files
+build_squid_service
+restart_gateway
+echo_wan_webui_url 
+}
+
+#################################################################################
+stage_gateway_config () {
+
+# Make build directory
+mkdir -p ${build_DIR} 2>/dev/null
+rm -rf ${build_DIR}/* 2>/dev/null
+
+#### dhcp
+cat <<EOF > ${build_DIR}/dhcp
+
+config dnsmasq
+	option domainneeded '1'
+	option boguspriv '1'
+	option filterwin2k '0'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option nonegcache '0'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.auto'
+	option nonwildcard '1'
+	option localservice '1'
+
+config dhcp 'lan'
+	option interface 'lan'
+	option ignore '1'
+
+config dhcp 'wan'
+	option interface 'wan'
+	option ignore '1'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+EOF
+
+#### dropbear
+cat <<EOF > ${build_DIR}/dropbear
+EOF
+
+#### firewall
+cat <<EOF > ${build_DIR}/firewall
+
+config defaults
+	option syn_flood '1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+
+config zone
+	option name 'lan'
+	list network 'lan'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+
+config zone
+	option name 'wan'
+	list network 'wan'
+	list network 'wan6'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'lan'
+	option dest 'wan'
+
+config rule
+	option name 'Allow-DHCP-Renew'
+	option src 'wan'
+	option proto 'udp'
+	option dest_port '68'
+	option target 'ACCEPT'
+	option family 'ipv4'
+
+config rule
+	option name 'Allow-Ping'
+	option src 'wan'
+	option proto 'icmp'
+	option icmp_type 'echo-request'
+	option family 'ipv4'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-IGMP'
+	option src 'wan'
+	option proto 'igmp'
+	option family 'ipv4'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-DHCPv6'
+	option src 'wan'
+	option proto 'udp'
+	option src_ip 'fc00::/6'
+	option dest_ip 'fc00::/6'
+	option dest_port '546'
+	option family 'ipv6'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-MLD'
+	option src 'wan'
+	option proto 'icmp'
+	option src_ip 'fe80::/10'
+	list icmp_type '130/0'
+	list icmp_type '131/0'
+	list icmp_type '132/0'
+	list icmp_type '143/0'
+	option family 'ipv6'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-ICMPv6-Input'
+	option src 'wan'
+	option proto 'icmp'
+	list icmp_type 'echo-request'
+	list icmp_type 'echo-reply'
+	list icmp_type 'destination-unreachable'
+	list icmp_type 'packet-too-big'
+	list icmp_type 'time-exceeded'
+	list icmp_type 'bad-header'
+	list icmp_type 'unknown-header-type'
+	list icmp_type 'router-solicitation'
+	list icmp_type 'neighbour-solicitation'
+	list icmp_type 'router-advertisement'
+	list icmp_type 'neighbour-advertisement'
+	option limit '1000/sec'
+	option family 'ipv6'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-ICMPv6-Forward'
+	option src 'wan'
+	option dest '*'
+	option proto 'icmp'
+	list icmp_type 'echo-request'
+	list icmp_type 'echo-reply'
+	list icmp_type 'destination-unreachable'
+	list icmp_type 'packet-too-big'
+	list icmp_type 'time-exceeded'
+	list icmp_type 'bad-header'
+	list icmp_type 'unknown-header-type'
+	option limit '1000/sec'
+	option family 'ipv6'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-IPSec-ESP'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'esp'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-ISAKMP'
+	option src 'wan'
+	option dest 'lan'
+	option dest_port '500'
+	option proto 'udp'
+	option target 'ACCEPT'
+
+config include
+	option path '/etc/firewall.user'
+
+#config redirect
+#	option proto 'tcp'
+#	option src 'lan'
+#	option src_ip '!${ministack_SUBNET}.1'
+#	option src_dport '80'
+#	option dest 'lan'
+#	option dest_ip '${ministack_SUBNET}.1'
+#	option dest_port '3128'
+#	option target 'DNAT'
+#	option name 'squid-http-caching-proxy'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp udp'
+	option src_dport '8080'
+	option dest_ip '${ministack_SUBNET}.1'
+	option name 'openwrt-webui'
+	option dest_port '80'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp udp'
+	option src_dport '5240'
+	option dest_ip '${ministack_SUBNET}.10'
+	option dest_port '5240'
+	option name 'maasctl-webui'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp udp'
+	option src_dport '17070'
+	option dest_ip '${ministack_SUBNET}.4'
+	option dest_port '17070'
+	option name 'jujuctl-webui'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp'
+	option src_dport '22'
+	option dest_ip '${ministack_SUBNET}.3'
+	option dest_port '22'
+	option name 'cloudctl-ssh'
+
+config redirect
+	option target 'DNAT'
+	option src 'wan'
+	option dest 'lan'
+	option proto 'tcp'
+	option src_dport '2022'
+	option dest_ip '${ministack_SUBNET}.2'
+	option dest_port '22'
+	option name 'mini-stack-host-ssh'
+
+#config redirect
+#	option proto 'tcp'
+#	option src 'lan'
+#	option src_ip '!${ministack_SUBNET}.1'
+#	option src_dport '80'
+#	option dest 'lan'
+#	option dest_ip '${ministack_SUBNET}.1'
+#	option dest_port '3128'
+#	option target 'DNAT'
+#	option name 'squid-http-caching-proxy'
+
+config redirect
+        option target 'DNAT'
+        option src 'wan'
+        option dest 'lan'
+        option proto 'tcp udp'
+        option src_dport '8080'
+        option dest_ip '${ministack_SUBNET}.1'
+        option name 'openwrt-webui'
+        option dest_port '80'
+EOF
+
+#### luci
+cat <<EOF >${build_DIR}/luci
+
+config core 'main'
+	option lang 'auto'
+	option mediaurlbase '/luci-static/bootstrap'
+	option resourcebase '/luci-static/resources'
+
+config extern 'flash_keep'
+	option uci '/etc/config/'
+	option dropbear '/etc/dropbear/'
+	option openvpn '/etc/openvpn/'
+	option passwd '/etc/passwd'
+	option opkg '/etc/opkg.conf'
+	option firewall '/etc/firewall.user'
+	option uploads '/lib/uci/upload/'
+
+config internal 'languages'
+
+config internal 'sauth'
+	option sessionpath '/tmp/luci-sessions'
+	option sessiontime '3600'
+
+config internal 'ccache'
+	option enable '1'
+
+config internal 'themes'
+	option Bootstrap '/luci-static/bootstrap'
+
+config internal 'apply'
+	option rollback '30'
+	option holdoff '4'
+	option timeout '5'
+	option display '1.5'
+
+config internal 'diag'
+	option dns 'openwrt.org'
+	option ping 'openwrt.org'
+	option route 'openwrt.org'
+EOF
+
+#### network
+cat <<EOF >${build_DIR}/network
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+
+config interface 'wan'
+	option ifname 'eth0'
+	option proto 'dhcp'
+
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'eth1'
+	option proto 'static'
+	option ipaddr '${ministack_SUBNET}.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+EOF
+
+#### rpcd
+cat <<EOF >${build_DIR}/rpcd
+config rpcd
+	option socket /var/run/ubus.sock
+	option timeout 30
+
+config login
+	option username 'root'
+	option password '\$p\$root'
+	list read '*'
+	list write '*'
+EOF
+
+#### script
+cat <<EOF >${build_DIR}/script
+EOF
+
+#### squid
+cat <<EOF >${build_DIR}/squid
+config squid 'squid'
+	option config_file '/etc/squid/squid.conf'
+	option http_port '3128'
+	option coredump_dir '/tmp/squid'
+	option visible_hostname 'OpenWrt'
+	option mime_table '/tmp/squid/mime.conf'
+EOF
+
+#### system
+cat <<EOF >${build_DIR}/system
+
+config system
+	option ttylogin '0'
+	option log_size '64'
+	option urandom_seed '0'
+	option log_proto 'udp'
+	option log_file '/tmp/system.log'
+	option conloglevel '5'
+	option cronloglevel '9'
+	option hostname 'mini-stack'
+	option zonename 'Pacific/Honolulu'
+	option timezone 'HST10'
+
+config timeserver 'ntp'
+	option enabled '1'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+	option enable_server '1'
+EOF
+
+#### ucitrack
+cat <<EOF >${build_DIR}/ucitrack
+config network
+	option init network
+	list affects dhcp
+	list affects radvd
+
+config wireless
+	list affects network
+
+config firewall
+	option init firewall
+	list affects luci-splash
+	list affects qos
+	list affects miniupnpd
+
+config olsr
+	option init olsrd
+
+config dhcp
+	option init dnsmasq
+	list affects odhcpd
+
+config odhcpd
+	option init odhcpd
+
+config dropbear
+	option init dropbear
+
+config httpd
+	option init httpd
+
+config fstab
+	option exec '/sbin/block mount'
+
+config qos
+	option init qos
+
+config system
+	option init led
+	option exec '/etc/init.d/log reload'
+	list affects luci_statistics
+	list affects dhcp
+
+config luci_splash
+	option init luci_splash
+
+config upnpd
+	option init miniupnpd
+
+config ntpclient
+	option init ntpclient
+
+config samba
+	option init samba
+
+config tinyproxy
+	option init tinyproxy
+EOF
+
+#### uhttpd
+cat <<EOF >${build_DIR}/uhttpd
+# Server configuration
+config uhttpd main
+
+	# HTTP listen addresses, multiple allowed
+	list listen_http	0.0.0.0:80
+	list listen_http	[::]:80
+
+	# HTTPS listen addresses, multiple allowed
+	list listen_https	0.0.0.0:443
+	list listen_https	[::]:443
+
+	# Redirect HTTP requests to HTTPS if possible
+	option redirect_https	1
+
+	# Server document root
+	option home		/www
+
+	# Reject requests from RFC1918 IP addresses
+	# directed to the servers public IP(s).
+	# This is a DNS rebinding countermeasure.
+	option rfc1918_filter 1
+
+	# Maximum number of concurrent requests.
+	# If this number is exceeded, further requests are
+	# queued until the number of running requests drops
+	# below the limit again.
+	option max_requests 1
+
+	# Maximum number of concurrent connections.
+	# If this number is exceeded, further TCP connection
+	# attempts are queued until the number of active
+	# connections drops below the limit again.
+	option max_connections 100
+
+	# Certificate and private key for HTTPS.
+	# If no listen_https addresses are given,
+	# the key options are ignored.
+	option cert		/etc/uhttpd.crt
+	option key		/etc/uhttpd.key
+
+	# CGI url prefix, will be searched in docroot.
+	# Default is /cgi-bin
+	option cgi_prefix	/cgi-bin
+
+	# List of extension->interpreter mappings.
+	# Files with an associated interpreter can
+	# be called outside of the CGI prefix and do
+	# not need to be executable.
+#	list interpreter	".php=/usr/bin/php-cgi"
+#	list interpreter	".cgi=/usr/bin/perl"
+
+	# List of prefix->Lua handler mappings.
+	# Any request to an URL beneath the prefix
+	# will be dispatched to the associated Lua
+	# handler script. Lua support is disabled when
+	# no handler mappings are specified. Lua prefix
+	# matches have precedence over the CGI prefix.
+	list lua_prefix		"/cgi-bin/luci=/usr/lib/lua/luci/sgi/uhttpd.lua"
+
+	# Specify the ubus-rpc prefix and socket path.
+#	option ubus_prefix	/ubus
+#	option ubus_socket	/var/run/ubus.sock
+
+	# CGI/Lua timeout, if the called script does not
+	# write data within the given amount of seconds,
+	# the server will terminate the request with
+	# 504 Gateway Timeout response.
+	option script_timeout	60
+
+	# Network timeout, if the current connection is
+	# blocked for the specified amount of seconds,
+	# the server will terminate the associated
+	# request process.
+	option network_timeout	30
+
+	# HTTP Keep-Alive, specifies the timeout for persistent
+	# HTTP/1.1 connections. Setting this to 0 will disable
+	# persistent HTTP connections.
+	option http_keepalive	20
+
+	# TCP Keep-Alive, send periodic keep-alive probes
+	# over established connections to detect dead peers.
+	# The value is given in seconds to specify the
+	# interval between subsequent probes.
+	# Setting this to 0 will disable TCP keep-alive.
+	option tcp_keepalive	1
+
+	# Basic auth realm, defaults to local hostname
+#	option realm	OpenWrt
+
+	# Configuration file in busybox httpd format
+#	option config	/etc/httpd.conf
+
+	# Do not follow symlinks that point outside of the
+	# home directory.
+#	option no_symlinks	0
+
+	# Do not produce directory listings but send 403
+	# instead if a client requests an url pointing to
+	# a directory without any index file.
+#	option no_dirlists	0
+
+	# Do not authenticate any ubus-rpc requests against
+	# the ubus session/access procedure.
+	# This is dangerous and should be always left off
+	# except for development and debug purposes!
+#	option no_ubusauth	0
+
+	# For this instance of uhttpd use the listed httpauth
+	# sections to require Basic auth to the specified
+	# resources.
+#	list httpauth prefix_user
+
+
+# Defaults for automatic certificate and key generation
+config cert defaults
+
+	# Validity time
+	option days		730
+
+	# RSA key size
+	option bits		2048
+
+	# Location
+	option country		ZZ
+	option state		Somewhere
+	option location		Unknown
+
+	# Common name
+	option commonname	'OpenWrt'
+
+# config httpauth prefix_user
+#	option prefix /protected/url/path
+#	option username user
+#	option password 'plaintext_or_md5_or_\$p\$user_for_system_user'
+EOF
+}
+
+run
