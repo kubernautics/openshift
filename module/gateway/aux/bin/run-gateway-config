@@ -68,6 +68,11 @@ restart_gateway () {
 
 #################################################################################
 # Build Squid HTTP Proxy Service
+build_wg_service () {
+    lxc exec gateway -- /bin/bash -c 'opkg update ; opkg install luci-proto-wireguard luci-app-wireguard wireguard kmod-wireguard wireguard-tools'
+}
+#################################################################################
+# Build Squid HTTP Proxy Service
 build_squid_service () {
 echo '    Configuring Squid HTTP Caching Proxy'
   lxc exec gateway -- /bin/bash -c 'wget -O /etc/squid/squid.conf https://git.io/Jer9Z'
@@ -116,6 +121,7 @@ run_prep
 stage_gateway_config
 load_config_files
 build_squid_service
+build_wg_service 
 restart_gateway
 echo_wan_webui_url 
 }

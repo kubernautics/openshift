@@ -13,4 +13,6 @@ lxc profile device add openwrt eth2 nic nictype=bridged parent=internal name=eth
 lxc init bcio:openwrt gateway -p openwrt
 lxc exec gateway -- /bin/bash -c "sed -i 's/192.168.1/${ocp_ministack_SUBNET}/g' /etc/config/network"
 
+. ~/.ccio/ocp-mini-stack/module/gateway/aux/bin/run-gateway-config
+
 opkg install luci-proto-wireguard luci-app-wireguard wireguard kmod-wireguard wireguard-tools
