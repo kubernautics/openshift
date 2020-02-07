@@ -99,8 +99,8 @@ ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{pri
 #### 00\. Setup Libvirt Access && Add host ssh keys
 ```sh
 echo 'alias virsh="virsh -c qemu+ssh://root@${ocp_ministack_SUBNET}.2/system"' >>.bashrc && source ~/.bashrc
-lxc exec cloudctl -- su -l ${ministack_UNAME} /bin/bash -c "ssh-keyscan -H ${ocp_ministack_SUBNET}.2 >>~/.ssh/known_hosts"
-lxc exec cloudctl -- su -l ${ministack_UNAME} /bin/bash -c "ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname"
+ssh-keyscan -H ${ocp_ministack_SUBNET}.2 >>~/.ssh/known_hosts
+ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname
 virsh list --all
 ```
 #### 00\. Setup LXD Access
