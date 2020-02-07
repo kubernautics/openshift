@@ -5,8 +5,8 @@ description: Default LXD profile
 devices:
   eth0:
     name: eth0
-    nictype: physical
-    parent: eth0
+    nictype: bridged
+    parent: external
     type: nic
   eth1:
     nictype: bridged
@@ -14,12 +14,10 @@ devices:
     type: nic
   eth2:
     nictype: bridged
-    parent: openshift
+    parent: ocp-mini-stack
     type: nic
   root:
     path: /
     pool: default
     type: disk
 name: openwrt
-used_by:
-- /1.0/containers/gateway

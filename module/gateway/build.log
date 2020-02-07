@@ -1,1 +1,8 @@
+# Host Setup
+sudo dnf copr enable jdoss/wireguard -y && sudo dnf update -y
+sudo dnf install -y wireguard-dkms wireguard-tools
+
+
+
+
 opkg install luci-proto-wireguard luci-app-wireguard wireguard kmod-wireguard wireguard-tools
