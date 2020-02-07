@@ -17,6 +17,11 @@ devices:
     nictype: bridged
     parent: internal
     type: nic
+  eth2:
+    name: eth2
+    nictype: bridged
+    parent: ocp-mini-stack
+    type: nic
   root:
     path: /
     pool: default

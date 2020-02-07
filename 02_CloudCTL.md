@@ -52,8 +52,10 @@ lxc exec cloudctl -- /bin/bash -c "systemctl disable systemd-networkd"
 lxc exec cloudctl -- /bin/bash -c "systemctl enable --now NetworkManager"
 lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth0 ifname eth0 ipv4.method auto connection.autoconnect yes"
 lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth1 ifname eth1 ip4 ${ocp_ministack_SUBNET}.3/24 ipv4.dns '8.8.8.8 8.8.4.4' connection.autoconnect yes"
+lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth2 ifname eth2 ip4 172.10.0.3/16 ipv4.dns '172.10.0.1' connection.autoconnect yes"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth0"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth1"
+lxc exec cloudctl -- /bin/bash -c "nmcli con up eth2"
 ```
 #### 00\. Set System Services
 ```sh
