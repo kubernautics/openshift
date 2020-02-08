@@ -65,3 +65,5 @@
    65  exit
    66  ls
    67  history > build.log
+TODO:
+https://www.redhat.com/en/blog/five-nines-dnsmasq
