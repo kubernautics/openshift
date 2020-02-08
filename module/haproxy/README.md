@@ -1,6 +1,6 @@
 # [HAProxy] Application Router & [Load Balancer]
 
-# Launch HAProxy Container with [Podman]
+#### 01\. Launch [HAProxy] Container with [Podman]
 ```sh
 sudo podman run -d --name ocp-haproxy -p 443:443 -p 80:80 -p 2022:2022 -v ~/.ccio/ocp-mini-stack/module/haproxy/aux/lib/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro -v ~/.ccio/ocp-mini-stack/module/haproxy/aux/lib/errors/:/usr/local/etc/haproxy/errors:ro  haproxy:latest
 ```
