@@ -1,4 +1,6 @@
 # Stage 01 -- CloudCtl Bastion Setup
+[Repo Module](./module/cloudctl)    
+
 --------------------------------------------------------------------------------
 # Part 00 -- Build LXD CloudCtl Container
 #### 00\. Write LXD CloudCtl Profile
