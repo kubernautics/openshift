@@ -1,4 +1,4 @@
-# [HAProxy] [Application Router] & [Load Balancer]
+# [HAProxy]: [Application Router] & [Load Balancer]
 
 #### 01\. Launch [HAProxy] Container with [Podman]
 ```sh
