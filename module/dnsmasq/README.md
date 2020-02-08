@@ -7,7 +7,8 @@
 sudo podman run \
                 -d \
                 --name ocp-dnsmasq \
-                -p 10.10.10.3:53:53/udp \
+                --cap-add=NET_ADMIN \
+                -p ${ocp_ministack_SUBNET}.3:53:53/udp \
                 -v ~/.ccio/ocp-mini-stack/module/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf \
                 -v ~/.ccio/ocp-mini-stack/module/dnsmasq/resolv.dnsmasq.conf:/etc/resolv.dnsmasq.conf \
                 -v ~/.ccio/ocp-mini-stack/module/dnsmasq/dnsmasq.conf.hosts \
