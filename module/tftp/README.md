@@ -1,10 +1,20 @@
-build-tftp eth1.network pxelinux.cfg tftp.service
+```sh
 .
+├── aux
+│   ├── bin
+│   │   └── fedora-bootstrap-ansible
+│   └── lib
+│       ├── AC1E00
+│       ├── AC1E01
+│       ├── default
+│       └── pxelinux.cfg
+│           ├── AC1E00
+│           └── default
+├── build.log
 ├── build-tftp
 ├── eth1.network
-├── pxelinux.cfg
-│   ├── AC1E00
-│   └── default
+├── README.md
 └── tftp.service
 
-1 directory, 6 files
+4 directories, 11 files
+```
