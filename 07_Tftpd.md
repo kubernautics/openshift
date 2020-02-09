@@ -1,24 +1,61 @@
-### [![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-tftpd/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-tftpd/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-tftpd?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-tftpd)    [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-tftpd) | [Repo Module](./module/tftp)
+[![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-dnsmasq/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-dnsmasq/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-dnsmasq?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-dnsmasq)<br>
+[Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-dnsmasq) || [Find on Github](https://github.com/containercraft/ccio-dnsmasq)
 
-# TFTP Service: Network PXE Boot Resources    
+### Prerequisites:
+  + [01 Host Hypervisor - Bare Metal]
+  + [02 CloudCtl RDP Bastion - LXD Container]
+  + [03 VFW Firewall & Gateway - LXD Container]
+  + [04 DNS & DHCP Service			- OCI Podman Container]
+  + [05 Application Router Proxy - OCI Podman Container]
+  + [06 Simple Artifact Server - OCI Podman Container]
+--------------------------------------------------------------------------------
     
-### Simple container running [tftp-hpa] on [Alpine Linux]
-######    Tftp will serve all all files mounted at `/tftpboot/`
+# Part 07 -- TFTPd: Network PXE Boot Resources
+####    Step.01 Launch [tftp-hpa] on [Alpine Linux] Container with [Podman]
+  - the tftp container will serve all files mounted to `/tftpboot/`
 ```sh
 sudo podman run \
-             --name     ocp-tftpd                                                                     \
-             --publish  172.10.0.3:69:69/tcp                                                          \
-             --publish  172.10.0.3:69:69/udp                                                          \
-             --volume   ~/.ccio/ocp-mini-stack/module/tftp/aux/pxelinux.cfg:/tftpboot/pxelinux.cfg:ro \
-             --detach                                                                                 \
-             --rm                                                                                     \
-     docker.io/containercraft/ccio-tftpd:latest
+    --rm                                                                                     \
+    --detach                                                                                 \
+    --name     ocp-tftpd                                                                     \
+    --publish  ${ocp_ministack_SUBNET}.3:69:69/tcp                                           \
+    --publish  ${ocp_ministack_SUBNET}.3:69:69/udp                                           \
+    --volume   ~/.ccio/ocp-mini-stack/module/tftp/aux/pxelinux.cfg:/tftpboot/pxelinux.cfg:ro \
+  docker.io/containercraft/ccio-tftpd:latest
 ```
-######    Example Test Pull command
+    
+    
+---------------------------------------------------------------------------------
+    
+### Next Steps:
+  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+    
+---------------------------------------------------------------------------------
+    
+######  + [Repo Module] Index
 ```sh
-${PKG_MANAGER} install tftp-hpa
-tftp ${IP} -c get "about.txt"
+.
+├── aux
+│   └── config
+│       ├── dnsmasq.conf
+│       ├── dnsmasq.ethers
+│       ├── dnsmasq.hosts
+│       ├── dnsmasq.leases
+│       └── dnsmasq.resolv.conf
+└── README.md
 ```
-[tftp-hpa]:http://freshmeat.sourceforge.net/projects/tftp-hpa/
-[Tftpd]:http://freshmeat.sourceforge.net/projects/tftp-hpa/
+
+<!-- Markdown link & img dfn's -->
+[Repo Module]:/module/tftpd
+[podman]: https://podman.io
 [Alpine Linux]:https://alpinelinux.org/
+[TFTPd]:http://freshmeat.sourceforge.net/projects/tftp-hpa/
+[tftp-hpa]:http://freshmeat.sourceforge.net/projects/tftp-hpa/
+[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
+[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
+[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
+[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
+[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
+[08 Deploy OpenShift Red Hat CoreOS Nodes]:/08_DeployNodes.md
