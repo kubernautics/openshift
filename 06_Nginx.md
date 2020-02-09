@@ -13,13 +13,14 @@
 ####    Step.01 Launch [Nginx] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --rm                                                                                               \
-    --detach                                                                                           \
-    --name     ccio-nginx                                                                              \
-    --publish  ${ocp_ministack_SUBNET}.3:8843:8843                                                     \
-    --publish  ${ocp_ministack_SUBNET}.3:8080:8080                                                     \
-    --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/html/:/var/www/html/:ro                         \
-    --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/lib/default.conf:/etc/nginx/conf.d/default.conf \
+    --rm                                                                                                  \
+    --detach                                                                                              \
+    --name     ccio-nginx                                                                                 \
+    --publish  ${ocp_ministack_SUBNET}.3:8843:8843                                                        \
+    --publish  ${ocp_ministack_SUBNET}.3:8080:8080                                                        \
+    --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/html/:/var/www/html/:ro                            \
+    --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/nginx.conf:/etc/nginx/nginx.conf            \
+    --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/default.conf:/etc/nginx/conf.d/default.conf \
   docker.io/containercraft/ccio-nginx
 ```
     
@@ -35,16 +36,14 @@ sudo podman run \
 ```sh
 .
 ├── aux
-│   ├── bak
-│   │   └── build.log
 │   ├── bin
 │   │   └── artifact-scrape-mirror
-│   ├── html
-│   │   ├── boot
-│   │   └── README.txt
-│   └── lib
-│       ├── default.conf
-│       └── nginx.conf
+│   ├── config
+│   │   ├── default.conf
+│   │   └── nginx.conf
+│   └── html
+│       ├── boot
+│       └── README.txt
 └── README.md
 ```
 
