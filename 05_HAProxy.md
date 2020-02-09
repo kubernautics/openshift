@@ -56,10 +56,10 @@ sudo podman run
 [Alpine Linux]:https://alpinelinux.org/
 [Load Balancer]:https://blog.openshift.com/an-open-source-load-balancer-for-openshift/
 [Application Router]:https://blog.openshift.com/ocp-custom-routing/
-[01 Host Hypervisor				- Bare Metal]:/module/host/README.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/module/cloudctl/README.md
-[03 VFW Firewall & Gateway		- LXD Container]:/module/openwrt/README.md
-[04 DNS & DHCP Service			- OCI Podman Container]:/module/dnsmasq/README.md
-[05 Application Router Proxy	- OCI Podman Container]:/module/haproxy/README.md
-[06 Simple Artifact Server		- OCI Podman Container]:/module/nginx/README.md
-[07 TFTP Boot Artifact Server	- OCI Podman Container]:/module/tftpd/README.md
+[01 Host Hypervisor				- Bare Metal]:/HostSetup.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/CloudCtl.md
+[03 VFW Firewall & Gateway		- LXD Container]:/Gateway.md
+[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
+[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
+[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
