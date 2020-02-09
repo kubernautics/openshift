@@ -21,6 +21,10 @@ sudo podman run
     --volume   ~/.ccio/ocp-mini-stack/module/haproxy/aux/config/:/usr/local/etc/haproxy/:ro \
   docker.io/containercraft/ccio-haproxy:latest
 ```
+## Next Steps:
+  + [06 Simple Artifact Server		- OCI Podman Container]
+  + [07 TFTP Boot Artifact Server	- OCI Podman Container]
+    
 ---------------------------------------------------------------------------------
 #### [Repo Module] Index
 ```sh
@@ -38,10 +42,6 @@ sudo podman run
 │       └── haproxy.cfg
 └── README.md
 ```
-    
-## Next Steps:
-  + [06 Simple Artifact Server		- OCI Podman Container]
-  + [07 TFTP Boot Artifact Server	- OCI Podman Container]
 
 <!-- Markdown link & img dfn's -->
 [Repo Module]:/module/haproxy
