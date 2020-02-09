@@ -1,6 +1,6 @@
 # [Dnsmasq]: DHCP & DNS Service
 [![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-dnsmasq/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-dnsmasq/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-dnsmasq?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-dnsmasq)    
-[Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-dnsmasq)  |  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
+[Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-dnsmasq)  ||  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
 
 ## Prerequisites:
   + [01 Host Hypervisor				- Bare Metal](/module/host/README.md)
