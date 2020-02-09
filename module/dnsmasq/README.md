@@ -16,7 +16,7 @@ sudo podman run \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.resolv.conf:/etc/resolv.conf           \
   docker.io/containercraft/ccio-dnsmasq:latest
 ```
-## [Repo Module Index](/ocp-mini-stack/module/dnsmasq)
+## [Repo Module Index](/ocp-mini-stack/tree/master/module/dnsmasq)
 ```sh
 .
 ├── aux
