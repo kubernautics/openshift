@@ -1,6 +1,8 @@
 # Stage 01 -- CloudCtl Bastion Setup
-[Repo Module](./module/cloudctl)    
 
+### Prerequisites:
+  + [01 Host Hypervisor				- Bare Metal]
+    
 --------------------------------------------------------------------------------
 # Part 00 -- Build LXD CloudCtl Container
 #### 00\. Write LXD CloudCtl Profile
@@ -115,7 +117,6 @@ lxc remote switch msbase
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
-  + [02 CloudCtl RDP Bastion - LXD Container]
   + [03 VFW Firewall & Gateway - LXD Container]
   + [04 DNS & DHCP Service			- OCI Podman Container]
   + [05 Application Router Proxy - OCI Podman Container]
