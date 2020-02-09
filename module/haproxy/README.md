@@ -29,6 +29,7 @@ sudo podman run
 ### Next Steps:
   + [06 Simple Artifact Server		- OCI Podman Container]
   + [07 TFTP Boot Artifact Server	- OCI Podman Container]
+  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
     
     
 ---------------------------------------------------------------------------------
@@ -64,3 +65,4 @@ sudo podman run
 [05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
 [06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
 [07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
+[08 Deploy OpenShift Red Hat CoreOS Nodes]:/08_DeployNodes.md
