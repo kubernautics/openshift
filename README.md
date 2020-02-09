@@ -1,4 +1,4 @@
-# CCIO OCP MiniStack Lab Environment & Development Stack [ocp-mini-stack]   
+# CCIO MiniStack Lab & Development Stack [ocp-mini-stack]   
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/master-ocp-mini-stack.svg)
 
 ## What is it?
