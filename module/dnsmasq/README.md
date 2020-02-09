@@ -3,9 +3,9 @@
 [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-dnsmasq)  ||  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
 
 ## Prerequisites:
-  + [01 Host Hypervisor				- Bare Metal]()
-  + [02 CloudCtl RDP Bastion		- LXD Container]()
-  + [03 VFW Firewall & Gateway		- LXD Container]()
+  + [01 Host Hypervisor				- Bare Metal]
+  + [02 CloudCtl RDP Bastion		- LXD Container]
+  + [03 VFW Firewall & Gateway		- LXD Container]
 
 #### 01\. Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
@@ -35,9 +35,9 @@ sudo podman run \
 └── README.md
 ```
 ## Next Steps:
-  + [05 Application Router Proxy	- OCI Podman Container]()
-  + [06 Simple Artifact Server		- OCI Podman Container]()
-  + [07 TFTP Boot Artifact Server	- OCI Podman Container]()
+  + [05 Application Router Proxy	- OCI Podman Container]
+  + [06 Simple Artifact Server		- OCI Podman Container]
+  + [07 TFTP Boot Artifact Server	- OCI Podman Container]
     
 <!-- Markdown link & img dfn's -->
 [Podman]:https://podman.io
