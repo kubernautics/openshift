@@ -34,11 +34,6 @@ sudo podman run \
 │       └── dnsmasq.resolv.conf
 └── README.md
 ```
-#### REFRENCE
-  + `watch -c cat dnsmasq.leases`
-  + `arp -f`
-  + `https://www.redhat.com/en/blog/five-nines-dnsmasq`
-
 ## Next Steps:
   + [05 Application Router Proxy	- OCI Podman Container]
   + [06 Simple Artifact Server		- OCI Podman Container]
