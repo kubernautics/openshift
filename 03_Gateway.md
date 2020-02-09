@@ -1,4 +1,4 @@
-# Part 02 -- [OpenWRT]: Build LXD Virtual Firewall Gateway Container
+# Part 02 -- [OpenWRT]: LXD Virtual Firewall Gateway
      
 ### Prerequisites:
   + [01 Host Hypervisor - Bare Metal]
