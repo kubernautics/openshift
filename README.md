@@ -54,6 +54,7 @@ number of criteria included in the following.
   + Kubernetes
   + Bare Metal Hosts
   + Physical & Virtual Switching Gear
+
 <!-- Markdown link & img dfn's -->
 [01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
 [02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md

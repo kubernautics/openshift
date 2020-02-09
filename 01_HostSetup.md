@@ -7,7 +7,7 @@
 3. You have created an ssh key pair
 4. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
 5. Recommended: Follow these guides using ssh to copy/paste commands as you read along    
-     
+    
 --------------------------------------------------------------------------------
 # Part 00 -- Clone Project
 #### 00\. Clone the ocp-mini-stack repo
@@ -406,3 +406,21 @@ update-alternatives --set editor /usr/bin/vim
 echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
 --------------------------------------------------------------------------------
+    
+  + [02 CloudCtl RDP Bastion - LXD Container]
+  + [03 VFW Firewall & Gateway - LXD Container]
+  + [04 DNS & DHCP Service			- OCI Podman Container]
+  + [05 Application Router Proxy - OCI Podman Container]
+  + [06 Simple Artifact Server - OCI Podman Container]
+  + [07 TFTP Boot Artifact Server - OCI Podman Container]
+  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+    
+--------------------------------------------------------------------------------
+<!-- Markdown link & img dfn's -->
+[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
+[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
+[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
+[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
+[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
