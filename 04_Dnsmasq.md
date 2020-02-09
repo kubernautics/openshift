@@ -44,8 +44,8 @@ sudo podman run \
   + [05 Application Router Proxy - OCI Podman Container]
   + [06 Simple Artifact Server - OCI Podman Container]
   + [07 TFTP Boot Artifact Server - OCI Podman Container]
-[Repo Module]:/module/dnsmasq
 <!-- Markdown link & img dfn's -->
+[Repo Module]:/module/dnsmasq
 [01 host hypervisor                - bare metal]: (/module/host/README.md)
 [02 cloudctl rdp bastion        - lxd container]: (/module/cloudctl/README.md)
 [03 vfw firewall & gateway        - lxd container]: (/module/openwrt/README.md)
