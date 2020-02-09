@@ -8,7 +8,7 @@
   + [03 VFW Firewall & Gateway		- LXD Container]
   + [04 DNS & DHCP Service			- OCI Podman Container]
     
-#### 01\. Launch Simple [HAProxy] on [Alpine Linux] Container with [Podman]
+#### Step.01: Launch Simple [HAProxy] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run 
     --rm                                                                                    \
