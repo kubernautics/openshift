@@ -26,6 +26,12 @@ sudo podman run \
 
 ---------------------------------------------------------------------------------
 
+### Next Steps:
+
+  + [05 Application Router Proxy - OCI Podman Container]
+  + [06 Simple Artifact Server - OCI Podman Container]
+  + [07 TFTP Boot Artifact Server - OCI Podman Container]
+
 ######  + [Repo Module] Index
 ```sh
 .
@@ -39,11 +45,6 @@ sudo podman run \
 └── README.md
 ```
 
-### Next Steps:
-
-  + [05 Application Router Proxy - OCI Podman Container]
-  + [06 Simple Artifact Server - OCI Podman Container]
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
 <!-- Markdown link & img dfn's -->
 [Repo Module]:/module/dnsmasq
 [01 host hypervisor                - bare metal]: (/module/host/README.md)
