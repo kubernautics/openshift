@@ -1,0 +1,147 @@
+  104  ls
+  105  clear
+  106  ls
+  107  mkdir aux
+  108  mkdir aux/lib
+  109  mkdir aux/bin
+  110  cp ../tftp/aux/bin/fedora-bootstrap-ansible aux/bin/
+  111  clear
+  112  ls
+  113  clear
+  114  lxc file push aux/bin/fedora-bootstrap-ansible httpd/usr/bin/
+  115  lxc start httpd
+  116  lxc exec httpd -- fedora-bootstrap-ansible
+  117  clear
+  118  ls
+  119  mv bootstrap.ign aux/lib/
+  120  ls html/
+  121  ls html/boot/
+  122  mv html/ aux/lib/
+  123  ls
+  124  mv README.md aux/lib/
+  125  ls
+  126  mkdir ../cloudctl/ocp4
+  127  mkdir ../cloudctl/aux/bin -p; mv stage-install-config-yaml.sh stage-pull-secrets.sh ../cloudctl/aux/bin/
+  128  ls
+  129  clear
+  130  ls
+  131  vim httpd-build_a00.log 
+  132  mv httpd-build_a00.log build-httpd
+  133  chmod +x build-httpd 
+  134  ls
+  135  scp build-httpd  eth1.network httpd:~
+  136  httpd
+  137  clear
+  138  history | build.log
+  139  history | tee build.log
+   0 clear
+   1 apk update
+   2 apk add tftp-hpa
+   3 find / -name "*tftp*"
+   4 tftp
+   5 tftp --help
+   6 tftp 10.10.10.62 -c get "zzjson.c32"
+   7 ls
+   8 rm zzjson.c32 
+   9 tftp 10.10.10.62 -c get "zzjson.c32"
+  10 ls
+  11 rm zzjson.c32 
+  12 ls
+  13 tftp 10.10.10.62 -c get "zzjson.c32"
+  14 ls
+  15 clear
+  16 tftp 10.10.10.62 -c get "zzjson.c32"
+  17 ls
+  18 rm zzjson.c32 
+  19 rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls
+  20 clear; rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls
+  21 watch -c clear; rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls
+  22 watch -c "clear; rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls"
+  23 watch -c 'clear; rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls'
+  24 watch  'clear; rm zzjson.c32; tftp 10.10.10.62 -c get "zzjson.c32"; ls'
+  25 tftp 10.10.10.62 -c get "zzjson.c32"
+  26 ls
+  27 tftp 10.10.10.62 -c get "zzjson.c32" 
+  28 clear
+  29 tftp 10.10.10.62 -c get "about.txt" 
+  30 tftp 10.10.10.62 -c get "mapfile" 
+  31 tftp 10.10.10.62 -c get "about.txt" 
+  32 ls
+  33 cat about.txt 
+  34 clear
+  35 rm *
+  36 ls
+  37 clear
+  38 tftp 10.10.10.62 -c get "about.txt" 
+  39 tftp 10.10.10.62 -c get "mapfile" 
+  40 ls
+  41 cat mapfile 
+  42 clear
+  43 exit
+  44 tftp 10.10.10.62 -c get "mapfile" 
+  45 ls
+  46 rm *
+  47 tftp 172.10.0.3 -c get "mapfile" 
+  48 tftp 10.10.10.3 -c get "mapfile" 
+  49 ls
+  50 clear
+  51 tftp 10.10.10.3 -c get "mapfile" 
+  52 tftp 172.10.0.3 -c get "mapfile" 
+  53 clear
+  54 ls
+  55 clear
+  56 ip a
+  57 ip addr add 172.10.7.111/16 dev eth1
+  58 ip link set eth1 up
+  59 ip a
+  60 ping 172.10.0.3
+  61 tracepath 172.10.0.3
+  62 traceroute 172.10.0.3
+  63 clear
+  64 tftp 172.10.0.3 -c get "mapfile" 
+  65 clear
+  66 ip a
+  67 ls
+  68 rm mapfile 
+  69 tftp 172.10.0.3 -c get "mapfile" 
+  70 ls
+  71 rm mapfile 
+  72 ls
+  73 clear
+  74 tftp 172.10.0.3 -c get "mapfile" 
+  75 exit
+  76 clear
+  77 apk update
+  78 clear
+  79 apk search httpd
+  80 apk search httpd | grep httpd
+  81 apk search nginx
+  82 clear
+  83 apk search nginx
+  84 apk update
+  85 apk add nginx
+  86 adduser -D -g 'www' www
+  87 mkdir /www
+  88 chown -R www:www /var/lib/nginx
+  89 chown -R www:www /www
+  90 mkdir ~/bak
+  91 cp /etc/nginx/nginx.conf ~/bak/
+  92 vi /etc/nginx/nginx.conf 
+  93 vim /etc/nginx/conf.d/default.conf 
+  94 vi /etc/nginx/conf.d/default.conf 
+  95 cp /etc/nginx/conf.d/default.conf ~/bak/
+  96 clear
+  97 ls
+  98 vi /etc/nginx/conf.d/default.conf 
+  99 rc-service nginx start
+ 100 touch /www/1.txt
+ 101 echo hello > /www/hello.txt
+ 102 ip a
+ 103 clear
+ 104 history
+ 105 clear
+ 106 ls
+ 107 cp /etc/nginx/conf.d/default.conf ~/default.conf
+ 108 exit
+ 109 history
+ 110 history >>history.log
