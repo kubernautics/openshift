@@ -1,5 +1,0 @@
-#!/bin/bash
-vim /etc/haproxy/haproxy.cfg
-clear
-systemctl restart haproxy
-systemctl status haproxy

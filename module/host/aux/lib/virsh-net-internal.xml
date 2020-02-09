@@ -1,7 +1,0 @@
-<network>
-  <name>internal</name>
-  <forward mode='bridge'/>
-  <bridge name='internal'/>
-  <virtualport type='openvswitch'/>
-</network>
-

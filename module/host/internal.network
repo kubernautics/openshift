@@ -1,7 +1,0 @@
-[Match]
-Name=internal
-
-[Network]
-DHCP=no
-IPv6AcceptRA=no
-LinkLocalAddressing=no

@@ -1,9 +1,0 @@
-NAME="openshift"
-DEVICE="openshift"
-DEVICETYPE="ovs"
-TYPE="OVSBridge"
-BOOTPROTO="static"
-ONBOOT="yes"
-IPV6INIT="no"
-IPV4INIT="no"
-HOTPLUG=yes

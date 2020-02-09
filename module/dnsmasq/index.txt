@@ -1,0 +1,9 @@
+/etc/dnsmasq.conf
+/etc/hosts 
+/etc/resolv.conf 
+/etc/ethers 
+/var/lib/dnsmasq/dnsmasq.leases
+# REFRENCE
+# watch -c cat dnsmasq.leases 
+# arp -f
+# https://www.redhat.com/en/blog/five-nines-dnsmasq

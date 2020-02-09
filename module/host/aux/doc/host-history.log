@@ -1,0 +1,1023 @@
+lxc profile set hostapd linux.kernel_modules ath10k_pci,cfg80211,ath10k_core,mac80211,ath10k,ath
+ls
+cd ocp-mini-stack/wifiap/
+ls
+lxc profile set hostapd security.privileged true
+lxc launch images:ubuntu/bionic/amd64 hostapd -p hostapd
+lxc profile set hostapd linux.kernel_modules ath10k_pci,cfg80211,ath10k_core,mac80211,ath
+lxc delete --force hostapd
+lxc launch images:ubuntu/bionic/amd64 hostapd -p hostapd
+lxc exec hostapd bash
+lxc profile show | tee profile-lxd-hostapd.yaml
+lxc profile show hostapd | tee profile-lxd-hostapd.yaml
+lxc exec hostapd bash
+history | grep add
+lxc profile device add hostapd wlan0 nic nictype=physical parent=wlan0 name=wlan0
+lxc start hostapd
+lxc exec hostapd bash
+lxc delete --force hostapd
+lxc launch images:fedora/30/amd64 hostapd -p hostapd
+lxc exec hostapd bash
+lxc exec hostapd -- /bin/bash -c 'journalctl -fxe'
+lxc exec gateway -- /etc/init.d/network restart
+lxc exec hostapd -- /bin/bash -c 'journalctl -fxe'
+lxc exec hostapd bash
+history | build-hostapd.log
+history | tee build-hostapd.log
+ls
+lxc exec hostapd bash
+exit
+lxc exec hostapd bash
+exit
+dnsmasq
+clear
+lxc launch ubuntu:t01 ministack
+vim /etc/resolv.conf
+ip r
+ping 10.10.20.1
+ping google.com
+lxc launch ubuntu: t01 -p ministack
+clear
+lxc exec t01 bash
+shutdown -h now
+clear
+lxc launch ubuntu:bionic t01
+lxc exec t01 bash
+clear
+lxc exec t01 bash
+lxc delete --force t01
+clear
+lsmod | grep -iE "ath|wi|int"
+clear
+lsmod | grep ath1
+clear
+cd ocp-mini-stack/wifiap/
+cd ..
+mv wifiap/ hostapd
+clear
+ls
+cd host
+cd hosta
+cd ../hostapd
+ls
+clear
+ls
+clear
+ls
+vim REFRENCE
+mv REFRENCE ../gateway/
+clear
+ls ..
+ls
+vim hostapd_build_v02.log 
+ls
+lxc file push hostapd.conf hostapd/root/
+clear
+vim .
+ls
+vim hostapd_build_v02.log 
+clear
+ls
+for i in hostapd.conf ifcfg-eth0 ifcfg-hostapd; do lxc file push $i hostapd/root/; done
+cat hostapd_build_v02.log 
+clar
+clear
+ls
+vim ifcfg-eth0 
+vim ifcfg-hostapd 
+clear
+lxc restart hostapd
+ls
+lxc exec hostapd bash
+ovs-clear
+lxc config show hostapd
+lxc stop hostapd
+history | grep add
+lxc profile device add hostapd eth0 nic nictype=bridged parent=internal
+lxc profile device remove hostapd eth0
+lxc profile device add hostapd eth0 nic nictype=bridged parent=internal
+lxc start hostapd
+clear
+ls
+for i in build-hostapd.log hostapd.conf ifcfg-eth0 ifcfg-hostapd ; do lxc file pull hostapd/root/$i .; done
+ls
+vim hostapd_build_v02.log 
+rn hostapd_build_v02.log 
+rm hostapd_build_v02.log 
+ls
+clear
+ls
+lxc profile show hostapd | tee profile-lxd-hostapd.yaml 
+clear
+ls ~/.ssh/
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+ls /etc/resolv.conf
+cat /etc/resolv.conf
+vim /etc/resolv.conf
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+vim /etc/sysconfig/network-scripts/
+ifdown mgmt1; ifup mgmt1
+clear
+cat /etc/resolv.conf
+clear
+ping google.com
+ping hostapd.ministack.dev
+clear
+vim hostapd.conf 
+for i in build-hostapd.log hostapd.conf ifcfg-eth0 ifcfg-hostapd ; do lxc file pull hostapd/root/$i .; done
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+git config --global user.name usrbinkat
+git config --global user.email usrbinkat@braincraft.io
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+ls
+vim profile-lxd-hostapd.yaml 
+clear
+cd ../gateway/
+ls
+lxc profile show gateway
+lxc profile show openwrt
+lxc profile show openwrt | tee profile-lxd-openwrt.yaml
+vim profile-lxd-openwrt.yaml 
+clear
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+cd ..
+ls
+clear
+ls
+lxc profile list
+vim hostapd/hostapd.conf 
+iw reg get
+iw reg set US
+lxc file push hostapd/hostapd.conf hostapd/root/
+lxc file edit hostapd/root/hostapd.conf
+lxc exec hostapd bash
+clear
+lxc exec hostapd bash
+clear
+iw reg get
+iw reg set US
+modprobe cfg80211 ath ath10k_core mac80211 ath10k_pci
+rmmod cfg80211 ath ath10k_core mac80211 ath10k_pci
+lsmod cfg80211 ath ath10k_core mac80211 ath10k_pci
+modprobe cfg80211 ath ath10k_core mac80211 ath10k_pci
+iw reg set CA
+iw reg set US
+iw reg set GB
+clear
+iw reg set JA
+iw reg set US
+ls
+cd hostapd/
+lxc file pull hostapd/root/hostapd.conf .
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+echo "nameserver 10.10.20.1" >>/etc/resolv.conf
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+cd ../dnsmasq/
+ls
+cat REFRENCE 
+ssh dnsmasq
+clear
+cd 
+vim .ssh/config
+ls .ssh
+vim .ssh/config
+ssh dnsmasq
+vim .ssh/config
+ssh dnsmasq
+clear
+cd ocp-mini-stack/host
+mkdir ssh/
+head ~/.ssh/config >ssh/config
+vim ssh/config 
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+vim ssh/config 
+ls ~/.ssh
+ln /root/.ssh/id_rsa_kmorgan /root/.ssh/id_rsa
+ls -lah ~/.ssh
+clear
+ssh dnsmasq
+clear
+ssh dnsmasq
+cat ../dnsmasq/hosts >>ssh/config 
+vim ssh/config 
+cat ../dnsmasq/hosts >>../aux/tools/lxc-enroll 
+vim ../aux/tools/lxc-enroll 
+clear
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+vim ../aux/tools/lxc-enroll 
+clear
+ls
+cd ../dnsmasq/
+clear
+scp dnsmasq.conf dnsmasq/root/
+scp dnsmasq.conf dnsmasq:/root/
+clear
+bash
+dnsmasq
+vim ~/.bashrc
+bash
+vim ~/.bashrc
+bash
+clear
+lxc exec hostapd bash
+clear
+lxc exec hostapd bash
+lxc start hostapd
+lxc exec hostapd bash
+clear
+lxc exec fedora bash
+lxc exec hostapd bash
+clear
+iw reg set HK
+lxc exec hostapd bash
+clear
+lxc profile show ministack
+lxc launch images:fedora/30/amd64 dnsmasq -p ministack
+ssh dnsmasq
+cd ocp-mini-stack/host
+ls
+cat internal-mgmt1-setup 
+clear
+ls
+cat network-restart.sh 
+vim host.log 
+clear
+ls
+cd ..
+ls
+ls ansible/
+ls aux/
+ls aux/templates/
+ls tftp/
+ls squid/
+ls simpleca/
+ls opt/
+ls opt/wireguard/
+ls nfs/
+ls ipa/
+ls httpd/
+clear
+ls
+ls opt/
+ls aux/
+mkdir aux/tools; vim aux/tools/lxc-enroll
+chmod +x aux/tools/lxc-enroll 
+lxc file push aux/tools/lxc-enroll hostapd/bin/
+lxc file push aux/tools/lxc-enroll dnsmasq/bin/
+lxc exec dnsmasq lxc-enroll
+clear
+ls
+cd dnsmasq/
+ls
+cat REFRENCE 
+clear
+ls
+for i in $(ls); do scp $i dnsmasq:/root/; done
+ssh dnsmasq
+lxc file push ~/.bashrc dnsmasq:/root/
+scp ~/.bashrc dnsmasq:/root/
+ssh dnsmasq
+cat ~/.bashrc >> ../aux/tools/lxc-enroll 
+vim ../aux/tools/lxc-enroll 
+clear
+ls
+vim dnsmasq-resolv.conf 
+cat dnsmasq-resolv.conf 
+vim dnsmasq.conf 
+rm dnsmasq-resolv.conf 
+clear
+ls
+vim dnsmasq.conf 
+ls
+vim eth1.network 
+cat hosts 
+vim eth1.network 
+vim ../aux/tools/lxc-enroll 
+cat ../aux/tools/lxc-enroll 
+source ../aux/tools/lxc-enroll 
+dnsmasq
+bash
+clear
+lspci
+lspci -vv
+lspci -vv | tee lspci
+vim lspci 
+lshw
+dnf search ModemManager
+dnf install ModemManager modem-manager-gui -y
+ping google.com
+ip r
+cat /etc/resolv.conf
+ip a s mgmt1
+vim /etc/resolv.conf
+ping google.com
+vim /etc/resolv.conf
+ping google.com
+lshw
+lshw | more
+lshw | tee lshw
+vim lshw 
+lsusb
+lsusb -v
+lsusb -v | tee lsusb
+vim lsusb 
+ls
+rm ls*
+ls
+clear
+s
+clear
+iw list
+lxc exec hostapd bash
+clear
+iw set reg US
+lxc stop hostapd
+iw reg set US
+lxc start hostapd
+iw reg set US
+lxc exec hostapd bash
+clear
+lxc exec hostapd bash
+clear
+dnf install crda
+iw reg set US
+lxc exec dnsmasq 
+lxc exec dnsmasq bash
+clear
+lxc exec hostapd lxc-enroll
+s
+exit
+history | grep grubby
+clear
+ls
+grep grubby carrier-host-node-prep.log 
+cat carrier-host-node-prep.log 
+clear
+grubby -h
+grubby --remove-args="debug" --update-kernel=ALL
+reboot
+journalctl -fxe
+clear
+cd ocp-mini-stack/dnsmasq/
+ls
+for i in dnsmasq.conf eth1.network hosts resolv.conf ; do lxc file pull dnsmasq/root/$i .; done
+echo "nameserver 10.10.20.1" >>/etc/resolv.conf
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+dnsmasq
+clear
+cd ../gateway/
+ls
+clear
+ls
+lxc launch images:fedora/30/amd64 cloudctl -p ministack
+lxc exec cloudctl bash
+exit
+dnsmasq
+cat /etc/resolv.conf
+ip a s mgmt1
+vim /etc/resolv.conf
+nmtui
+lxc exec dnsmasq bash
+clear
+cd ocp-mini-stack/cloudctl/
+ls
+cat eth0.network 
+cat eth1.network 
+cat guest-check 
+for i in cloudctl-ocp4-mini-stack-build_a00.log eth* guest-check ifcfg-eth0 ; do scp $i cloudctl:~; done
+lxc file push ../aux/tools/lxc-enroll cloudctl/bin/
+lxc exec cloudctl lxc-entroll
+cloudctl
+ssh root@cloudctl -i ~/.ssh/id_rsa_kmorgan
+cloudctl
+ssh root@10.10.20.111
+ping cloudctl
+ssh cloudctl
+ssh root@10.10.20.111 -i ~/.ssh/id_rsa
+cloudctl
+tracepath cloudctl
+ping cloudctl
+ssh cloudctl
+clear
+exit
+clear
+ssh cloudctl
+lxc file edit cloudctl/root/.ssh/authorized_keys < /root/.ssh/id_rsa_kmorgan.pub 
+lxc exec cloudctl bash
+lxc delete --force cloudctl
+lxc launch images:fedora/30/amd64 cloudctl -p ministack
+ssh-keygen 
+lxc exec cloudctl bash
+lxc file push ~/.bashrc cloudctl/root/
+lxc exec cloudctl bash
+exit
+lxc exec cloudctl bash
+lxc config set cloudctl security.privileged true
+clear
+lxc exec cloudctl bash
+lxc list
+clear
+lxc exec cloudctl bash
+lxc config show cloudctl 
+clear
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+exit
+lxc exec cloudctl bash
+clear
+lxc list
+lxc exec cloudctl bash
+lxc start cloudctl
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+clear
+lxc stop cloudctl
+lxc profile show ministack
+lxc config device remove cloudctl eth0
+lxc config device remove cloudctl eth1
+lxc network attach internal cloudctl eth0 eth0
+lxc network attach openshift cloudctl eth1 eth1
+lxc start cloudctl
+clear
+lxc exec cloudctl bash
+exit
+lxc exec cloudctl
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+lxc stop cloudctl
+lxc start cloudctl 
+lxc exec cloudctl bash
+lxc start cloudctl
+lxc exec cloudctl bash
+clear
+lxc delete --force cloudctl 
+journalctl -fxe 
+getenforce
+journalctl -fxe 
+journalctl -fxe | lnav
+dnf install vim lnav -y
+lxc exec cloudctl bash
+clear
+exit
+lxc file puah .ssh cloudctl/home/kmorgan/
+lxc file push .ssh cloudctl/home/kmorgan/
+lxc file push .ssh cloudctl/home/kmorgan/ -r
+lxc exec cloudctl bash
+cd ocp-mini-stack/cloudctl/
+lxc file pull cloudctl/root/.bash_history broken-build.log
+lxc delete --force cloudctl
+lxc launch images:fedora/30/amd64 cloudctl -p ministack
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+lxc file push ~/.bashrc cloudctl/home/kmorgan
+lxc file push ~/.bashrc cloudctl/home/kmorgan/
+lxc exec cloudctl bash
+lxc stop cloudctl
+lxc exec cloudctl bash
+lxc restart cloudctl
+lxc exec cloudctl history | tee xrdpfailing
+lxc delete --force cloudctl
+ls
+vim eth0.network 
+vim eth1.network 
+lxc file push eth1.network cloudctl/etc/systemd/network/
+exit
+lxc delete --force cloudctl
+lxc launch images:fedora/30/amd64 cloudctl -p ministack -c security.privileged=true
+lxc exec cloudctl bash
+lxc launch images:fedora/30/amd64 cloudctl -p ministack -c security.privileged=true
+lxc exec cloudctl bash
+ip a
+lxc exec cloudctl bash
+clear
+dnf distrosync
+dnf install xrdp -y
+lxc exec cloudctl bash
+clear
+systemctl status xrdp
+systemctl start xrdp
+systemctl status xrdp
+ip a
+lxc exec cloudctl bash
+lxc launch images:fedora/29/amd64 cloudctl -p ministack -c security.privileged=true
+lxc exec cloudctl bash
+ls
+exit
+ping 10.0.0.106
+lxc exec cloudctl bash
+clear
+lxc file push ~/.bashrc cloudctl/home/kmorgan/
+clear
+ls .ssh
+exit
+clear
+lxc exec cloudctl bash
+lxc file push ~/.bashrc cloudctl~
+lxc file push ~/.bashrc cloudctl/root/
+lxc exec cloudctl bash
+exit
+lxc exec cloudctl -- /bin/bash -c 'cat /home/kmorgan/.ssh/id_rsa.pub'
+lxc exec cloudctl -- /bin/bash -c 'cat /home/kmorgan/.ssh/id_rsa.pub' >> ~/.ssh/authorized_keys 
+clear
+lxc file push .ssh/id_rsa_kmorgan cloudctl/home/kmorgan/.ssh/
+lxc file push .ssh/id_rsa_kmorgan.pub cloudctl/home/kmorgan/.ssh/
+vim .ssh/config 
+cd ocp-mini-stack/
+ls
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+exit
+history | tee -a /home/kmorgan/.bash_history 
+clear
+ls
+ls /var/lib/libvirt/
+ls /var/lib/libvirt/images/
+clear
+cd ocp-mini-stack/
+ls
+cd host
+ls
+vim nodes.sh 
+clear
+git stage -A; git commit -m 'ongoing alpha seed work' ; git push origin pre-alpha-00
+clear
+ls
+cd
+ls
+rm mprcs-ssh-secrets.tar.xz carrier-host-node-prep.log bak/ -rf
+ls
+cd ocp-mini-stack/
+git pull
+clear
+ls
+exit
+ls
+exit
+clear
+cd ocp-mini-stack/host
+ls
+./nodes.sh 
+ls
+cat virsh-net-openshift.xml 
+virsh net-define virsh-net-openshift.xml 
+virsh net-list --all
+virsh net-undefine default
+virsh net-destroy default
+cat virsh-net-default.xml 
+virsh net-define virsh-net-default.xml 
+cp virsh-net-default.xml virsh-net-internal.xml 
+vim virsh-net-internal.xml 
+for i in internal openshift default ; do virsh net-autostart $i; done
+for i in internal openshift default ; do virsh net-start $i; done
+ovs-clear
+virsh net-list --all
+vim virsh-net-internal.xml 
+virsh net-define virsh-net-internal.xml 
+virsh net-autostart internal
+virsh net-start internal
+clear
+virsh net-list --all
+clear
+/bin/bash -x ./nodes.sh 
+virsh list --all
+ip a
+clear
+ovs-clear
+clear
+history | grep add
+clear
+cd
+clear
+cd ocp-mini-stack/
+git pull
+clear
+git pull
+clear
+cd
+clear
+. ocp-mini-stack/01_host/aux/tools/run-node-builds 
+ls
+ls inventory/
+ls inventory/ethers 
+ls inventory/ocp/
+systemd-resolve --status | grep DNS
+cat /etc/resolv.conf
+vim /etc/resolv.conf
+ping httpd.ocp4.ministack.dev
+clear
+exit
+cd /var/lib/libvirt/images/
+ls
+mv bootstrap02.ocp4.ministack.dev_vda.qcow2 bootstrap.ocp4.ministack.dev_vda.qcow2 -f
+ls
+clear
+virsh destroy bootstrap02.ocp4.ministack.dev
+virsh undefine bootstrap02.ocp4.ministack.dev
+clear
+virsh start bootstrap02.ocp4.ministack.dev; virsh console bootstrap02.ocp4.ministack.dev
+virsh start bootstrap.ocp4.ministack.dev; virsh console bootstrap.ocp4.ministack.dev
+clear
+cd
+ls
+cd ocp-mini-stack/
+git pull
+cp 01_host/aux/tools/run-node-builds ~
+rm 01_host/aux/tools/run-node-builds 
+git pull
+clear
+diff ~/run-node-builds 
+diff ~/run-node-builds zdoc/host/aux/tools/run-node-builds 
+rm ~/run-node-builds 
+clear
+cd
+ln ocp-mini-stack/zdoc/host/aux/tools/run-node-builds ~
+ls
+./run-node-builds 
+virsh console worker02.ocp4.ministack.dev
+exit
+clear
+htop
+lxc exec cloudctl bash
+clear
+systemctl status xrdp
+lxc exec cloudctl bash
+exit
+lxc exec cloudctl bash
+clear
+exit
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+clear
+lxc exec cloudctl bash
+virsh list --all
+virsh destroy bootstrap
+virsh destroy bootstrap.ocp4.ministack.dev
+virsh start bootstrap.ocp4.ministack.dev; virsh console bootstrap.ocp4.ministack.dev
+for i in $(virsh list | grep running | awk '{print $2}'); do virsh destroy $i; done
+clear
+ls
+./run-node-builds 
+lxc exec dnsmasq bash
+lxc exec cloudctl bash
+virsh console master0.ocp4.ministack.dev
+virsh console worker02.ocp4.ministack.dev
+lxc exec cloudctl bash
+clear
+./run-node-builds 
+rm -rf /var/lib/libvirt/images/* ; ./run-node-builds 
+clear
+lxc exec dnsmasq bash
+clear
+virsh console master0.ocp4.braincraft.io
+virsh console .ocp4.ministack.dev
+clear
+rm -rf /var/lib/libvirt/images/*
+virsh console master0.ocp4.braincraft.io
+virsh console master0.ocp4.ministack.dev
+clear
+ls
+cd inventory/
+ls
+vim ethers 
+lxc file push ethers dnsmasq/etc/ethers
+lxc restart dnsmasq
+virsh console master0.ocp4.ministack.dev
+rm -rf /var/lib/libvirt/images/*
+virsh console master0.ocp4.ministack.dev
+clear
+lxc exec dnsmasq
+lxc exec dnsmasq bash
+lxc exec cloudctl bash
+cd ocp-mini-stack/
+git pull
+cd
+clear
+. ocp-mini-stack/01_host/aux/tools/run-node-builds 
+cd ocp-mini-stack ; git pull ; cd ~ ; clear; . ocp-mini-stack/01_host/aux/tools/run-node-builds 
+tree inventory
+gethostip -x 172.30.0
+gethostip -x 172.30.0.12
+et0_HEXIP=$(gethostip -x 172.30.0.12) pxe_NAME=${${et0_HEXIP}%??} echo ${pxe_NAME}
+et0_HEXIP=$(gethostip -x 172.30.0.12) pxe_NAME=${et0_HEXIP%??} echo ${pxe_NAME}
+/bin/bash -c 'et0_HEXIP=$(gethostip -x 172.30.0.12) pxe_NAME=${et0_HEXIP%??} echo ${pxe_NAME}'
+/bin/bash -c 'et0_HEXIP=$(gethostip -x 172.30.0.12) pxe_NAME=${et0_HEXIP/%??/} echo ${pxe_NAME}'
+/bin/bash -c 'et0_HEXIP=$(gethostip -x 172.30.0.12) pxe_NAME=${et0_HEXIP/%??/} echo ${et0_HEXIP}'
+vim test.sh
+. test.sh 
+/bin/bash -x ./test.sh 
+vim test.sh
+. test.sh 
+/bin/bash -x ./test.sh 
+vim test.sh
+. test.sh 
+vim test.sh
+. test.sh 
+cat test.sh 
+cd ocp-mini-stack ; git pull ; cd ~ ; clear; . ocp-mini-stack/01_host/aux/tools/run-node-builds 
+tree inventory/
+vim ocp-mini-stack/01_host/aux/tools/run-node-builds 
+rm -rf inventory/
+vim ocp-mini-stack/01_host/aux/tools/run-node-builds 
+cd ocp-mini-stack ; git pull ; cd ~ ; clear; . ocp-mini-stack/01_host/aux/tools/run-node-builds 
+tree inventory/
+clear
+scp ocp-mini-stack/01_host/aux/tools/run-node-builds cloudctl/root/
+scp ocp-mini-stack/01_host/aux/tools/run-node-builds cloudctl:/root/
+lxc file push ocp-mini-stack/01_host/aux/tools/run-node-builds cloudctl/root/
+clear
+lxc list
+watch -c lxc list
+clear
+lxc list
+watch -c lxc list
+htop
+lxc exec cloudctl
+lxc exec cloudctl bash
+watch -c 'curl --insecure https://bootstrap.ocp4.ministack.dev:6443/version'
+clear
+exit
+virsh list --all
+lxc exec haproxy bash
+exit
+lxc exec dnsmasq bash
+clear
+rm -rf /var/lib/libvirt/images/* ; ./run-node-builds 
+lxc exec cloudctl bash
+exit
+exit
+exit
+tmux
+exit
+ls
+vim run-node-builds 
+./run-node-builds 
+clear
+ls
+rm \'~\'
+rm \~
+ls
+cd inventory/
+ls
+vim ethers 
+cd ocp/
+ls
+cd ..
+ls
+cd ..
+ls
+vim run-node-builds 
+ls
+vi .run-node-builds.swp 
+cp run-node-builds run-node-builds.bak
+vim run-node-builds
+rm .run-node-builds.swp 
+vim run-node-builds
+./run-node-builds
+clear
+ls
+cd inventory/
+ls
+vim ethers 
+rm ocp/ -rf
+cd pxelinux.0/
+ls
+vim ~/run-node-builds
+ls
+ls ..
+. /root/run-node-builds
+clear
+ls
+ls ..
+ls
+vim ~/run-node-builds
+pwd
+cd ..
+ls
+file pxelinux.0/
+rm -rf pxelinux.0/
+vim ~/run-node-builds
+/bin/bash -x /root/run-node-builds
+clear
+ls
+ls pxelinux.0/
+vim ~/run-node-builds
+. /root/run-node-builds
+ls
+ls pxelinux.0/
+clear
+ls
+mv pxelinux.0/ pxelinux.cfg
+clear
+exit
+ls
+exit
+tree inventory/
+rm -rf exit
+clear
+exit
+vim run-node-builds 
+ls
+rm -rf inventory/
+clear
+tree inventory
+clear
+exit
+nslookup carrier
+clear
+ls
+ln /etc/resolv.conf .
+clear
+virsh list --all
+for i in $(virsh list --all | grep "ocp4" | awk '{print $2}'); do virsh start $i; done
+ls
+rm run-node-builds.bak 
+vim run-node-builds 
+./run-node-builds 
+exit
+virsh list --all
+virsh destroy 292
+vim run-node-builds 
+./run-node-builds 
+vim run-node-builds 
+./run-node-builds 
+vim run-node-builds 
+./run-node-builds 
+vim run-node-builds 
+./run-node-builds 
+exit
+lxc exec cloudctl bash
+exit
+watch -c "cat ~/inventory/ethers"
+lxc exec dnsmasq 
+lxc exec dnsmasq bash
+exsit
+exit
+htop
+exit
+glances 2>/dev/null
+exit
+htop
+dnf install glances -y
+tmux
+clear
+exit
+lxc exec cloudctl bash
+exit
+clear
+ls
+./run-node-builds 
+exit
+./run-node-builds 
+bootstrap
+exit
+./run-node-builds 
+vim inventory/pxelinux.cfg/AC1E00 
+exit
+clear
+./run-node-builds 
+exit
+clear
+htop
+ping etcd-1.ocp4.ministack.dev
+lxc exec tftp bash
+exit
+vim run-node-builds 
+exit
+./run-node-builds 
+virsh console master1.ocp4.ministack.dev
+excit
+exit
+glances
+exit
+clear
+./run-node-builds 
+exit
+clear
+ls
+vim run-node-builds 
+exit
+clear
+ls
+vim inventory/pxelinux.cfg/AC1E01 
+virsh restart master1.ocp4.ministack.dev
+virsh destroy master1.ocp4.ministack.dev
+virsh start master1.ocp4.ministack.dev
+virsh destroy master2.ocp4.ministack.dev
+clear
+./run-node-builds 
+virsh console master1.ocp4.ministack.dev
+clear
+ping api-int.ocp4.ministack.dev
+curl --insecure -k https://bootstrap.ocp4.ministack.dev:22623/config/master -I
+curl --insecure -k https://api-int.ocp4.ministack.dev:22623/config/master -I
+https://api-int.ocp4.ministack.dev:22623/config/master:
+curl --insecure -k https://api-int.ocp4.ministack.dev:22623/config/master -I
+htop
+exit
+ls
+./run-node-builds 
+oc get logs
+exit
+vim run-node-builds 
+./run-node-builds 
+vim run-node-builds 
+./run-node-builds 
+vim run-node-builds 
+./run-node-builds 
+curl https://api-int.ocp4.ministack.dev:22623/config/master -insecure
+curl https://api-int.ocp4.ministack.dev:22623/config/master --insecure
+ping api-int.ocp4.ministack.dev
+lxc exec tftp bash
+exit
+speedtest-cli 
+clear
+exit
+virt-top
+exit
+clear
+ls
+./run-node-builds 
+exit
+lxc file push run-node-builds cloudctl/root/
+lxc file push run-node-builds cloudctl/home/kmorgan/
+exit
+./run-node-builds 
+exit
+clear
+exit
+ip a s 
+clear
+ip a s mgmt0
+ip a s mgmt1
+lxc list
+exit
+clear
+virsh define /tmp/buildah.xml 
+vim /tmp/buildah.xml 
+clear
+virsh start buildah
+virsh console buildah
+exit
+htop
+exit
+clear
+ls
+./run-node-builds 
+virsh console master1.ocp4.ministack.dev
+exit
+clear
+neofetch
+clear
+neofetch
+ls
+exit
+htop
+clear
+virsh list --name
+for i in $(virsh list --name ); do virsh destroy $i; done
+clear
+exit
+glances
+htop
+clear
+exit
+virt-top
+exit
+ls
+history >>build.log
+for i in cloudctl dnsmasq haproxy httpd nfs tftp ; do lxc init images:fedora/30/amd64 tftp -p ministack; done
+for i in dnsmasq haproxy httpd nfs tftp ; do lxc network attach internal tftp eth0 eth0 ; done
+# 
+
+# snapd
+https://forum.snapcraft.io/t/building-a-snap-rpm-for-red-hat-enterprise-linux-rhel-8/13728
+https://www.cyberciti.biz/faq/how-to-set-up-and-use-lxd-on-centos-linux-7-x-server/
+https://forum.snapcraft.io/t/how-to-build-snapd-from-source-im-using-red-hat-enterprise-linux-8/12640/7
+
+# golang
+https://access.redhat.com/documentation/en-us/red_hat_developer_tools/2019.1/html-single/using_go_toolset/index
+
+# OVS
+https://www.linuxtechi.com/install-use-openvswitch-kvm-centos-7-rhel-7/
+https://github.com/openvswitch/ovs/blob/master/rhel/README.RHEL.rst
+https://blog.scottlowe.org/2013/02/07/exploring-rhel-ovs-integrations/
+
+# HOSTAPD
+https://www.shellvoide.com/wifi/setup-wireless-access-point-hostapd-dnsmasq-linux/
+https://www.osradar.com/building-your-own-wireless-access-point-on-top-of-centos7/
+
+## 
+https://docs.openshift.com/container-platform/4.2/installing/installing_bare_metal/installing-bare-metal.html#installation-user-infra-machines-pxe_installing-bare-metal

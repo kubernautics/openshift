@@ -1,8 +1,0 @@
-[Match]
-Name=eth0
-
-[Network]
-Address=10.10.20.3/24
-Gateway=10.10.20.1
-DNS=10.10.20.1
-Domains=ministack.dev
