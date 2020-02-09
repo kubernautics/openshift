@@ -1,8 +1,9 @@
-# Stage 02 -- Gateway Standup : Build OpenWRT LXD Gateway & Firewall Container
-## Review checklist of prerequisites:
-0. Completed Stage 00
-1. Completed Stage 01
+# Part 02 -- [OpenWRT]: Build LXD Virtual Firewall Gateway Container
      
+### Prerequisites:
+  + [01 Host Hypervisor - Bare Metal]
+  + [02 CloudCtl RDP Bastion - LXD Container]
+    
 --------------------------------------------------------------------------------
 # Part 00 -- Build Gateway Container
 #### 00\. Write 'openwrt' LXD Profile
