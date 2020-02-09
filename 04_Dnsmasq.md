@@ -49,13 +49,13 @@ sudo podman run \
 
 <!-- Markdown link & img dfn's -->
 [Repo Module]:/module/dnsmasq
-[01 host hypervisor                - bare metal]: (/module/host/README.md)
-[02 cloudctl rdp bastion        - lxd container]: (/module/cloudctl/README.md)
-[03 vfw firewall & gateway        - lxd container]: (/module/openwrt/README.md)
-[04 dns & dhcp service            - oci podman container]: (/module/dnsmasq/README.md)
-[05 application router proxy    - oci podman container]: (/module/haproxy/README.md)
-[06 simple artifact server        - oci podman container]: (/module/nginx/README.md)
-[07 tftp boot artifact server    - oci podman container]: (/module/tftpd/README.md)
 [alpine linux]: https://alpinelinux.org/
 [dnsmasq]: http://www.thekelleys.org.uk/dnsmasq/doc.html
 [podman]: https://podman.io
+[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCtl.md
+[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
+[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
+[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
+[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
