@@ -1,11 +1,11 @@
-# [Dnsmasq]: DHCP & DNS Service
+# Part 04 -- [Dnsmasq]: DHCP & DNS Service
 [![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-dnsmasq/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-dnsmasq/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-dnsmasq?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-dnsmasq)    
 [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-dnsmasq)  ||  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
 
 ## Prerequisites:
-  + [01 Host Hypervisor				- Bare Metal](/module/host/README.md)
-  + [02 CloudCtl RDP Bastion		- LXD Container](/module/cloudctl/README.md)
-  + [03 VFW Firewall & Gateway		- LXD Container](/module/openwrt/README.md)
+  + [01 Host Hypervisor				- Bare Metal]()
+  + [02 CloudCtl RDP Bastion		- LXD Container]()
+  + [03 VFW Firewall & Gateway		- LXD Container]()
 
 #### 01\. Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
@@ -35,9 +35,9 @@ sudo podman run \
 └── README.md
 ```
 ## Next Steps:
-  + [05 Application Router Proxy	- OCI Podman Container]
-  + [06 Simple Artifact Server		- OCI Podman Container]
-  + [07 TFTP Boot Artifact Server	- OCI Podman Container]
+  + [05 Application Router Proxy	- OCI Podman Container]()
+  + [06 Simple Artifact Server		- OCI Podman Container]()
+  + [07 TFTP Boot Artifact Server	- OCI Podman Container]()
     
 <!-- Markdown link & img dfn's -->
 [Podman]:https://podman.io
