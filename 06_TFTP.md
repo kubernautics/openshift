@@ -13,7 +13,7 @@ sudo podman run \
                 --rm                                                           \
      docker.io/containercraft/ccio-tftpd
 ```
-EG: Test pull command
+######    Example Test Pull command
 ```sh
 ${PKG_MANAGER} install tftp-hpa
 tftp ${IP} -c get "about.txt"
