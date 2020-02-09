@@ -29,17 +29,13 @@ sudo podman run \
 ├── index.txt
 └── README.md
 ```
+#### REFRENCE
+  + `watch -c cat dnsmasq.leases`
+  + `arp -f`
+  + `https://www.redhat.com/en/blog/five-nines-dnsmasq`
+
 <!-- Markdown link & img dfn's -->
 [Podman]:https://podman.io
 [Dnsmasq]:http://www.thekelleys.org.uk/dnsmasq/doc.html
 [Application Router]:https://blog.openshift.com/ocp-custom-routing/
 
-/etc/dnsmasq.conf
-/etc/ethers 
-/etc/hosts 
-/var/lib/dnsmasq/dnsmasq.leases
-/etc/resolv.conf 
-# REFRENCE
-# watch -c cat dnsmasq.leases 
-# arp -f
-# https://www.redhat.com/en/blog/five-nines-dnsmasq
