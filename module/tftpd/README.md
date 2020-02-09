@@ -36,12 +36,11 @@ sudo podman run \
 ```sh
 .
 ├── aux
-│   └── config
-│       ├── dnsmasq.conf
-│       ├── dnsmasq.ethers
-│       ├── dnsmasq.hosts
-│       ├── dnsmasq.leases
-│       └── dnsmasq.resolv.conf
+│   ├── pxelinux.cfg
+│   │   ├── AC1E00
+│   │   └── default
+│   └── systemd
+│       └── tftp.service
 └── README.md
 ```
 
