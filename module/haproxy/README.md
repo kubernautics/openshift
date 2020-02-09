@@ -43,7 +43,7 @@ sudo podman run
   + [07 TFTP Boot Artifact Server	- OCI Podman Container]
 
 <!-- Markdown link & img dfn's -->
-[Repo Module Index]:/module/haproxy
+[Repo Module]:/module/haproxy
 [Podman]:https://podman.io
 [HAProxy]:https://haproxy.org
 [Alpine Linux]:https://alpinelinux.org/
