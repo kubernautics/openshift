@@ -1,9 +1,9 @@
-[![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-tftpd/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-tftpd/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-tftpd?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-tftpd)  - [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-tftpd) | [Repo Module](./module/tftp)
+[![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-tftpd/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-tftpd/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-tftpd?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-tftpd)    [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-tftpd) | [Repo Module](./module/tftp)
 
 # TFTP Service: Network PXE Boot Resources    
     
 ### Simple container running [tftp-hpa] on [Alpine Linux]
-#####  - Tftp will serve all all files mounted at `/tftpboot/`
+######    Tftp will serve all all files mounted at `/tftpboot/`
 ```sh
 sudo podman run \
                 --name ccio-tftpd                                              \
@@ -11,7 +11,7 @@ sudo podman run \
                 --volume ~/.ccio/ocp-mini-stack/module/tftp/aux/pxelinux.cfg:/tftpboot/pxelinux.cfg:ro \
                 --detach                                                       \
                 --rm                                                           \
-            containercraft/ccio-tftpd
+     docker.io/containercraft/ccio-tftpd
 ```
 EG: Test pull command
 ```sh
