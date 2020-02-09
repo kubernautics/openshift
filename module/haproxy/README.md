@@ -8,6 +8,7 @@
   + [03 VFW Firewall & Gateway		- LXD Container]
   + [04 DNS & DHCP Service			- OCI Podman Container]
     
+---------------------------------------------------------------------------------
 #### Step.01: Launch Simple [HAProxy] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run 
@@ -21,6 +22,9 @@ sudo podman run
     --volume   ~/.ccio/ocp-mini-stack/module/haproxy/aux/config/:/usr/local/etc/haproxy/:ro \
   docker.io/containercraft/ccio-haproxy:latest
 ```
+    
+---------------------------------------------------------------------------------
+    
 ### Next Steps:
   + [06 Simple Artifact Server		- OCI Podman Container]
   + [07 TFTP Boot Artifact Server	- OCI Podman Container]
