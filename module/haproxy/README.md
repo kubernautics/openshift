@@ -21,6 +21,7 @@ sudo podman run
     --volume   ~/.ccio/ocp-mini-stack/module/haproxy/aux/config/:/usr/local/etc/haproxy/:ro \
   docker.io/containercraft/ccio-haproxy:latest
 ```
+---------------------------------------------------------------------------------
 #### [Repo Module] Index
 ```sh
 .
