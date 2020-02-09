@@ -14,10 +14,10 @@ sudo podman run
     --rm                                                                                    \
     --detach                                                                                \
     --name     ocp-haproxy                                                                  \
-    --publish  ${ocp_ministack_SUBNET}.3:2022:22                                                           \
-    --publish  ${ocp_ministack_SUBNET}.3:69:6969                                                           \
-    --publish  ${ocp_ministack_SUBNET}.3:80:8080                                                           \
-    --publish  ${ocp_ministack_SUBNET}.3:443:8843                                                          \
+    --publish  ${ocp_ministack_SUBNET}.3:2022:22                                            \
+    --publish  ${ocp_ministack_SUBNET}.3:69:6969                                            \
+    --publish  ${ocp_ministack_SUBNET}.3:80:8080                                            \
+    --publish  ${ocp_ministack_SUBNET}.3:443:8843                                           \
     --volume   ~/.ccio/ocp-mini-stack/module/haproxy/aux/config/:/usr/local/etc/haproxy/:ro \
   docker.io/containercraft/ccio-haproxy:latest
 ```
