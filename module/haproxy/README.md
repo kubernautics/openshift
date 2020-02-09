@@ -58,7 +58,7 @@ sudo podman run
 [Load Balancer]:https://blog.openshift.com/an-open-source-load-balancer-for-openshift/
 [Application Router]:https://blog.openshift.com/ocp-custom-routing/
 [01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCtl.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
 [03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
 [04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
 [05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
