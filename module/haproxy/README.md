@@ -1,4 +1,3 @@
-# Part 05 -- [HAProxy]: [Application Router] & [Load Balancer] 
 [![Alpine Build](https://img.shields.io/github/workflow/status/containercraft/ccio-haproxy/DockerHubBuild/alpine?label=Alpine%20Build)](https://github.com/containercraft/ccio-haproxy/actions) [![Docker Pulls](https://img.shields.io/docker/pulls/containercraft/ccio-haproxy?label=DockerHub%20Pulls)](https://hub.docker.com/r/containercraft/ccio-haproxy)    
 [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-haproxy)  ||  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
     
@@ -9,6 +8,7 @@
   + [04 DNS & DHCP Service			- OCI Podman Container]
     
 ---------------------------------------------------------------------------------
+# Part 05 -- [HAProxy]: [Application Router] & [Load Balancer] 
 #### Step.01: Launch Simple [HAProxy] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run 
