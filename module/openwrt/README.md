@@ -61,33 +61,31 @@ watch -c lxc list
 ######  + [Repo Module] Index
 ```sh
 .
-├── aux
-│   ├── bin
-│   │   ├── build-cloudctl-profile
-│   │   ├── init-ansible-fedora
-│   │   ├── init-ocp-install-config-yml
-│   │   ├── init-ocp-pull-secrets
-│   │   └── start-nodes
-│   ├── config
-│   │   ├── bashrc
-│   │   ├── htpasswd.yaml
-│   │   ├── ssh-config
-│   │   ├── ssh-config.2
-│   │   └── users.htpasswd
-│   ├── doc
-│   │   ├── cloudctl.log
-│   │   └── oc.log
-│   └── inventory
-│       ├── ethers
-│       └── pxelinux.cfg
-│           ├── AC1E00
-│           ├── AC1E01
-│           └── default
-└── README.md
+├── bin
+│   └── run-gateway-config
+├── build.log
+├── config
+│   ├── dnsmasq.conf
+│   └── profile-lxd-openwrt.yaml
+└── openwrt
+    └── config
+        ├── dhcp
+        ├── dropbear
+        ├── firewall
+        ├── hosts
+        ├── luci
+        ├── network
+        ├── ocp4
+        ├── rpcd
+        ├── script
+        ├── squid
+        ├── system
+        ├── ucitrack
+        └── uhttpd
 ```
     
 <!-- Markdown link & img dfn's -->
-[Repo Module]:/module/cloudctl
+[Repo Module]:/module/openwrt
 [01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
 [02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
 [03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
