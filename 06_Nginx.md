@@ -37,7 +37,7 @@ sudo podman run \
 .
 ├── aux
 │   ├── bin
-│   │   └── artifact-scrape-mirror
+│   │   └── scrape-artifact-mirrors
 │   ├── config
 │   │   ├── default.conf
 │   │   └── nginx.conf
