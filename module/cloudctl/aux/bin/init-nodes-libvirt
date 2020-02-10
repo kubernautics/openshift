@@ -1,7 +1,6 @@
 #!/bin/bash -x
-dir_OCP4_PROFILE=${HOME}/.ccio/ocp-mini-stack/build
-yml_OCP4_CONFIG=${dir_OCP4_PROFILE}/install-config.yaml
-mkdir -p ${dir_OCP4_PROFILE} 2>/dev/null
+dir_OCP4_INVENTORY=${HOME}/.ccio/ocp-mini-stack/build/inventory
+mkdir -p ${dir_OCP4_INVENTORY} 2>/dev/null
 #################################################################################
 # Logging Function
 echo_log () {
@@ -100,7 +99,7 @@ echo_log 0 "Creating Libvirt VM ${name_FULL}"
 stage_pxe_cfg_worker () {
 echo_log 0 "Generating default pxelinux.cfg boot file..."
 
-cat <<EOF >/root/inventory/pxelinux.cfg/default
+cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/default
 default coreos
 prompt 0
 label coreos
@@ -108,7 +107,7 @@ label coreos
   kernel  http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://httpd.ocp4.ministack.dev/ignition/worker.ign
   append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/worker.ign
 EOF
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/default"
+echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/default"
 }
 
 #################################################################################
@@ -117,7 +116,7 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >/root/inventory/pxelinux.cfg/${pxe_MASTERF}
+cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}
 default coreos
 prompt 0
 label coreos
@@ -125,7 +124,7 @@ label coreos
   kernel  http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://httpd.ocp4.ministack.dev/ignition/master.ign
   append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/master.ign
 EOF
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/${pxe_MASTERF}"
+echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
@@ -134,7 +133,7 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >/root/inventory/pxelinux.cfg/${pxe_MASTERF}
+cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}
 default coreos
 prompt 0
 label coreos
@@ -143,7 +142,7 @@ label coreos
   append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/master.ign
 EOF
 
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/${pxe_MASTERF}"
+echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
@@ -173,8 +172,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers & write pxelinux menu seed files
       eth0_IP='172.30.0.30'
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
+      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
       stage_pxe_cfg_bootstrap
 
 
@@ -194,8 +193,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers & write pxelinux menu seed files
       eth0_IP="172.30.1.3${count}"
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
+      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
 
       # Init node
       spawn_build ${vm_master_RAM}
@@ -216,8 +215,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers
       eth0_IP=$(echo 172.30.2.$(echo ${count} | sed 's/0/4/g'))
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
+      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_INVENTORY}/ethers
 
       # Init node
       spawn_build ${vm_worker_RAM}
@@ -242,10 +241,10 @@ run_clean () {
     ovs-vsctl del-port $i;
   done
   
-  rm    -rf /root/inventory/pxelinux.cfg 2>/dev/null
-  mkdir -p  /root/inventory/pxelinux.cfg
+  rm    -rf ${dir_OCP4_INVENTORY}/pxelinux.cfg 2>/dev/null
+  mkdir -p  ${dir_OCP4_INVENTORY}/pxelinux.cfg
   
-  echo '' > /root/inventory/ethers
+  echo '' > ${dir_OCP4_INVENTORY}/ethers
 }
 
 #################################################################################
