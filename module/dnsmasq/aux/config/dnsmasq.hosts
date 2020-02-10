@@ -6,12 +6,12 @@
 172.10.0.1       gateway.ocp.ministack.dev   gateway
 172.10.0.3      cloudctl.ocp.ministack.dev   cloudctl
 172.10.0.3       haproxy.ocp.ministack.dev   haproxy 
+172.10.0.3       dnsmasq.ocp.ministack.dev   dnsmasq
+172.10.0.3          tftp.ocp.ministack.dev   tftp
+172.10.0.3         nginx.ocp.ministack.dev   nginx 
 172.10.0.5           nfs.ocp.ministack.dev   nfs 
-172.10.0.7       dnsmasq.ocp.ministack.dev   dnsmasq
-172.10.0.8          tftp.ocp.ministack.dev   tftp
-172.10.0.9         httpd.ocp.ministack.dev   httpd 
+172.10.0.3         squid.ocp.ministack.dev   squid
 172.10.0.11     simpleca.ocp.ministack.dev   simpleca 
-172.10.0.20        squid.ocp.ministack.dev   squid
 172.10.0.21          ipa.ocp.ministack.dev   ipa 
 #################################################################################
 172.10.0.30    bootstrap.ocp.ministack.dev   bootstrap
