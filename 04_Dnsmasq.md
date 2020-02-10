@@ -16,6 +16,7 @@ sudo podman run \
     --name    ocp-dnsmasq                                                                                     \
     --cap-add=NET_ADMIN                                                                                       \
     --publish ${ocp_ministack_SUBNET}.3:53:53/udp                                                             \
+    --publish ${ocp_ministack_SUBNET}.3:67:67/udp                                                             \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.conf:/etc/dnsmasq.conf                 \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.ethers:/etc/ethers                     \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts                       \
