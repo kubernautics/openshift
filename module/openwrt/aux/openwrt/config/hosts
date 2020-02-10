@@ -8,7 +8,7 @@
 # Backend Infrastructure
 172.10.0.1    gateway.ocp4.ministack.dev   gateway
 172.10.0.3   cloudctl.ocp4.ministack.dev   cloudctl
-172.10.0.4    haproxy.ocp4.ministack.dev   haproxy 
+172.10.0.3    haproxy.ocp4.ministack.dev   haproxy 
 172.10.0.5        nfs.ocp4.ministack.dev   nfs 
 172.10.0.7    dnsmasq.ocp4.ministack.dev   dnsmasq
 172.10.0.8       tftp.ocp4.ministack.dev   tftp
@@ -31,9 +31,9 @@
 
 #################################################################################
 # OCP Application Router Reserved DNS Spaces
-172.10.0.4    apps.ocp4.ministack.dev      apps
-172.10.0.4     api.ocp4.ministack.dev      api
-172.10.0.4 api-int.ocp4.ministack.dev      api-int
+172.10.0.3    apps.ocp4.ministack.dev      apps
+172.10.0.3     api.ocp4.ministack.dev      api
+172.10.0.3 api-int.ocp4.ministack.dev      api-int
 #################################################################################
 # OCP Worker Nodes
 172.10.3.41  worker01.ocp4.ministack.dev   worker01
