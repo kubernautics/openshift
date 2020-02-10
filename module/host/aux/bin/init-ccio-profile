@@ -13,13 +13,24 @@ clear
 }
 
 #################################################################################
-prompt_subnet () {
-echo "    Please enter a valid /24 subnet:
-      EG: 10.10.0.0
+prompt_ocp_subnet () {
+echo "    Please enter a valid /16 subnet for the 'openshift' network bridge:
+      EG: 172.10.0.0
       "
 read -p '    Subnet: ' input_SUBNET
 
 ocp_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
+
+}
+
+#################################################################################
+prompt_int_subnet () {
+echo "    Please enter a valid /24 subnet for the 'internal' network bridge:
+      EG: 10.10.0.0
+      "
+read -p '    Subnet: ' input_SUBNET
+
+int_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
 
 }
 
@@ -90,6 +101,7 @@ export ccio_SSH_UNAME="${provider_UNAME}"
 
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
+export int_ministack_SUBNET="${int_ministack_SUBNET}"
 export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
 
@@ -156,7 +168,8 @@ done
 #################################################################################
 run () {
 load_vars
-prompt_subnet
+prompt_ocp_subnet
+prompt_int_subnet
 prompt_provider_uname
 prompt_pwd
 write_profile
