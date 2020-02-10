@@ -1,4 +1,5 @@
 #!/bin/bash
+name_BASE="ocp.ministack.dev"
 #################################################################################
 # Logging Function
 echo_log () {
