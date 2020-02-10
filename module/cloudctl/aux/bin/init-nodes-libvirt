@@ -87,7 +87,7 @@ echo_log 0 "Creating Libvirt VM ${name_FULL}"
     --connect=qemu+ssh://root@10.10.10.2/system \
     --boot 'hd,network,useserial=on' \
     --description "RHCOS OCP4 ${node_ROLE}" \
-    --network network=openshift,model=virtio,mac=${eth0_HWADDR} \
+    --network network=ocp-mini-stack,model=virtio,mac=${eth0_HWADDR} \
     --disk path=${storage_POOL}/${name_FULL}_vda.qcow2,format=qcow2,bus=virtio,sparse=true,cache=unsafe,size=${root_DISK}
 
   # Halt System (will boot manually later)
