@@ -26,7 +26,7 @@ vm_CPU=8            # CPU Count
 vm_master_RAM=16384 # in Megabytes
 vm_worker_RAM=16384 # in Megabytes
 root_DISK=120       # in Gigabytes
-master_COUNT=3      # Set VM spawn count
+master_COUNT=03      # Set VM spawn count
 worker_COUNT=02     # Set VM spawn count
 storage_POOL="/var/lib/libvirt/images"
 
@@ -182,7 +182,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
   # Build Masters
   elif [[ ${node_ROLE} == "master" ]]; then
-    for count in $(seq -w 1 ${master_COUNT}); do
+    for count in $(seq -w 01 ${master_COUNT}); do
 
       # Set VM Name & Declare Build
       name_FULL="${node_ROLE}${count}.${name_BASE}"

@@ -17,7 +17,7 @@ echo_log () {
 run_boot_all () {
 
   
-  #virsh -c qemu+ssh://root@10.10.10.2/system start bootstrap.ocp4.ministack.dev
+  #virsh -c qemu+ssh://root@10.10.10.2/system start bootstrap.ocp.ministack.dev
   echo_log 0 "Waiting for bootstrap node to start ... "
   #sleep 150
   for guest_TARGET in $(virsh -c qemu+ssh://root@10.10.10.2/system list --all | grep ${name_BASE} | grep master | grep off | awk '{print $2}'); do
