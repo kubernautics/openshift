@@ -10,7 +10,11 @@
 # Part 08 -- Deploy: Write Final Configuration Files & Build/Deploy Nodes
 ####    Step.01 Stash OCP Pull Secrets
 ```sh
-. ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-ocp-pull-secrets
+ . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-ocp-pull-secrets
+```
+####    Step.02 Initialize Cluster Libvirt Virtual Machines
+```sh
+ . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-nodes-libvirt
 ```
     
     
