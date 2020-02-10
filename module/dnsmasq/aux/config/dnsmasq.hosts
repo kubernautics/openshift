@@ -5,7 +5,7 @@
 #################################################################################
 172.10.0.1       gateway.ocp.ministack.dev   gateway
 172.10.0.3      cloudctl.ocp.ministack.dev   cloudctl
-172.10.0.4       haproxy.ocp.ministack.dev   haproxy 
+172.10.0.3       haproxy.ocp.ministack.dev   haproxy 
 172.10.0.5           nfs.ocp.ministack.dev   nfs 
 172.10.0.7       dnsmasq.ocp.ministack.dev   dnsmasq
 172.10.0.8          tftp.ocp.ministack.dev   tftp
@@ -25,7 +25,7 @@
 172.10.2.41     worker01.ocp.ministack.dev   worker01
 172.10.2.42     worker02.ocp.ministack.dev   worker02
 #################################################################################
-172.10.0.4          apps.ocp.ministack.dev
-172.10.0.4           api.ocp.ministack.dev
-172.10.0.4       api-int.ocp.ministack.dev
+172.10.0.3          apps.ocp.ministack.dev
+172.10.0.3           api.ocp.ministack.dev
+172.10.0.3       api-int.ocp.ministack.dev
 
