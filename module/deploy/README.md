@@ -15,6 +15,11 @@
 ####    Step.02 Initialize Cluster Libvirt Virtual Machines
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-nodes-libvirt
+ for i in ocp-tftpd ocp-nginx ocp-haproxy ocp-dnsmasq; do docker restart $i; done
+```
+####    Step.02 Initialize Cluster Libvirt Virtual Machines
+```sh
+ . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/start-nodes
 ```
     
     
