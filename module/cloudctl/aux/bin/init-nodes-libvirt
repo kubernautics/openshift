@@ -231,9 +231,9 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 run_clean () {
   echo_log 0 "Executing PreRun Cleanup/Prep Routine"
 
-  for guest_TARGET in $(virsh list --all | grep   ${name_BASE}); do
-	  virsh -c qemu+ssh://root@10.10.10.2/system  ${guest_TARGET} 2>/dev/null
-	  virsh -c qemu+ssh://root@10.10.10.2/system  ${guest_TARGET} 2>/dev/null
+  for guest_TARGET in $(virsh list --all | grep ${name_BASE}); do
+	  virsh -c qemu+ssh://root@10.10.10.2/system destroy  ${guest_TARGET} 2>/dev/null
+	  virsh -c qemu+ssh://root@10.10.10.2/system undefine ${guest_TARGET} 2>/dev/null
   done
   rm    -rf /var/lib/libvirt/images/*${name_BASE}* 2>/dev/null
 
