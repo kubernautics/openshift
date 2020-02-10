@@ -1,6 +1,10 @@
 #!/bin/bash -x
-dir_OCP4_MODULES=${HOME}/.ccio/ocp-mini-stack/module
-dir_OCP4_INVENTORY=${HOME}/.ccio/ocp-mini-stack/build/inventory
+dir_OCP4_HTML="${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html"
+dir_OCP4_TFTP="${HOME}/.ccio/ocp-mini-stack/module/tftpd/aux"
+dir_OCP4_DNSMASQ="${HOME}/.ccio/ocp-mini-stack/module/dnsmasq/aux"
+dir_OCP4_MODULES="${HOME}/.ccio/ocp-mini-stack/module"
+
+dir_OCP4_INVENTORY="${HOME}/.ccio/ocp-mini-stack/build/inventory"
 mkdir -p ${dir_OCP4_INVENTORY} 2>/dev/null
 #################################################################################
 # Logging Function
@@ -98,9 +102,9 @@ echo_log 0 "Creating Libvirt VM ${name_FULL}"
 
 #################################################################################
 stage_pxe_cfg_worker () {
-echo_log 0 "Generating default pxelinux.cfg boot file..."
+echo_log 0 "Generating default pxelinux.cfg boot files..."
 
-cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/default
+cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/default
 default coreos
 prompt 0
 label coreos
@@ -108,7 +112,7 @@ label coreos
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign
 EOF
-echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/default"
+echo_log "Boot configuration file written to ${dir_OCP4_HTML}/boot/pxelinux.cfg/default"
 }
 
 #################################################################################
@@ -117,7 +121,7 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}
+cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
 default coreos
 prompt 0
 label coreos
@@ -125,7 +129,7 @@ label coreos
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
 EOF
-echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}"
+echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
@@ -134,7 +138,7 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}
+cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
 default coreos
 prompt 0
 label coreos
@@ -143,7 +147,7 @@ label coreos
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
 EOF
 
-echo_log "Boot configuration file written to ${dir_OCP4_INVENTORY}/pxelinux.cfg/${pxe_MASTERF}"
+echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
@@ -240,10 +244,10 @@ run_clean () {
 
   #ssh root@base.ocp.ministack.dev ovs-clear
   
-  rm    -rf ${dir_OCP4_INVENTORY}/pxelinux.cfg 2>/dev/null
-  mkdir -p  ${dir_OCP4_INVENTORY}/pxelinux.cfg
+  rm    -rf ${dir_OCP4_TFTP}/pxelinux.cfg/* 2>/dev/null
+  mkdir -p  ${dir_OCP4_TFTP}/pxelinux.cfg 2>/dev/null
   
-  echo '' > ${dir_OCP4_INVENTORY}/ethers
+  echo '' > ${dir_OCP4_DNSMASQ}/config/dnsmasq.ethers
 }
 
 #################################################################################
