@@ -17,7 +17,7 @@ echo_log () {
 
 #################################################################################
 # Priviledge Check
-[[ $EUID -ne 0 ]] && echo_log 1 "This script must be run as root!"
+#[[ $EUID -ne 0 ]] && echo_log 1 "This script must be run as root!"
 
 #################################################################################
 # Virtual Machine Variables
