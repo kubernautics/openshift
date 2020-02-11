@@ -286,7 +286,7 @@ run_clean
 run_spawn bootstrap
 run_spawn master
 run_spawn worker
-req_boot
+#req_boot
 }
 
 run_core
