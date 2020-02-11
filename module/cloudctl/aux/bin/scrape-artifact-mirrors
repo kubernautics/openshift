@@ -11,7 +11,7 @@ list_ARTIFACTS="$(\
                   lynx -dump                   \
                      -nolist                   \
                      -dont_wrap_pre            \
-                  ${url_ARTIFACTS}             \
+                  ${grep_ARTIFACTS}            \
                   | grep -E ${grep_artifacts}  \
                   | awk '{print $3}'           \
                   )"
