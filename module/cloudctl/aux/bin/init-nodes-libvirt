@@ -262,11 +262,11 @@ run_clean () {
 
   #ssh root@base.ocp.ministack.dev ovs-clear
   
-  echo '' > ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
   rm    -rf ${dir_OCP4_TFTP}/pxelinux.cfg/* 2>/dev/null
   mkdir -p  ${dir_OCP4_TFTP}/pxelinux.cfg 2>/dev/null
   
   echo '' > ${dir_OCP4_DNSMASQ}/config/dnsmasq.ethers
+  echo '' > ${dir_OCP4_DNSMASQ}/config/dnsmasq.dhcp  
 }
 
 #################################################################################
