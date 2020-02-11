@@ -155,7 +155,8 @@ spawn_prep () {
 echo_log 0 "Generating interface profile"
 
   # Generate unique repeatable eth0 MAC address
-  eth0_HWADDR=$(echo "${name_FULL} openshift eth0 libvirt" | md5sum \
+  eth0_HWADDR=$(echo "$HOSTNAME ${name_FULL} ocp-mini-stack ${eth0_IP} libvirt" \
+    | md5sum \
     | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')
 
 }
