@@ -144,11 +144,11 @@ cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/default
 default worker
 UI menu.32
 timeout 60
+prompt 1
 EOF
 
 #cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
 #default bootstrap
-#prompt 0
 
 cat <<EOF >>${dir_OCP4_TFTP}/pxelinux.cfg/default
 
