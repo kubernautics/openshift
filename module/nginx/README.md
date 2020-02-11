@@ -15,12 +15,12 @@
 sudo podman run \
     --rm                                                                                                  \
     --detach                                                                                              \
-    --name     ccio-nginx                                                                                 \
+    --name     ocp-nginx                                                                                  \
     --publish  ${ocp_ministack_SUBNET}.3:8080:8080                                                        \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/html/:/var/www/html/:ro                            \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/nginx.conf:/etc/nginx/nginx.conf            \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/default.conf:/etc/nginx/conf.d/default.conf \
-  docker.io/containercraft/ocp-nginx
+  docker.io/containercraft/ccio-nginx
 ```
     
     
