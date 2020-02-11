@@ -13,7 +13,7 @@ list_ARTIFACTS="$(\
                      -dont_wrap_pre            \
                   ${url_ARTIFACTS}             \
                   | grep -E ${grep_artifacts}  \
-                  | awk '{print $3}'
+                  | awk '{print $3}'           \
                   )"
 }
 
