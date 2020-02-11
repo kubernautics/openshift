@@ -244,7 +244,8 @@ run_clean () {
 	  virsh -c qemu+ssh://root@10.10.10.2/system destroy  ${guest_TARGET} 2>/dev/null
 	  virsh -c qemu+ssh://root@10.10.10.2/system undefine ${guest_TARGET} 2>/dev/null
   done
-  rm    -rf /var/lib/libvirt/images/*${name_BASE}* 2>/dev/null
+   ssh root@base.ocp.ministack.dev 'rm -rf /var/lib/libvirt/images/*${name_BASE}* 2>/dev/null'
+   #rm -rf  /var/lib/libvirt/images/*.ocp.ministack.dev*'
 
   #ssh root@base.ocp.ministack.dev ovs-clear
   
