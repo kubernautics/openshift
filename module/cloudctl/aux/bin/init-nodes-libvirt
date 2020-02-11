@@ -105,9 +105,11 @@ stage_pxe_cfg_worker () {
 echo_log 0 "Generating default pxelinux.cfg boot files..."
 
 cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/default
-default coreos
-prompt 0
-label coreos
+default worker
+UI menu.32
+label worker
+timeout 60
+
   menu default
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign
@@ -121,14 +123,16 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
-default coreos
-prompt 0
-label coreos
+#cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
+
+cat <<EOF >>${dir_OCP4_TFTP}/pxelinux.cfg/default
+
+label master
   menu default
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
 EOF
+
 echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
@@ -138,10 +142,13 @@ eth0_HEXIP=$(gethostip -x ${eth0_IP})
 pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
-default coreos
-prompt 0
-label coreos
+#cat <<EOF >${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}
+#default bootstrap
+#prompt 0
+
+cat <<EOF >>${dir_OCP4_TFTP}/pxelinux.cfg/default
+
+label bootstrap
   menu default
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
