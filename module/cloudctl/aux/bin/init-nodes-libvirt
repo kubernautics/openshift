@@ -144,7 +144,7 @@ prompt 0
 label coreos
   menu default
   kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
-  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
+  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
 EOF
 
 echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
@@ -185,6 +185,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       # Init node
       spawn_build ${vm_master_RAM}
 
+      exit
   # Build Masters
   elif [[ ${node_ROLE} == "master" ]]; then
     for count in $(seq -w 01 ${master_COUNT}); do
