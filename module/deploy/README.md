@@ -12,10 +12,15 @@
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-ocp-pull-secrets
 ```
-####    Step.02 Initialize Cluster Libvirt Virtual Machines
+####    Step.02 Initialize Cluster Libvirt Virtual Machines & Restart Services
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-nodes-libvirt
  for i in ocp-tftpd ocp-nginx ocp-haproxy ocp-dnsmasq; do docker restart $i; done
+```
+####    Step.02 
+```sh
+curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install
+curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc
 ```
 ####    Step.02 Initialize Cluster Libvirt Virtual Machines
 ```sh
