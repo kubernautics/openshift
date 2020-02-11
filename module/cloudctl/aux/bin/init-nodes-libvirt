@@ -201,7 +201,6 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_prep
 
       # Log to /etc/ethers & write pxelinux menu seed files
-      set -x
       eth0_IP="172.30.1.3${build_COUNT}"
       echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
       echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
@@ -210,7 +209,6 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_build ${vm_master_RAM}
       stage_pxe_cfg_master
 
-      exit
     done
     
   # Build Workers
