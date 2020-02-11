@@ -22,6 +22,12 @@
 curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install
 curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc
 ```
+####    Step.02 Generate ignition files
+```sh
+ cp ~/.ccio/ocp-mini-stack/build/install-config.yaml ~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition
+ openshift-install create manifests --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
+ openshift-install create ignition-configs --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
+```
 ####    Step.02 Initialize Cluster Libvirt Virtual Machines
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/start-nodes
