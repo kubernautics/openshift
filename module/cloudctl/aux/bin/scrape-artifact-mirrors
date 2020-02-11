@@ -18,8 +18,8 @@ list_ARTIFACTS="lynx -dump \
 
 run_curl () {
 for artifact in ${list_ARTIFACTS}; do
-    curl --locationl ${url_ARTIFACTS}/${artifact} \
-         --output    ${dir_OCP_HTML}/boot/${artifact}
+    curl --location ${url_ARTIFACTS}/${artifact} \
+         --output   ${dir_OCP_HTML}/boot/${artifact}
 done
 }
 
