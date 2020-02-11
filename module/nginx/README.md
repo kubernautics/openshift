@@ -20,7 +20,7 @@ sudo podman run \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/html/:/var/www/html/:ro                            \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/nginx.conf:/etc/nginx/nginx.conf            \
     --volume   ~/.ccio/ocp-mini-stack/module/nginx/aux/config/default.conf:/etc/nginx/conf.d/default.conf \
-  docker.io/containercraft/ccio-nginx
+  docker.io/containercraft/ocp-nginx
 ```
     
     
