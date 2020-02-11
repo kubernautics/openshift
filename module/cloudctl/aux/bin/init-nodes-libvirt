@@ -187,7 +187,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       eth0_IP='172.30.0.30'
       echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
       echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
-      echo "dhcp-host=${eth0_HWADDR},${node_ROLE},${eth0_IP}" | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
+      echo "dhcp-host=${eth0_HWADDR},${node_ROLE},${eth0_IP}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
       stage_pxe_cfg_bootstrap
 
 
@@ -214,7 +214,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       eth0_IP="172.30.1.3${build_COUNT}"
       echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
       echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
-      echo "dhcp-host=${eth0_HWADDR},${name_SMOL},${eth0_IP}" | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
+      echo "dhcp-host=${eth0_HWADDR},${name_SMOL},${eth0_IP}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
 
       # Init node
       spawn_build ${vm_master_RAM}
@@ -238,7 +238,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       eth0_IP=$(echo 172.30.2.$(echo ${count} | sed 's/0/4/g'))
       echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
       echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
-      echo "dhcp-host=${eth0_HWADDR},${name_SMOL},${eth0_IP}" | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
+      echo "dhcp-host=${eth0_HWADDR},${name_SMOL},${eth0_IP}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.dhcp
 
       # Init node
       spawn_build ${vm_worker_RAM}
