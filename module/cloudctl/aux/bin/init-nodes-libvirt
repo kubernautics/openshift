@@ -187,7 +187,11 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
   # Build Masters
   elif [[ ${node_ROLE} == "master" ]]; then
+    master_COUNT=0
     for count in $(seq -w 01 ${master_COUNT}); do
+      
+      # Track build count
+      master_COUNT=$((${master_COUNT}+1))
 
       # Set VM Name & Declare Build
       name_FULL="${node_ROLE}${count}.${name_BASE}"
@@ -198,7 +202,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers & write pxelinux menu seed files
       set -x
-      eth0_IP="172.30.1.3${count}"
+      eth0_IP="172.30.1.3${master_COUNT}"
       echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
       echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a ${dir_OCP4_MODULES}/dnsmasq/aux/config/dnsmasq.ethers
 
