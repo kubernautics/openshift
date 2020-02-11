@@ -7,13 +7,14 @@ url_ARTIFACTS="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 grep_ARTIFACTS='x86_64-metal.raw|x86_64-installer-kernel|x86_64-installer-initramfs.img'
 
 run_list () {
-list_ARTIFACTS="lynx -dump \
+list_ARTIFACTS="$(\
+                  lynx -dump                   \
                      -nolist                   \
                      -dont_wrap_pre            \
                   ${url_ARTIFACTS}             \
                   | grep -E ${grep_artifacts}  \
                   | awk '{print $3}'
-               "
+                  )"
 }
 
 run_curl () {
