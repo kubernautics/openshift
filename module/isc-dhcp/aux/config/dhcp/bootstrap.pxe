@@ -1,0 +1,6 @@
+
+host bootstrap {
+  fixed-address  172.10.0.30;
+  option host-name "bootstrap.ocp.ministack.dev";
+  hardware ethernet 02:56:1c:f4:f4:dd;
+}

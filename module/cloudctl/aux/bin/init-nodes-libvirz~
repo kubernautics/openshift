@@ -1,4 +1,12 @@
-#!/bin/bash
+#!/bin/bash -x
+dir_OCP4_MODULES="${HOME}/.ccio/ocp-mini-stack/module"
+dir_OCP4_DNSMASQ="${dir_OCP4_MODULES}/dnsmasq/aux"
+dir_OCP4_HTML="${dir_OCP4_MODULES}/nginx/aux/html"
+dir_OCP4_TFTP="${dir_OCP4_MODULES}/tftpd/aux/tftpboot/pxelinux.cfg"
+dir_OCP4_DHCP="${dir_OCP4_MODULES}/isc-dhcp/aux/config/dhcp"
+
+dir_OCP4_INVENTORY="${HOME}/.ccio/ocp-mini-stack/build/inventory"
+mkdir -p ${dir_OCP4_INVENTORY} 2>/dev/null
 #################################################################################
 # Logging Function
 echo_log () {
@@ -15,32 +23,32 @@ echo_log () {
 
 #################################################################################
 # Priviledge Check
-[[ $EUID -ne 0 ]] && echo_log 1 "This script must be run as root!"
+#[[ $EUID -ne 0 ]] && echo_log 1 "This script must be run as root!"
 
 #################################################################################
 # Virtual Machine Variables
-name_BASE="ocp4.ministack.dev"
+name_BASE="ocp.ministack.dev"
 vm_CPU=8            # CPU Count
 vm_master_RAM=16384 # in Megabytes
 vm_worker_RAM=16384 # in Megabytes
 root_DISK=120       # in Gigabytes
-master_COUNT=3      # Set VM spawn count
+master_COUNT=03     # Set VM spawn count
 worker_COUNT=02     # Set VM spawn count
 storage_POOL="/var/lib/libvirt/images"
 
 #################################################################################
 run_boot_all () {
-  virsh start bootstrap.ocp4.ministack.dev
+  virsh -c qemu+ssh://root@10.10.10.2/system start bootstrap.ocp.ministack.dev
   echo_log 0 "Waiting for bootstrap node to start ... "
   sleep 150
-  for guest_TARGET in $(virsh list --all | grep ${name_BASE} | grep master | grep "off" | awk '{print $2}'); do
-	  virsh start ${guest_TARGET}
+  for guest_TARGET in $(virsh -c qemu+ssh://root@10.10.10.2/system list --all | grep ${name_BASE} | grep master | grep "off" | awk '{print $2}'); do
+	  virsh -c qemu+ssh://root@10.10.10.2/system start ${guest_TARGET}
 	  sleep 8
   done
   echo_log 0 "Waiting for masters to install ... "
   sleep 360
-  for guest_TARGET in $(virsh list --all | grep ${name_BASE} | grep master | grep "off" | awk '{print $2}'); do
-	  virsh start ${guest_TARGET}
+  for guest_TARGET in $(virsh -c qemu+ssh://root@10.10.10.2/system list --all | grep ${name_BASE} | grep master | grep "off" | awk '{print $2}'); do
+	  virsh -c qemu+ssh://root@10.10.10.2/system start ${guest_TARGET}
 	  sleep 8
   done
 }
@@ -82,64 +90,63 @@ echo_log 0 "Creating Libvirt VM ${name_FULL}"
     --vcpus=${vm_CPU} \
     --memory=${1} \
     --name=${name_FULL} \
+    --connect=qemu+ssh://root@10.10.10.2/system \
     --boot 'hd,network,useserial=on' \
-    --description "RHCOS OCP4 ${node_ROLE}" \
-    --network network=openshift,model=virtio,mac=${eth0_HWADDR} \
+    --description "RHCOS OCP ${node_ROLE}" \
+    --network network=ocp-mini-stack,model=virtio,mac=${eth0_HWADDR} \
     --disk path=${storage_POOL}/${name_FULL}_vda.qcow2,format=qcow2,bus=virtio,sparse=true,cache=unsafe,size=${root_DISK}
 
   # Halt System (will boot manually later)
-  sleep 1 && virsh destroy ${name_FULL} 2>/dev/null
+  sleep 1 && virsh -c qemu+ssh://root@10.10.10.2/system destroy ${name_FULL} 2>/dev/null
 
 }
 
 #################################################################################
 stage_pxe_cfg_worker () {
-echo_log 0 "Generating default pxelinux.cfg boot file..."
+echo_log 0 "Generating default worker pxelinux.cfg boot files..."
 
-cat <<EOF >/root/inventory/pxelinux.cfg/default
-default coreos
+cat <<EOF >${dir_OCP4_TFTP}/worker.cfg
 prompt 0
-label coreos
-  menu default
-  kernel  http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://httpd.ocp4.ministack.dev/ignition/worker.ign
-  append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/worker.ign
+default worker
+label   worker
+  menu  worker
+  kernel http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img
+  append coreos.inst=yes coreos.inst.install_dev=vda ip=dhcp rd.neednet=1 coreos.first_boot=1 console=tty0 console=ttyS0 coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign 
 EOF
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/default"
+echo_log "Boot configuration file written to ${dir_OCP4_HTML}/boot/pxelinux.cfg/default"
 }
 
 #################################################################################
 stage_pxe_cfg_master () {
-eth0_HEXIP=$(gethostip -x ${eth0_IP})
-pxe_MASTERF=${eth0_HEXIP/%??/}
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >/root/inventory/pxelinux.cfg/${pxe_MASTERF}
-default coreos
+cat <<EOF >${dir_OCP4_TFTP}/master.cfg
 prompt 0
-label coreos
-  menu default
-  kernel  http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://httpd.ocp4.ministack.dev/ignition/master.ign
-  append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/master.ign
+default master
+label   master
+  menu  master
+  kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
+  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
 EOF
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/${pxe_MASTERF}"
+
+echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
 stage_pxe_cfg_bootstrap () {
-eth0_HEXIP=$(gethostip -x ${eth0_IP})
-pxe_MASTERF=${eth0_HEXIP/%??/}
-echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
+echo_log 0 "Generating pxelinux.cfg bootstap boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >/root/inventory/pxelinux.cfg/${pxe_MASTERF}
-default coreos
-prompt 0
-label coreos
-  menu default
-  kernel  http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://httpd.ocp4.ministack.dev/boot/rhcos-4.2.0-x86_64-metal-bios.raw.gz coreos.inst.ignition_url=http://httpd.ocp4.ministack.dev/ignition/bootstrap.ign
-  append coreos.first_boot=1 coreos.config.url=http://httpd.ocp4.ministack.dev/ignition/master.ign
+
+cat <<EOF >${dir_OCP4_TFTP}/bootstrap.cfg
+timeout 0
+default bootstrap
+label   bootstrap
+  menu  bootstrap
+  kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
+  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
 EOF
 
-echo_log "Boot configuration file written to /root/inventory/pxelinux.cfg/${pxe_MASTERF}"
+echo_log "Boot configuration file written to ${dir_OCP4_TFTP}/pxelinux.cfg/${pxe_MASTERF}"
 }
 
 #################################################################################
@@ -147,9 +154,21 @@ spawn_prep () {
 echo_log 0 "Generating interface profile"
 
   # Generate unique repeatable eth0 MAC address
-  eth0_HWADDR=$(echo "${name_FULL} openshift eth0 libvirt" | md5sum \
+  eth0_HWADDR=$(echo "$HOSTNAME ${name_FULL} ocp-mini-stack ${eth0_IP} libvirt" \
+    | md5sum \
     | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')
 
+}
+
+#################################################################################
+write_dhcp_pxe_cfg () {
+cat <<EOF >>$1
+host ${node_ROLE} {
+  fixed-address  ${eth0_IP};
+  option host-name \"${node_ROLE}.${name_BASE}\";
+  hardware ethernet "$(echo ${eth0_HWADDR} | sed 's/\\//g')";
+}
+EOF
 }
 
 #################################################################################
@@ -169,8 +188,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers & write pxelinux menu seed files
       eth0_IP='172.30.0.30'
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/bootstrap.pxe"
       stage_pxe_cfg_bootstrap
 
 
@@ -179,9 +197,14 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
   # Build Masters
   elif [[ ${node_ROLE} == "master" ]]; then
-    for count in $(seq -w 1 ${master_COUNT}); do
+    build_COUNT=0
+    for count in $(seq -w 01 ${master_COUNT}); do
+      
+      # Track build count
+      build_COUNT=$((${build_COUNT}+1))
 
       # Set VM Name & Declare Build
+      name_SMOL="${node_ROLE}${count}"
       name_FULL="${node_ROLE}${count}.${name_BASE}"
       echo_log 0 "Initializing .. ${name_FULL}"
        
@@ -189,9 +212,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_prep
 
       # Log to /etc/ethers & write pxelinux menu seed files
-      eth0_IP="172.30.1.3${count}"
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      eth0_IP="172.30.1.3${build_COUNT}"
+      write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/master.pxe"
 
       # Init node
       spawn_build ${vm_master_RAM}
@@ -204,6 +226,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
     for count in $(seq -w 01 ${worker_COUNT}); do
 
       # Set VM Name & Declare Build
+      name_SMOL="${node_ROLE}${count}"
       name_FULL="${node_ROLE}${count}.${name_BASE}"
       echo_log 0 "Initializing .. ${name_FULL}"
 
@@ -212,8 +235,7 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 
       # Log to /etc/ethers
       eth0_IP=$(echo 172.30.2.$(echo ${count} | sed 's/0/4/g'))
-      echo "${eth0_HWADDR} ${name_FULL}" | sed 's/\\//g' | tee -a /root/inventory/ethers
-      echo "${eth0_HWADDR} ${eth0_IP}"   | sed 's/\\//g' | tee -a /root/inventory/ethers
+      write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/worker.pxe"
 
       # Init node
       spawn_build ${vm_worker_RAM}
@@ -228,25 +250,32 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
 run_clean () {
   echo_log 0 "Executing PreRun Cleanup/Prep Routine"
 
-  for guest_TARGET in $(virsh list --all | grep ${name_BASE}); do
-	  virsh destroy  ${guest_TARGET} 2>/dev/null
-	  virsh undefine ${guest_TARGET} 2>/dev/null
+  # Destroy & Undefine libvirt guests
+  for guest_TARGET in $(virsh -c qemu+ssh://root@10.10.10.2/system list --all | grep ${name_BASE}); do
+	  virsh -c qemu+ssh://root@10.10.10.2/system destroy  ${guest_TARGET} 2>/dev/null
+	  virsh -c qemu+ssh://root@10.10.10.2/system undefine ${guest_TARGET} 2>/dev/null
   done
-  rm    -rf /var/lib/libvirt/images/*${name_BASE}* 2>/dev/null
 
-  for i in $(ovs-vsctl show | awk '/error: /{print $7}'); do
-    ovs-vsctl del-port $i;
-  done
+  # Remove libvirt guest disk images
+  ssh root@10.10.10.2 'rm -rf /var/lib/libvirt/images/*${name_BASE}* 2>/dev/null'
+
+  # Clear straggling ovs interfaces
+  ssh root@10.10.10.2 'ovs-clear'
   
-  rm    -rf /root/inventory/pxelinux.cfg 2>/dev/null
-  mkdir -p  /root/inventory/pxelinux.cfg
-  
-  echo '' > /root/inventory/ethers
+  # Clear TFTP Boot Menu(s)
+  echo '' > ${dir_OCP4_TFTP}/worker.cfg
+  echo '' > ${dir_OCP4_TFTP}/master.cfg
+  echo '' > ${dir_OCP4_TFTP}/bootstrap.cfg
+
+  # Clear DHCP Boot Config(s)
+  echo '' > ${dir_OCP4_DHCP}/worker.pxe
+  echo '' > ${dir_OCP4_DHCP}/master.pxe
+  echo '' > ${dir_OCP4_DHCP}/bootstrap.pxe
 }
 
 #################################################################################
 safety_check () {
-safety_BOOL=$(virsh list --all | grep ${name_BASE} 2>&1 1>/dev/null; echo $?)
+safety_BOOL=$(virsh -c qemu+ssh://root@10.10.10.2/system list --all | grep ${name_BASE} 2>&1 1>/dev/null; echo $?)
 
   echo_log 0 "Executing PreRun Safety Check"
 
@@ -276,7 +305,7 @@ run_clean
 run_spawn bootstrap
 run_spawn master
 run_spawn worker
-req_boot
+#req_boot
 }
 
 run_core
