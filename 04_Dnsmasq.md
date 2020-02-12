@@ -13,6 +13,7 @@
 sudo podman run \
     --rm                                                                                                      \
     --detach                                                                                                  \
+    --cap-add=NET_ADMIN                                                                                       \
     --name    ocp-dnsmasq                                                                                     \
     --publish ${ocp_ministack_SUBNET}.3:53:53/udp                                                             \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts                       \
@@ -20,8 +21,6 @@ sudo podman run \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.resolv:/etc/resolv.conf                \
   docker.io/containercraft/ccio-dnsmasq:latest
 ```
-    --net=host                                                                                                \
-    --cap-add=NET_ADMIN                                                                                       \
     
     
 ---------------------------------------------------------------------------------
