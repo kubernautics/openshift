@@ -124,7 +124,7 @@ echo_log  0 "Boot configuration file written to ${dir_OCP4_TFTP}/worker.cfg"
 stage_pxe_cfg_master () {
 echo_log 0 "Generating pxelinux.cfg master boot file for host: ${eth0_IP} ${eth0_HEXIP}"
 
-cat <<EOF >${dir_OCP4_TFTP}/master.cfg
+cat <<EOF >${dir_OCP4_TFTP}/infra.cfg
 prompt 0
 default master
 label   master
@@ -133,7 +133,7 @@ label   master
   append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
 EOF
 
-echo_log 0 "Boot configuration file written to ${dir_OCP4_TFTP}/master.cfg"
+echo_log 0 "Boot configuration file written to ${dir_OCP4_TFTP}/infra.cfg"
 }
 
 #################################################################################
@@ -167,9 +167,9 @@ echo_log 0 "Generating interface profile"
 #################################################################################
 write_dhcp_pxe_cfg () {
 cat <<EOF >>$1
-host ${node_ROLE} {
+host ${node_ROLE}${name_NUM} {
   fixed-address  ${eth0_IP};
-  option host-name "${node_ROLE}.${name_BASE}";
+  option host-name "${node_ROLE}${name_NUM}.${name_BASE}";
   hardware ethernet $(echo ${eth0_HWADDR} | sed 's/\\//g');
 }
 EOF
@@ -191,7 +191,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_prep
 
       # Log to /etc/ethers & write pxelinux menu seed files
-      eth0_IP='172.30.0.30'
+      eth0_IP='172.10.0.30'
+      name_NUM=''
       write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/bootstrap.pxe"
       stage_pxe_cfg_bootstrap
 
@@ -216,8 +217,9 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_prep
 
       # Log to /etc/ethers & write pxelinux menu seed files
-      eth0_IP="172.30.1.3${build_COUNT}"
-      write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/master.pxe"
+      eth0_IP="172.10.1.3${build_COUNT}"
+      name_NUM="3${build_COUNT}"
+      write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/infra.pxe"
 
       # Init node
       spawn_build ${vm_master_RAM}
@@ -238,7 +240,8 @@ echo_log 0 "Initializing Nodes: ${node_ROLE}"
       spawn_prep
 
       # Log to /etc/ethers
-      eth0_IP=$(echo 172.30.2.$(echo ${count} | sed 's/0/4/g'))
+      eth0_IP=$(echo 172.10.2.$(echo ${count} | sed 's/0/4/g'))
+      name_NUM="$(echo ${count} | sed 's/0/4/g')"
       write_dhcp_pxe_cfg "${dir_OCP4_DHCP}/worker.pxe"
 
       # Init node
