@@ -15,13 +15,13 @@
   - the tftp container will serve all files mounted to `/tftpboot/`
 ```sh
 sudo podman run \
-    --rm                                                                                      \
-    --detach                                                                                  \
-    --name     ocp-tftpd                                                                      \
-    --publish  ${ocp_ministack_SUBNET}.3:69:69/tcp                                            \
-    --publish  ${ocp_ministack_SUBNET}.3:69:69/udp                                            \
-    --volume   ~/.ccio/ocp-mini-stack/module/tftpd/aux/pxelinux.cfg:/tftpboot/pxelinux.cfg:ro \
-  docker.io/containercraft/ccio-tftpd:latest
+    --rm \
+    --detach                                                                                        \
+    --name    tftpd                                                                                 \
+    --publish 172.10.0.3:69:69/udp                                                                  \
+    --publish 172.10.0.3:69:69/tcp                                                                  \
+    --volume  ~/.ccio/ocp-mini-stack/module/tftp/aux/tftpboot/pxelinux.cfg/:/tftpboot/pxelinux.cfg  \
+  docker.io/containercraft/ccio-tftpd:alpine-latest
 ```
     
     
@@ -36,11 +36,14 @@ sudo podman run \
 ```sh
 .
 ├── aux
-│   ├── pxelinux.cfg
-│   │   ├── AC1E00
-│   │   └── default
-│   └── systemd
-│       └── tftp.service
+│   ├── systemd
+│   │   └── tftp.service
+│   └── tftpboot
+│       └── pxelinux.cfg
+│           ├── bootstrap.cfg
+│           ├── compute.cfg
+│           ├── infra.cfg
+│           └── ldlinux.c32
 └── README.md
 ```
 
