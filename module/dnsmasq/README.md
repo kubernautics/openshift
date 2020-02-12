@@ -11,17 +11,17 @@
 ####    Step.01 Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --rm                                                                                                      \
-    --detach                                                                                                  \
-    --cap-add=NET_ADMIN                                                                                       \
-    --name    ocp-dnsmasq                                                                                     \
-    --publish ${ocp_ministack_SUBNET}.3:53:53/udp                                                             \
-    --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts                       \
-    --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.conf:/etc/dnsmasq.conf                 \
-    --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.resolv:/etc/resolv.conf                \
+    --cap-add=NET_ADMIN                                                                         \
+    --detach                                                                                    \
+    --net=host                                                                                  \
+    --name    ocp-dnsmasq                                                                       \
+    --publish 172.10.0.3:53:53/udp                                                              \
+    --publish 172.10.0.3:53:53/tcp                                                              \
+    --volume   ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.conf:/etc/dnsmasq.conf  \
+    --volume ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.resolv:/etc/resolv.conf   \
+    --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts         \
   docker.io/containercraft/ccio-dnsmasq:latest
 ```
-    
     
 ---------------------------------------------------------------------------------
     
