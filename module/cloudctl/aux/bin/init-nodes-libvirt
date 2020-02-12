@@ -3,7 +3,7 @@ dir_OCP4_MODULES="${HOME}/.ccio/ocp-mini-stack/module"
 dir_OCP4_DNSMASQ="${dir_OCP4_MODULES}/dnsmasq/aux"
 dir_OCP4_HTML="${dir_OCP4_MODULES}/nginx/aux/html"
 dir_OCP4_TFTP="${dir_OCP4_MODULES}/tftpd/aux/tftpboot/pxelinux.cfg"
-dir_OCP4_DHCP="${dir_OCP4_MODULES}/isc-dhcp/aux/config"
+dir_OCP4_DHCP="${dir_OCP4_MODULES}/isc-dhcp/aux/config/dhcp"
 
 dir_OCP4_INVENTORY="${HOME}/.ccio/ocp-mini-stack/build/inventory"
 mkdir -p ${dir_OCP4_INVENTORY} 2>/dev/null
