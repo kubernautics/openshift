@@ -17,9 +17,9 @@ sudo podman run \
     --net=host                                                                 \
     --cap-add=NET_ADMIN                                                        \
     --publish 67:67/udp                                                        \
-    --volume ~/Git/ccio-isc-dhcp/config/dhcpd.conf:/etc/dhcp/dhcpd.conf        \
-    --volume ~/Git/ccio-isc-dhcp/config/dhcp:/etc/dhcp/                        \
-    --volume ~/Git/ccio-isc-dhcp/config/defaults:/etc/defaults                 \
+    --volume ~/ccio/ccio-isc-dhcp/config/dhcpd.conf:/etc/dhcp/dhcpd.conf       \
+    --volume ~/ccio/ccio-isc-dhcp/config/dhcp:/etc/dhcp/                       \
+    --volume ~/ccio/ccio-isc-dhcp/config/defaults:/etc/defaults                \
   docker.io/containercraft/ccio-isc-dhcp:alpine-latest
 ```
     
