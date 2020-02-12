@@ -11,14 +11,15 @@
 ####    Step.01 Launch [isc-dhcp] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --name      isc-dhcp                                        \
-    --detach                                                    \
-    --net=host                                                  \
-    --cap-add=NET_ADMIN                                         \
-    --publish 172.10.0.3:67:67/udp                              \
-    --volume ~/Git/isc-dhcp/config/dhcp/:/etc/dhcp/             \
-    --volume ~/Git/isc-dhcp/config/defaults:/etc/defaults       \
-    --volume ~/Git/isc-dhcp/config/var/lib/dhcp/:/var/lib/dhcp/ \
+    --name      ocp-isc-dhcp                                                   \
+    --rm                                                                       \
+    --detach                                                                   \
+    --net=host                                                                 \
+    --cap-add=NET_ADMIN                                                        \
+    --publish 67:67/udp                                                        \
+    --volume ~/Git/ccio-isc-dhcp/config/dhcpd.conf:/etc/dhcp/dhcpd.conf        \
+    --volume ~/Git/ccio-isc-dhcp/config/dhcp:/etc/dhcp/                        \
+    --volume ~/Git/ccio-isc-dhcp/config/defaults:/etc/defaults                 \
   docker.io/containercraft/ccio-isc-dhcp:alpine-latest
 ```
     
@@ -34,16 +35,16 @@ sudo podman run \
 ---------------------------------------------------------------------------------
     
 ######  + [Repo Module] Index
-```sh
+```sh 
 .
 ├── aux
-│   └── config
-│       ├── isc-dhcp.conf
-│       ├── isc-dhcp.ethers
-│       ├── isc-dhcp.hosts
-│       ├── isc-dhcp.leases
-│       └── isc-dhcp.resolv.conf
-└── README.md
+│   └── config
+│       ├── defaults
+│       ├── dhcpd.conf
+│       ├── dhcpd.leases
+│       └── dhcpd.libvirt
+├── README.md
+└── run
 ```
 
 <!-- Markdown link & img dfn's -->
