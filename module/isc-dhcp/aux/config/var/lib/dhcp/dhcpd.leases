@@ -125,3 +125,47 @@ lease 172.10.10.104 {
   uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
   client-hostname "tftp";
 }
+lease 172.10.10.102 {
+  starts 3 2020/02/12 23:05:32;
+  ends 3 2020/02/12 23:15:32;
+  cltt 3 2020/02/12 23:05:32;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 3 2020/02/12 23:05:36;
+  ends 3 2020/02/12 23:15:36;
+  cltt 3 2020/02/12 23:05:36;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 3 2020/02/12 23:10:30;
+  ends 3 2020/02/12 23:20:30;
+  cltt 3 2020/02/12 23:10:30;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 3 2020/02/12 23:10:35;
+  ends 3 2020/02/12 23:20:35;
+  cltt 3 2020/02/12 23:10:35;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
