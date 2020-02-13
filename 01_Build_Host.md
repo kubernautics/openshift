@@ -1,5 +1,5 @@
 # Stage 00 -- Host System Setup
-[Repo Module](./moduule/host/)
+[Repo Module](/module/host/)
 ## Review checklist of prerequisites:
 1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
 2. You have no critical data on this system
