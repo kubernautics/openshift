@@ -16,19 +16,21 @@
 #################################################################################
 172.10.0.30    bootstrap.ocp.ministack.dev   bootstrap
 #################################################################################
-172.10.1.1        infra0.ocp.ministack.dev   infra0
-172.10.1.1        etcd-0.ocp.ministack.dev   etcd-0
-172.10.1.2        infra1.ocp.ministack.dev   infra1
-172.10.1.2        etcd-1.ocp.ministack.dev   etcd-1
-172.10.1.3        infra2.ocp.ministack.dev   infra2
-172.10.1.3        etcd-2.ocp.ministack.dev   etcd-2
+172.10.1.31        infra0.ocp.ministack.dev   infra0
+172.10.1.31        etcd-0.ocp.ministack.dev   etcd-0
+172.10.1.32        infra1.ocp.ministack.dev   infra1
+172.10.1.32        etcd-1.ocp.ministack.dev   etcd-1
+172.10.1.33        infra2.ocp.ministack.dev   infra2
+172.10.1.33        etcd-2.ocp.ministack.dev   etcd-2
 #################################################################################
-172.10.2.1      master01.ocp.ministack.dev   master01
-172.10.2.2      master02.ocp.ministack.dev   master01
-172.10.2.3      master03.ocp.ministack.dev   master01
+172.10.1.31     master01.ocp.ministack.dev   master01
+172.10.1.32     master02.ocp.ministack.dev   master02
+172.10.1.33     master03.ocp.ministack.dev   master03
 #################################################################################
 172.10.3.1     compute01.ocp.ministack.dev   compute01
 172.10.3.2     compute02.ocp.ministack.dev   compute02
+172.10.3.1      worker01.ocp.ministack.dev   worker01
+172.10.3.2      worker02.ocp.ministack.dev   worker02 
 #################################################################################
 172.10.0.3          apps.ocp.ministack.dev
 172.10.0.3           api.ocp.ministack.dev

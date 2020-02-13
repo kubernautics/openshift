@@ -15,7 +15,17 @@
 ####    Step.02 Initialize Cluster Libvirt Virtual Machines & Restart Services
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/init-nodes-libvirt
- for i in ocp-tftpd ocp-nginx ocp-haproxy ocp-dnsmasq; do docker restart $i; done
+ sudo podman stop ocp-isc-dhcp ; sleep 3 ; sudo podman start ocp-isc-dhcp
+ openshift-install --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/ wait-for bootstrap-complete --log-level=debug
+ openshift-install --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/ wait-for install-complete --log-level=debug
+ export KUBECONFIG=~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/auth/kubeconfig
+ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+ oc get csr -ojson | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
+ sudo dnf install httpd-tools
+ htpasswd -c -B -b users.htpasswd ocadmin admin
+ oc create secret generic htpass-secret --from-file=htpasswd=./users.htpasswd -n openshift-config
+ oc apply -f ~/.ccio/ocp-mini-stack/module/cloudctl/aux/config/htpasswd.yaml
+ oc adm policy add-cluster-role-to-user cluster-admin ocadmin
 ```
 ####    Step.02 
 ```sh
@@ -27,6 +37,7 @@ curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshi
  cp ~/.ccio/ocp-mini-stack/build/install-config.yaml ~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition
  openshift-install create manifests --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
  openshift-install create ignition-configs --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
+ sudo chmod -R 777 ~/.ccio/ocp-mini-stack/module/nginx/aux/html/
 ```
 ####    Step.02 Initialize Cluster Libvirt Virtual Machines
 ```sh
