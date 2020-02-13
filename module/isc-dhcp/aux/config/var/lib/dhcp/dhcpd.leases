@@ -134,3 +134,135 @@ lease 172.10.10.102 {
   uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
   client-hostname "u01";
 }
+lease 172.10.10.104 {
+  starts 4 2020/02/13 18:53:39;
+  ends 4 2020/02/13 19:03:39;
+  cltt 4 2020/02/13 18:53:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 18:53:41;
+  ends 4 2020/02/13 19:03:41;
+  cltt 4 2020/02/13 18:53:41;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 4 2020/02/13 18:58:39;
+  ends 4 2020/02/13 19:08:39;
+  cltt 4 2020/02/13 18:58:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 18:58:41;
+  ends 4 2020/02/13 19:08:41;
+  cltt 4 2020/02/13 18:58:41;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 4 2020/02/13 19:03:39;
+  ends 4 2020/02/13 19:13:39;
+  cltt 4 2020/02/13 19:03:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 19:03:40;
+  ends 4 2020/02/13 19:13:40;
+  cltt 4 2020/02/13 19:03:40;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 4 2020/02/13 19:08:38;
+  ends 4 2020/02/13 19:18:38;
+  cltt 4 2020/02/13 19:08:38;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 19:08:39;
+  ends 4 2020/02/13 19:18:39;
+  cltt 4 2020/02/13 19:08:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 19:13:38;
+  ends 4 2020/02/13 19:23:38;
+  cltt 4 2020/02/13 19:13:38;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 4 2020/02/13 19:13:39;
+  ends 4 2020/02/13 19:23:39;
+  cltt 4 2020/02/13 19:13:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
+lease 172.10.10.102 {
+  starts 4 2020/02/13 19:18:37;
+  ends 4 2020/02/13 19:28:37;
+  cltt 4 2020/02/13 19:18:37;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:ad:67:8c;
+  uid "\377;h\260<\000\002\000\000\253\021\242cv\373%\334\253'";
+  client-hostname "u01";
+}
+lease 172.10.10.104 {
+  starts 4 2020/02/13 19:18:38;
+  ends 4 2020/02/13 19:28:38;
+  cltt 4 2020/02/13 19:18:38;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:16:3e:b7:98:c2;
+  uid "\377\253\325\004\330\000\002\000\000\253\021\356!\307\026SP\364\010";
+  client-hostname "tftp";
+}
