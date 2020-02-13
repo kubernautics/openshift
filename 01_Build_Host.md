@@ -1,12 +1,11 @@
 # Stage 00 -- Host System Setup
 [Repo Module](./moduule/host/)
 ## Review checklist of prerequisites:
-0. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
-1. You have no data on this system
-2. You are familiar with and able to ssh between machines
-3. You have created an ssh key pair
-4. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
-5. Recommended: Follow these guides using ssh to copy/paste commands as you read along    
+1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
+2. You have no critical data on this system
+3. You are familiar with and able to ssh between machines
+4. You have created an ssh key pair
+5. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
     
 --------------------------------------------------------------------------------
 # Part 00 -- Clone Project
