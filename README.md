@@ -11,8 +11,6 @@
   + [08 Setup Tftpd]
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
-  + [00 Introduction]:/00_Introduction.md
-     
 ---------------------------------------------------------------------------------
      
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/master-ocp-mini-stack.svg)
