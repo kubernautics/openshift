@@ -1,0 +1,6 @@
+[Match]
+Name=external
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no

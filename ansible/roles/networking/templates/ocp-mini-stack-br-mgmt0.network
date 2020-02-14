@@ -1,0 +1,8 @@
+[Match]
+Name=mgmt2
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Domains=ministack.dev
+Address=172.10.0.2/16
