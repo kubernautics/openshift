@@ -1,16 +1,5 @@
 # Stage 00 -- Introduction & Objectives
 --------------------------------------------------------------------------------
-    
-  + [02 CloudCtl RDP Bastion - LXD Container]
-  + [03 VFW Firewall & Gateway - LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
-  + [05 Application Router Proxy - OCI Podman Container]
-  + [06 Simple Artifact Server - OCI Podman Container]
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
-
-    
---------------------------------------------------------------------------------
   + [00 Introduction]
   + [01 Build Host]
   + [02 Build Bastion]
