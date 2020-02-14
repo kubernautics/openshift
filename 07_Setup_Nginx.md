@@ -29,7 +29,7 @@ sudo podman run \
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+  + [08 Setup Tftpd]
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
     
