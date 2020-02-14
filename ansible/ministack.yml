@@ -1,9 +1,10 @@
+#!/bin/ansible-playbook
 - name: Build CCIO OCP MiniStack Hypervisor Base
   hosts: hypervisors
   become: true
   gather_facts: yes
   vars_files:
-    - main.yml
+    - variables.yml
   pre_tasks:
     - name: Enable WireGuard Copr Repo
       command: 
@@ -12,10 +13,15 @@
         warn: false
   roles:
     - role: base
+      tags: base
     - role: openvswitch
+      tags: ovs
     - role: libvirt
+      tags: virt
     - role: lxd
       tags: lxd
+    - role: networking
+      tags: net
   tasks:
     - hostname:
         name: "{{ ministack_hostname_base }}"

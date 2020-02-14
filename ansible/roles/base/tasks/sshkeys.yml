@@ -1,0 +1,13 @@
+---
+- name: SSH Keys - Create New Key Pair
+  openssh_keypair:
+    path: /root/.ssh/id_rsa
+- name: SSH Keys - Import SSH Pub Key "{{ github_username }}" 
+  authorized_key:
+    user: root
+    state: present
+    key: "https://{{ git_ssh_pubkey_provider }}.com/{{ git_ssh_pubkey_username }}.keys"
+- authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"

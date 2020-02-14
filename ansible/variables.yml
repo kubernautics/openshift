@@ -1,0 +1,5 @@
+---
+ministack_username: kmorgan
+git_ssh_pubkey_provider: github
+git_ssh_pubkey_username: usrbinkat
+ministack_hostname_base: base.ministack.dev

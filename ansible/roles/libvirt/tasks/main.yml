@@ -7,3 +7,4 @@
 - include: install_Fedora.yml
   when: ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_version']|int == 31
 - include: configure.yml
+

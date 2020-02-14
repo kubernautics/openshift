@@ -10,6 +10,7 @@ packages_libvirt_fedora:
   - virt-viewer
   - libvirt-nss
   - virt-manager
+  - python3-lxml
   - virt-install
   - libvirt-client
   - python3-libvirt

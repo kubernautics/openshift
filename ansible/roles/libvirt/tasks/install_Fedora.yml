@@ -5,3 +5,8 @@
   package:
     name: "{{ packages_libvirt_fedora }}"
     state: present
+- modprobe:
+    name: kvm_intel
+    params: 'nested=1'
+- modprobe:
+    name: vfio-pci

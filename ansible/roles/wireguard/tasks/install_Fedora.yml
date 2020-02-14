@@ -5,3 +5,8 @@
   package:
     name: "{{ packages_wireguard_fedora }}"
     state: present
+- name: Enable Wireguard Kernel Module
+  become: yes
+  modprobe:
+    name: wireguard
+    state: present

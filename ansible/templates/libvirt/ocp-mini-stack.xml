@@ -1,0 +1,6 @@
+<network>
+  <name>ocp-mini-stack</name>
+  <forward mode='bridge'/>
+  <bridge name='ocp-mini-stack' />
+  <virtualport type='openvswitch'/>
+</network>
