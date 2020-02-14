@@ -1,4 +1,4 @@
-# Stage 00 -- Host System Setup
+# Stage 01 -- Host System Setup
 [Repo Module](/module/host/)
 ## Review checklist of prerequisites:
 1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
@@ -405,27 +405,7 @@ update-alternatives --set editor /usr/bin/vim
 echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
 --------------------------------------------------------------------------------
-    
-  + [02 CloudCtl RDP Bastion - LXD Container]
-  + [03 VFW Firewall & Gateway - LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
-  + [05 Application Router Proxy - OCI Podman Container]
-  + [06 Simple Artifact Server - OCI Podman Container]
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
-    
---------------------------------------------------------------------------------
-<!-- Markdown link & img dfn's -->
-[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
-[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
-[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
-[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
-[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
-[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
---------------------------------------------------------------------------------
-  + [00 Introduction]
-  + [01 Build Host]
+## Next Steps:
   + [02 Build Bastion]
   + [03 Build Gateway]
   + [04 Setup_Dns]

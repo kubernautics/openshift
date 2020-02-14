@@ -1,7 +1,7 @@
-# Stage 01 -- CloudCtl Bastion Setup
+# Stage 02 -- CloudCtl Bastion Setup
 
 ### Prerequisites:
-  + [01 Host Hypervisor				- Bare Metal]
+  + [01 Build Host]
     
 --------------------------------------------------------------------------------
 # Part 00 -- Build LXD CloudCtl Container
@@ -117,27 +117,6 @@ lxc remote switch msbase
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
-  + [03 VFW Firewall & Gateway - LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
-  + [05 Application Router Proxy - OCI Podman Container]
-  + [06 Simple Artifact Server - OCI Podman Container]
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
-     
----------------------------------------------------------------------------------
-<!-- Markdown link & img dfn's -->
-[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
-[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
-[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
-[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
-[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
-[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
-[08 Deploy OpenShift Red Hat CoreOS Nodes]:/08_DeployNodes.md
---------------------------------------------------------------------------------
-  + [00 Introduction]
-  + [01 Build Host]
-  + [02 Build Bastion]
   + [03 Build Gateway]
   + [04 Setup_Dns]
   + [05 Setup HAProxy]

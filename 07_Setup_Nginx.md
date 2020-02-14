@@ -2,14 +2,16 @@
 [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-nginx) || [Find on Github](https://github.com/containercraft/ccio-nginx)
 
 ### Prerequisites:
-  + [01 Host Hypervisor - Bare Metal]
-  + [02 CloudCtl RDP Bastion - LXD Container]
-  + [03 VFW Firewall & Gateway - LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
-  + [05 Application Router Proxy - OCI Podman Container]
+  + [00 Introduction]
+  + [01 Build Host]
+  + [02 Build Bastion]
+  + [03 Build Gateway]
+  + [04 Setup_Dns]
+  + [05 Setup HAProxy]
+  + [06 Setup Dhcp]
 --------------------------------------------------------------------------------
     
-# Part 06 -- [Nginx]: Simple Artifact Server
+# Part 07 -- [Nginx]: Simple Artifact Server
 ####    Step.01 Launch [Nginx] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
@@ -27,8 +29,9 @@ sudo podman run \
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
   + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+  + [09 Deploy Cloud]
+  + [10 Configure Cloud]
     
 ---------------------------------------------------------------------------------
     
@@ -52,26 +55,7 @@ sudo podman run \
 [Nginx]:https://www.nginx.com/
 [alpine linux]: https://alpinelinux.org/
 [podman]: https://podman.io
-[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
-[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
-[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
-[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
-[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
-[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
-[08 Deploy OpenShift Red Hat CoreOS Nodes]:/08_DeployNodes.md
 --------------------------------------------------------------------------------
-  + [00 Introduction]
-  + [01 Build Host]
-  + [02 Build Bastion]
-  + [03 Build Gateway]
-  + [04 Setup_Dns]
-  + [05 Setup HAProxy]
-  + [06 Setup Dhcp]
-  + [07 Setup Nginx]
-  + [08 Setup Tftpd]
-  + [09 Deploy Cloud]
-  + [10 Configure Cloud]
 --------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->

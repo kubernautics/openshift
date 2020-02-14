@@ -2,10 +2,11 @@
 [Find on DockerHub](https://hub.docker.com/r/containercraft/ccio-haproxy)  ||  [Find on Github](https://github.com/containercraft/ccio-haproxy)    
     
 ### Prerequisites:
-  + [01 Host Hypervisor				- Bare Metal]
-  + [02 CloudCtl RDP Bastion		- LXD Container]
-  + [03 VFW Firewall & Gateway		- LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
+  + [00 Introduction]
+  + [01 Build Host]
+  + [02 Build Bastion]
+  + [03 Build Gateway]
+  + [04 Setup_Dns]
     
 ---------------------------------------------------------------------------------
     
@@ -26,10 +27,11 @@ sudo podman run \
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
-  + [06 Simple Artifact Server		- OCI Podman Container]
-  + [07 TFTP Boot Artifact Server	- OCI Podman Container]
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
-    
+  + [06 Setup Dhcp]
+  + [07 Setup Nginx]
+  + [08 Setup Tftpd]
+  + [09 Deploy Cloud]
+  + [10 Configure Cloud]
     
 ---------------------------------------------------------------------------------
     
@@ -66,17 +68,6 @@ sudo podman run \
 [07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
 [08 Deploy OpenShift Red Hat CoreOS Nodes]:/08_DeployNodes.md
 --------------------------------------------------------------------------------
-  + [00 Introduction]
-  + [01 Build Host]
-  + [02 Build Bastion]
-  + [03 Build Gateway]
-  + [04 Setup_Dns]
-  + [05 Setup HAProxy]
-  + [06 Setup Dhcp]
-  + [07 Setup Nginx]
-  + [08 Setup Tftpd]
-  + [09 Deploy Cloud]
-  + [10 Configure Cloud]
 --------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
