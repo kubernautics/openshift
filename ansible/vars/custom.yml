@@ -1,9 +1,4 @@
 ---
-ministack_username: kmorgan
-git_ssh_pubkey_provider: github
-git_ssh_pubkey_username: usrbinkat
 ministack_hostname_base: base.ministack.dev
 external_host_interface: eth0
-external_host_address: "10.0.0.4"
-external_gateway_address: "10.0.0.1"
 internal_host_interface: eth1

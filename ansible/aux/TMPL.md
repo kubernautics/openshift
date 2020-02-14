@@ -1,5 +1,4 @@
-# Stage 01 -- Host System Setup
-[Repo Module](/module/host/)
+# Stage 01 -- Base Hypervisor Setup
 ## Review checklist of prerequisites:
 1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
 2. You have no critical data on this system

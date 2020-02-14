@@ -1,0 +1,183 @@
+#!/bin/bash
+#################################################################################
+load_vars () {
+project_NAME="ocp-mini-stack"
+base_PATH="/etc/ccio"
+full_PATH="${base_PATH}/${project_NAME}"
+profile_TARGET="${full_PATH}/profile"
+
+# Check/Create Directory Path
+[[ -f ${full_PATH} ]] || mkdir -p ${full_PATH}
+
+clear
+}
+
+#################################################################################
+prompt_ocp_subnet () {
+echo "    Please enter a valid /16 subnet for the 'openshift' network bridge:
+      EG: 172.10.0.0
+      "
+read -p '    Subnet: ' input_SUBNET
+
+ocp_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
+
+}
+
+#################################################################################
+prompt_int_subnet () {
+echo "    Please enter a valid /24 subnet for the 'internal' network bridge:
+      EG: 10.10.0.0
+      "
+read -p '    Subnet: ' input_SUBNET
+
+int_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
+
+}
+
+#################################################################################
+prompt_uname () {
+echo "    Is ${provider_UNAME} the same as your primary local username?"
+while true; do
+read -p '    [Yes/No]: ' stage_NAME
+    case ${stage_NAME} in
+        [Yy]* ) ministack_UNAME=${provider_UNAME};
+                echo "    Setting your project username to: ${ministack_UNAME}";
+                break;;
+        [Nn]* ) echo "    Please create your project username";
+                read -p '    New User: ' ministack_UNAME;
+                echo "    Setting your project username to: ${ministack_UNAME}";
+                break;;
+        *     ) echo "    Please answer 'yes' or 'no'"
+                exit;;
+    esac
+done
+}
+
+#################################################################################
+prompt_provider_uname () {
+echo "    
+    Please configure a supported service with your username & ssh public keys
+    Supported options:
+      GitHub   (enter 'gh')
+      Gitlab   (enter 'gl')"
+read -p '    gh/gl : '   provider_SSHPUBKEY ;
+read -p '    username: ' provider_UNAME
+echo ""
+
+prompt_uname
+}
+
+#################################################################################
+salt_pwd () {
+if [[ ${new_pwd} == ${chk_pwd} ]]; then
+    ministack_PWDSALT=$(mkpasswd --method=SHA-512 --rounds=4096 ${new_pwd})
+elif [[ ${new_pwd} == ${chk_pwd} ]]; then
+    prompt_pwd
+fi
+}
+
+#################################################################################
+mk_pwd () {
+read -sp '    New Password: '    new_pwd ; echo "" ;
+read -sp '    Confirm New PWD: ' chk_pwd
+salt_pwd
+}
+
+#################################################################################
+prompt_pwd () {
+echo "
+    Please create a user password for this lab environment:
+    NOTE: this password will be encrypted in your mini-stack profile
+"
+mk_pwd
+}
+
+#################################################################################
+write_profile () {
+cat <<EOF > ${profile_TARGET}
+# SSH Provider Configuration
+export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS gitlab:gl github:gh
+export ccio_SSH_UNAME="${provider_UNAME}"
+
+# Mini Stack User Credentials
+export ministack_PWD_SALT="${ministack_PWDSALT}"
+export int_ministack_SUBNET="${int_ministack_SUBNET}"
+export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
+export ministack_UNAME="${ministack_UNAME}"
+
+echo '>>>> CCIO Profile Loaded!'
+EOF
+sed -i "s/\"/\'/g" ${profile_TARGET}
+
+groupadd ccio -f -K GID_MIN=7000 -K GID_MAX=9000
+chown -R root:ccio ${base_PATH}
+
+mkdir -p ~/.ccio 2>/dev/null
+chown -R root:ccio ~/.ccio
+chmod -R 774 ~/.ccio
+}
+
+#################################################################################
+info_print () {
+echo "
+    CCIO mini-stack profile written to ${profile_TARGET}
+    Run the following command to load this profile:
+      source ${profile_TARGET}
+    "
+}
+
+#################################################################################
+write_append () {
+cat <<EOF >> $1
+# Source profile only for interactive sessions (Fixes qemu+ssh header size error)
+case \$- in *i*)
+        source /etc/ccio/ocp-mini-stack/profile
+esac
+EOF
+}
+
+append_bashrc () {
+  # Backup existing .bashrc
+  [[ ! -d ~/.bak ]] && mkdir ~/.bak/
+  cp ~/.bashrc ~/.bak/.bashrc_$(date +"%s")
+
+  # Add profile to /etc/skel/.bashrc file
+  [[ $(grep ocp-mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \
+      || write_append "/etc/skel/.bashrc"
+
+  # Add profile to .bashrc file
+  [[ $(grep ocp-mini-stack ~/.bashrc ; echo $?) == 0 ]] \
+      || write_append "$HOME/.bashrc"
+}
+
+#################################################################################
+req_source_profile () {
+echo "    Would you like to load the profile now?"
+while true; do
+read -p '    [Yes/No]: ' load_PROFILE
+    case ${load_PROFILE} in
+        [Yy]* ) echo "";
+                source ${profile_TARGET};
+                break;;
+        [Nn]* ) exit;;
+        *     ) echo "Please answer 'yes' or 'no'"
+    esac
+done
+}
+
+#################################################################################
+run () {
+load_vars
+prompt_ocp_subnet
+prompt_int_subnet
+prompt_provider_uname
+prompt_pwd
+write_profile
+info_print
+append_bashrc
+req_source_profile
+
+}
+
+#################################################################################
+run

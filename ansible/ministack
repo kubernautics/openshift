@@ -6,6 +6,7 @@
   vars_files:
     - vars/custom.yml
     - vars/grub.yml
+    - usr.yml
   pre_tasks:
     - name: Enable WireGuard Copr Repo
       command: 

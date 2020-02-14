@@ -9,6 +9,7 @@ packages_base_fedora:
   - neofetch
   - hostname
   - glances
+  - ansible
   - grubby
   - iperf3
   - fuse3

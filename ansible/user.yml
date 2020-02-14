@@ -1,0 +1,6 @@
+---
+ministack_username: kmorgan
+git_ssh_pubkey_provider: github
+git_ssh_pubkey_username: usrbinkat
+external_host_address: "10.0.0.4"
+external_gateway_address: "10.0.0.1"
