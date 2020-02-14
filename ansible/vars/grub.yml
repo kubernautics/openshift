@@ -1,0 +1,12 @@
+---
+grub_cmdline_add_args:
+  - quiet
+  - splash
+grub_cmdline_add_args:
+  - pci=noaer
+  - kvm_intel.nested=1
+  - iommu=pt
+  - intel_iommu=pt
+  - biosdevname=0
+  - net.ifnames=0
+  - console=tty1 console=ttyS1,115200n8r

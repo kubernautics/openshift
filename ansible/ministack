@@ -4,7 +4,8 @@
   become: true
   gather_facts: yes
   vars_files:
-    - variables.yml
+    - vars/custom.yml
+    - vars/grub.yml
   pre_tasks:
     - name: Enable WireGuard Copr Repo
       command: 
@@ -22,6 +23,8 @@
       tags: lxd
     - role: networking
       tags: net
+    - role: grub
+      tags: grub
   tasks:
     - hostname:
         name: "{{ ministack_hostname_base }}"
