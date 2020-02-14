@@ -7,22 +7,24 @@
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/default.xml') }}"
     state: active
     autostart: yes
-- virt_net:
+- name: Define OVS Bridge 'external' from .xml
+  virt_net:
     command: define
     name: external
     autostart: yes
     state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/external.xml') }}"
-- virt_net:
+- name: Define OVS Bridge 'internal' from .xml
+  virt_net:
     command: define
     name: internal
     autostart: yes
     state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/internal.xml') }}"
-- virt_net:
+- name: Define OVS Bridge 'ocp' from .xml
+  virt_net:
     command: define
     name: ocp-mini-stack
     autostart: yes
     state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/ocp-mini-stack.xml') }}"
-- include: networkd

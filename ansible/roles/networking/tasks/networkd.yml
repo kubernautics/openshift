@@ -24,14 +24,8 @@
     src: "{{ item }}.network"
     dest: "/etc/systemd/network/{{ item }}.network"
   with_items:
-    - "{{ external_host_interface }}"
-    - "{{ internal_host_interface }}"
-- name: Write Networkd Interface Configuration
-  template:
-    src: interface.network
-    dest: "/etc/systemd/network/{{ item }}.network"
-  when: "not '{{ item }}' == 'lo'"
-  with_items: ansible_interfaces
+    - "{{ external_interface }}"
+    - "{{ internal_interface }}"
 - name: Disable Network Scripts and NetworkManager
   service:
     name: "{{ item }}"
@@ -57,3 +51,9 @@
     state: link
     force: yes
 
+# name: Write Networkd Interface Configuration
+# template:
+#   src: interface.network
+#   dest: "/etc/systemd/network/{{ item }}.network"
+# when: "not '{{ item }}' == 'lo'"
+# with_items: ansible_interfaces

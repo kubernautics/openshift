@@ -1,5 +1,5 @@
 ---
 # Configure All Networks
-- include: libvirt.yml
-- include: networkd.yml
-- include: openvswitch.yml
+- include: ./libvirt.yml
+- include: ./networkd.yml
+- include: ./openvswitch.yml
