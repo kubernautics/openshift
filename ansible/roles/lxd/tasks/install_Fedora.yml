@@ -1,0 +1,34 @@
+---
+# Install Snapd on Fedora
+- name: Install Snapd for LXD
+  yum:
+    name: snapd
+    state: present
+  become: yes
+- name: create /snap symlink
+  file:
+    state: link
+    src: /var/lib/snapd/snap
+    dest: /snap
+    owner: root
+    group: root
+  become: yes
+- name: check if module was loaded
+  shell: |
+      set -o pipefail
+      semodule -l | grep '^snap$'
+  args:
+    executable: /bin/bash
+  register: semodule_loaded
+  ignore_errors: yes
+  changed_when: False
+  become: yes
+- name: copy policy
+  copy:
+    src: snap.pp
+    dest: /tmp/snap.pp
+  when: "'snap' not in semodule_loaded.stdout"
+- name: setup snap selinux policy
+  command: semodule -i /tmp/snap.pp
+  when: "'snap' not in semodule_loaded.stdout"
+  become: yes

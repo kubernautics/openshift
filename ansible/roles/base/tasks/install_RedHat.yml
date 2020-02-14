@@ -1,0 +1,6 @@
+---
+- name: Install Base Packages on RedHat Enterprise Linux
+  become: yes
+  package:
+    name: "{{ redhat_packages }}"
+    state: present

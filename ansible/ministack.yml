@@ -1,0 +1,21 @@
+- name: Build CCIO OCP MiniStack Hypervisor Base
+  hosts: hypervisors
+  become: true
+  gather_facts: yes
+  vars_files:
+    - main.yml
+  pre_tasks:
+    - name: Enable WireGuard Copr Repo
+      command: 
+        cmd: "dnf copr enable jdoss/wireguard -y"
+        creates: /etc/yum.repos.d/_copr\:copr.fedorainfracloud.org\:jdoss\:wireguard.repo
+        warn: false
+  roles:
+    - role: base
+    - role: openvswitch
+    - role: libvirt
+    - role: lxd
+      tags: lxd
+  tasks:
+    - hostname:
+        name: "{{ ministack_hostname_base }}"

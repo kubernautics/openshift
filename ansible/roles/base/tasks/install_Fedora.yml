@@ -1,0 +1,16 @@
+---
+# Install Base Packages on Fedora
+- name: Install Base Packages on Fedora OS
+  become: yes
+  package:
+    name: "{{ packages_base_fedora }}"
+    state: present
+- name: Upgrade All Packages
+  become: yes
+  package:
+    name: "*"
+    state: latest
+- name: Clean Up Packages
+  become: yes
+  package:
+    autoremove: yes

@@ -1,0 +1,21 @@
+namespace: "containercraft"
+name: "virtualization"
+version: "0.0.1"
+readme: "README.md"
+authors: "ContainerCraft.io"
+description: "Install base hypervisor requirements for CCIO ocp-mini-stack KVM, LXD, Podman, OpenVSwitch"
+license: "GPLv3"
+tags:
+  - linux
+  - virtualization
+  - hypervisor
+  - libvirt
+  - kvm
+  - docker
+  - podman
+  - vmtools
+  - collection
+repository: "https://www.github.com/containercraft/ocp-mini-stack"
+homepage: "https://www.github.com/containercraft/ocp-mini-stack"
+documentation: "https://www.github.com/containercraft/ocp-mini-stack"
+issues: "https://www.github.com/containercraft/ocp-mini-stack/issues"

@@ -1,0 +1,7 @@
+---
+# Install Base Packages on Fedora
+- name: Install Base Packages on Fedora OS
+  become: yes
+  package:
+    name: "{{ packages_ovs_fedora }}"
+    state: present

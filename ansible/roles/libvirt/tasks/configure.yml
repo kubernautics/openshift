@@ -1,0 +1,7 @@
+---
+- name: Enable & Start Libvirtd Service
+  become: yes
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes

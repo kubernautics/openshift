@@ -1,0 +1,47 @@
+---
+packages_libvirt_fedora:
+  - libvirt
+  - qemu-kvm
+  - virt-top
+  - qemu-kvm
+  - qemu-img
+  - edk2-ovmf
+  - genisoimage
+  - virt-viewer
+  - libvirt-nss
+  - virt-manager
+  - virt-install
+  - libvirt-client
+  - python3-libvirt
+  - libguestfs-tools
+  - libguestfs-tools-c
+  - libvirt-daemon-kvm
+  - libvirt-daemon-qemu 
+  - policycoreutils-python-utils
+
+packages_libvirt_centos:
+  - policycoreutils-python
+  - qemu-kvm
+  - qemu-img
+  - libvirt
+  - libvirt-client
+  - libvirt-python
+  - libvirt-nss
+  - libguestfs-tools
+  - virt-install
+  - bridge-utils
+  - virt-top
+  - genisoimage
+
+packages_libvirt_redhat:
+  - policycoreutils-python-utils
+  - qemu-kvm
+  - qemu-img
+  - libvirt
+  - libvirt-client
+  - python3-libvirt
+  - libvirt-nss
+  - libguestfs-tools
+  - virt-install
+  - virt-top
+  - genisoimage

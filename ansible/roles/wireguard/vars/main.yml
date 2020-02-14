@@ -1,0 +1,4 @@
+---
+packages_wireguard_fedora:
+  - wireguard-tools
+  - wireguard-dkms

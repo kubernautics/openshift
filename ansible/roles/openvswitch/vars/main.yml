@@ -1,0 +1,4 @@
+---
+packages_ovs_fedora:
+  - openvswitch
+  - network-scripts-openvswitch
