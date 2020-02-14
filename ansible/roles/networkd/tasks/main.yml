@@ -1,35 +1,4 @@
 ---
-- name: Make systemd-networkd Interfaces Config Directory
-  file:
-    path: /etc/systemd/network
-    state: directory
-- name: Make .network Interface Files
-  template:
-    src: interface.network
-    dest: "/etc/systemd/network/{{ item }}.network"
-  when: "not '{{ item }}' == 'lo'"
-  with_items: ansible_interfaces
-- name: Disable Network Scripts and NetworkManager
-  service:
-    name: "{{ item }}"
-    enabled: no
-  with_items:
-    - network
-    - NetworkManager
-- name: Enable systemd-networkd & systemd-resolved
-  service:
-    name: "{{ item }}"
-    enabled: yes
-  with_items:
-    - systemd-networkd
-    - systemd-resolved
-- name: Start systemd-resolved
-  service:
-    name: systemd-resolved
-    state: started
-- name: Symlink resolv.conf to systemd-resolved
-  file:
-    src: /run/systemd/resolve/resolv.conf
-    dest: /etc/resolv.conf
-    state: link
-    force: yes
+- include: networkd.yml
+- include: libvirt.yml
+- include: openvswitch.yml

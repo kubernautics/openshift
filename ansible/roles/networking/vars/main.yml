@@ -1,0 +1,5 @@
+---
+- external_host_address: "{{ external_host_address }}"
+- external_host_interface: "{{ external_host_interface }}"
+- external_gateway_address: "{{ external_gateway_address }}"
+- internal_host_interface: "{{ internal_host_interface }}"

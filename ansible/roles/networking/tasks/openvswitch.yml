@@ -1,0 +1,11 @@
+---
+- name: Build Networking Components - OpenVSwitch
+  openvswitch_bridge:
+    bridge: external
+    state: present
+- openvswitch_bridge:
+    bridge: internal
+    state: present
+- openvswitch_bridge:
+    bridge: ocp-mini-stack
+    state: present

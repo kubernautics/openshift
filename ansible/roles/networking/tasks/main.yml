@@ -1,36 +1,5 @@
 ---
 # Configure All Networks
-- name: Build Networking Components - OpenVSwitch
-  openvswitch_bridge:
-    bridge: external
-    state: present
-- openvswitch_bridge:
-    bridge: internal
-    state: present
-- openvswitch_bridge:
-    bridge: ocp-mini-stack
-    state: present
-- virt_net:
-    command: define
-    name: default
-    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/default.xml') }}"
-    state: active
-    autostart: yes
-- virt_net:
-    command: define
-    name: external
-    autostart: yes
-    state: active
-    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/external.xml') }}"
-- virt_net:
-    command: define
-    name: internal
-    autostart: yes
-    state: active
-    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/internal.xml') }}"
-- virt_net:
-    command: define
-    name: ocp-mini-stack
-    autostart: yes
-    state: active
-    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/ocp-mini-stack.xml') }}"
+- include: libvirt.yml
+- include: networkd.yml
+- include: openvswitch.yml
