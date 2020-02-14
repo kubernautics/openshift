@@ -4,12 +4,15 @@ selinux_policy: targeted
 packages_base_fedora:
   - openssh-server
   - vim-enhanced
+  - fuse3-devel
   - net-tools
   - neofetch
   - hostname
   - glances
   - grubby
   - iperf3
+  - fuse3
+  - criu 
   - htop
   - tmux
   - tar

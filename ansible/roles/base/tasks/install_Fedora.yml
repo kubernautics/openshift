@@ -14,3 +14,9 @@
   become: yes
   package:
     autoremove: yes
+- name: Enable & Start SSH Service
+  become: yes
+  service:
+    name: sshd
+    state: started
+    enabled: yes
