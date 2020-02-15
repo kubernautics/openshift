@@ -37,6 +37,7 @@ ln -s ~/Git/ocp-mini-stack ~/.ccio/ocp-mini-stack
 # Part 01 -- Build Hypervisor
 #### 01\. Run Hypervisor Setup Playbook
 ```sh
+cd ~/.ccio/ocp-mini-stack/ansible/
 ./hypervisor-setup -i ~/.ccio/ocp-mini-stack/hosts.yml
 ```
 #### 02\. Run Hypervisor Setup Playbook
