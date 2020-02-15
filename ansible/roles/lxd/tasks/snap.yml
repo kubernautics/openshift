@@ -6,8 +6,11 @@
     enabled: yes
     state: restarted
   become: yes
-- name: Snapd Ready Workaround
-  command: snap list || sleep 30
+- name: Snapd Ready Workaround - part1
+  command: snap list 
+  ignore_errors: yes
+- name: Snapd Ready Workaround - part2
+  command: sleep 30
   ignore_errors: yes
 - name: install lxd snap
   become: yes
