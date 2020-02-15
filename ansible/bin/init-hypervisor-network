@@ -9,8 +9,8 @@ systemctl restart ovs-vswitchd.service
 }
 
 run_net_setup_external () {
- ovs-vsctl add-br external             \
-  -- add-port external ${external_NIC} \
+ ovs-vsctl \
+     add-port external ${external_NIC} \
   -- add-port external mgmt0           \
   -- set interface mgmt0 type=internal \
   -- set interface mgmt0 mac="$(echo "${HOSTNAME} ocp external mgmt0" \
@@ -19,7 +19,7 @@ run_net_setup_external () {
 }
 
 run_net_setup_internal () {
-ovs-vsctl add-br internal \
+ovs-vsctl \
  -- add-port internal mgmt1 \
  -- set interface mgmt1 type=internal \
  -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" | md5sum \
@@ -27,7 +27,7 @@ ovs-vsctl add-br internal \
 }
 
 run_net_setup_ocp () {
-ovs-vsctl add-br ocp-mini-stack \
+ovs-vsctl \
  -- add-port ocp-mini-stack mgmt2 \
  -- set interface mgmt2 type=internal \
  -- set interface mgmt2 mac="$(echo "$HOSTNAME ocp-mini-stack mgmt2" | md5sum \
