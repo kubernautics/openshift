@@ -21,14 +21,13 @@ playbook.
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo dnf update -y && sudo dnf install git ansible -y
-git clone https://github.com/containercraft/ocp-mini-stack.git ~/Git/ocp-mini-stack
-mkdir ~/.ccio && ln -s ~/.ccio/ocp-mini-stack ~/Git/ocp-mini-stack 
+git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
 cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
 ```sh
- vim ~/.ccio/ocp-mini-stack/ansible/user.yml
- vim ~/.ccio/ocp-mini-stack/ansible/hosts.yml
+ vi ~/.ccio/ocp-mini-stack/ansible/vars/user.yml
+ vi ~/.ccio/ocp-mini-stack/ansible/hosts.yml
 ```
 --------------------------------------------------------------------------------
 # Part 01 -- Build Hypervisor
