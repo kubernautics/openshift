@@ -26,8 +26,8 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
 ```sh
- vim ~/.ccio/ocp-mini-stack/ansible/user.yml
- vim ~/.ccio/ocp-mini-stack/ansible/hosts.yml
+ vi ~/.ccio/ocp-mini-stack/ansible/vars/user.yml
+ vi ~/.ccio/ocp-mini-stack/ansible/hosts.yml
 ```
 --------------------------------------------------------------------------------
 # Part 01 -- Build Hypervisor
