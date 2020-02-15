@@ -1,0 +1,64 @@
+#!/bin/ansible-playbook
+- name: Build CCIO OCP MiniStack OpenWRT Gateway LXD Container
+  hosts: localhost
+  connection: local
+  vars_files:
+    - vars/custom.yml
+    - vars/grub.yml
+    - vars/user.yml
+  tasks:
+    - name: Gateway - Build Profile
+      lxd_profile:
+        name: openwrt
+        state: present
+        config: 
+          linux.kernel_modules: ip6table_filter,iptable_filter,wireguard,ip6_udp_tunnel,udp_tunnel
+          security.privileged: "true"
+          security.nesting: "true"
+          boot.autostart: "true"
+        devices:
+          eth0:
+            name: eth0
+            nictype: bridged
+            parent: external
+            type: nic
+          eth1:
+            name: eth1
+            nictype: bridged
+            parent: internal
+            type: nic
+          eth2:
+            name: eth2
+            nictype: bridged
+            parent: ocp-mini-stack
+            type: nic
+          root:
+            path: /
+            pool: default
+            type: disk
+    - name: Gateway - Create Container
+      lxd_container:
+        name: gateway
+        state: started
+        source:
+          type: image
+          mode: pull
+          # lxc remote add bcio https://images.braincraft.io --public --accept-certificate
+          server: https://images.braincraft.io
+          protocol: lxd
+          fingerprint: beeef940cbcb
+        profiles: ["openwrt"]
+        wait_for_ipv4_addresses: false
+- hosts: 
+    - gateway
+  tasks:
+    - name: Gateway - Push Config 
+      copy:
+        src: templates/gateway/config
+        dest: /etc/config
+- hosts: localhost
+  tasks:
+    - name: Gateway - Restart to apply Networkd Config
+      lxd_container:
+        name: gateway
+        state: restarted
