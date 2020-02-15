@@ -8,12 +8,14 @@
     
 --------------------------------------------------------------------------------
 #### Ansible Playbook Notes:
+````
 This playbook is a rough work in progress and stubs out the future automation
 of ministack setup with the goal of full CI/CD IaC implimentation in the future.
 To date this playbook has been predominantly run locally on the target machine 
 and executed against localhost. The following instructions loosely direct the
 user on the steps required to build the full ocp stack with the aid of this
 playbook. 
+````
 --------------------------------------------------------------------------------
 # Part 00 -- Prepare Repo & Environment
 #### 00\. Clone the ocp-mini-stack repo
