@@ -33,7 +33,7 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 # Part 01 -- Build Hypervisor
 #### 01\. Run Hypervisor Setup Playbook
 ```sh
-./hypervisor-setup -i ~/.ccio/ocp-mini-stack/hosts.yml
+./hypervisor-setup -i hosts.yml
 ```
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
