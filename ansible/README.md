@@ -22,11 +22,8 @@ playbook.
 ```sh
 sudo dnf update -y && sudo dnf install git ansible -y
 git clone https://github.com/containercraft/ocp-mini-stack.git ~/Git/ocp-mini-stack
-ln -s ~/Git/ocp-mini-stack ~/.ccio/ocp-mini-stack
-```
-#### 01\. Build CCIO User Profile
-```sh
- . ~/.ccio/ocp-mini-stack/module/host/aux/bin/build-profile-ccio
+mkdir ~/.ccio && ln -s ~/.ccio/ocp-mini-stack ~/Git/ocp-mini-stack 
+cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
 ```sh
@@ -37,7 +34,6 @@ ln -s ~/Git/ocp-mini-stack ~/.ccio/ocp-mini-stack
 # Part 01 -- Build Hypervisor
 #### 01\. Run Hypervisor Setup Playbook
 ```sh
-cd ~/.ccio/ocp-mini-stack/ansible/
 ./hypervisor-setup -i ~/.ccio/ocp-mini-stack/hosts.yml
 ```
 #### 02\. Run Network Systemd-Networkd Handoff script
