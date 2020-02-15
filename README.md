@@ -35,7 +35,9 @@ The original inspiration for this project came from endless hours of testing dif
 virtual network building tools and strategies in search of a paradigm that meets a 
 number of criteria included in the following.
     
-#### The architecture must be consistent across hardware platforms including:    
+## Objectives:    
+    
+#### Architecture -  must be consistent across hardware platforms including:    
   + Client Laptops
   + Client Desktops
   + Low cost Home Labs
@@ -43,7 +45,7 @@ number of criteria included in the following.
   + 100% Virtual Tenants
   + Multi-Host Rack Systems
     
-#### Easy end-user management and setup:    
+#### Experience - Simple setup and management:    
   + Easy to setup
   + Logical to comprehend
   + Easy to manage & maintain
@@ -52,7 +54,7 @@ number of criteria included in the following.
   + Easy to use behind Wifi connections
   + Capable of nesting multiple layers of networks
     
-#### Demonstrate a fully integrated portfolio of technologies including:
+#### Result - Demonstrate a fully integrated portfolio of technologies including:
   + Kubernetes
   + Bare Metal Hosts
   + LXD / LXC OS Container Runtimes
