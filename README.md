@@ -35,7 +35,7 @@ The original inspiration for this project came from endless hours of testing dif
 virtual network building tools and strategies in search of a paradigm that meets a 
 number of criteria included in the following.
     
-#### The tooling also needs to be consistent across hardware platforms including:    
+#### The architecture must be consistent across hardware platforms including:    
   + Client Laptops
   + Client Desktops
   + Low cost Home Labs
@@ -44,20 +44,21 @@ number of criteria included in the following.
   + Multi-Host Rack Systems
     
 #### Easy end-user management and setup:    
-  + Logical to comprehend
   + Easy to setup
-  + Easy to manage
+  + Logical to comprehend
+  + Easy to manage & maintain
+  + Support Single Ethernet hosts
   + Capable of multi-host overlays
-  + Easy to use over Wifi connections
+  + Easy to use behind Wifi connections
   + Capable of nesting multiple layers of networks
     
-#### Easy integration of technologies including:
-  + Docker/Podman Application Container OCI Runtimes
-  + LXD / LXC OS Container Runtimes
-  + Libvirt / QEMU / KVM Virtual Machine Environments
+#### Demonstrate a fully integrated portfolio of technologies including:
   + Kubernetes
   + Bare Metal Hosts
+  + LXD / LXC OS Container Runtimes
   + Physical & Virtual Switching Gear
+  + Docker/Podman Application Container OCI Runtimes
+  + Libvirt / QEMU / KVM Virtual Machine Environments
 
 <!-- Markdown link & img dfn's -->
 [Ansible Method]:/ansible/
