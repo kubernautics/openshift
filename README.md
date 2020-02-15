@@ -12,7 +12,7 @@
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
 
-### Or Get Started [Ansible Method])
+### Or Get Started [Ansible Method]
 ---------------------------------------------------------------------------------
      
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/master-ocp-mini-stack.svg)
