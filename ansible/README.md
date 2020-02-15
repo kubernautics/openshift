@@ -33,11 +33,9 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 # Part 01 -- Build Hypervisor
 #### 01\. Run Hypervisor Setup Playbook
 ```sh
-./hypervisor-setup -i hosts.yml
+ ./hypervisor-setup -i hosts.yml
 ```
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
- scp ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network root@10.0.0.4:/bin/
- ssh root@10.0.0.4 'TERM=screen init-hypervisor-network'
- ssh root@10.0.0.4 'TERM=screen shutdown -r now'
+ sudo /bin/bash bin/init-hypervisor-network
 ```
