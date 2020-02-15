@@ -39,3 +39,15 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 ```sh
  sudo /bin/bash bin/init-hypervisor-network
 ```
+--------------------------------------------------------------------------------
+# Part 02 -- Build RDP Enabled Bastion
+#### 01\. Run Fedora LXD CloudCtl Bastion Setup Playbook
+```sh
+ ./bastion-setup -i hosts.yml
+```
+--------------------------------------------------------------------------------
+# Part 03 -- Build Gateway
+#### 01\. Run OpenWRT LXD Gateway Setup Playbook
+```sh
+ ./gateway-setup -i hosts.yml
+```
