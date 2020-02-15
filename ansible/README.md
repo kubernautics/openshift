@@ -21,8 +21,7 @@ playbook.
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo dnf update -y && sudo dnf install git ansible -y
-git clone https://github.com/containercraft/ocp-mini-stack.git ~/Git/ocp-mini-stack
-mkdir ~/.ccio && ln -s ~/.ccio/ocp-mini-stack ~/Git/ocp-mini-stack 
+git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
 cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
