@@ -1,4 +1,6 @@
 ---
 ministack_hostname_base: base.ministack.dev
+ministack_hostname_bastion: cloudctl.ministack.dev
 external_host_interface: eth0
 internal_host_interface: eth1
+ocp_host_interface: eth2

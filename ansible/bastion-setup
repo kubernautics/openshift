@@ -1,0 +1,77 @@
+#!/bin/ansible-playbook
+- name: Build CCIO OCP MiniStack CloudCtl Bastion LXD Container (RDP Enabled)
+  hosts: localhost
+  connection: local
+  vars_files:
+    - vars/custom.yml
+    - vars/grub.yml
+    - vars/user.yml
+  tasks:
+    - name: CloudCtl - Build Profile
+      lxd_profile:
+        name: cloudctl
+        state: present
+        config: 
+          linux.kernel_modules: ip6table_filter,iptable_filter
+          security.privileged: "true"
+          security.nesting: "true"
+          boot.autostart: "true"
+        devices:
+          eth0:
+            name: eth0
+            nictype: bridged
+            parent: external
+            type: nic
+          eth1:
+            name: eth1
+            nictype: bridged
+            parent: internal
+            type: nic
+          eth2:
+            name: eth2
+            nictype: bridged
+            parent: ocp-mini-stack
+            type: nic
+          root:
+            path: /
+            pool: default
+            type: disk
+    - name: CloudCtl - Create Container
+      lxd_container:
+        name: cloudctl
+        state: started
+        source:
+          type: image
+          mode: pull
+          server: https://images.linuxcontainers.org
+          protocol: simplestreams
+          alias: fedora/31/amd64
+        profiles: ["cloudctl"]
+        wait_for_ipv4_addresses: true
+- hosts: 
+    - cloudctl
+  tasks:
+    - name: CloudCtl - Update Packages
+      delegate_to: cloudctl
+      raw: dnf update -y
+    - name: CloudCtl - Install Prereqs
+      delegate_to: cloudctl
+      raw: dnf install -y git ansible 
+    - name: CloudCtl - Push Network Configs
+      copy:
+        src: templates/cloudctl/eth0.network
+        dest: /etc/systemd/network/et0.network
+    - name: CloudCtl - Push Network Configs
+      copy:
+        src: templates/cloudctl/eth1.network
+        dest: /etc/systemd/network/eth1.network
+    - name: CloudCtl - Push Network Configs
+      copy:
+        src: templates/cloudctl/eth2.network
+        dest: /etc/systemd/network/eth2.network
+- hosts: localhost
+  tasks:
+    - name: CloudCtl - Restart to apply Networkd Config
+      lxd_container:
+        name: cloudctl
+        state: restarted

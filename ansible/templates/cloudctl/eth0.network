@@ -1,0 +1,9 @@
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+DNS=8.8.8.8
+DNS=8.8.4.4
