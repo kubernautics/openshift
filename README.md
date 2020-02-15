@@ -29,7 +29,7 @@ By following these guides you will be able to:
 
 ## Purpose:
 
-This tooling provides a common platform to quickly and seamlessly build high impact education and development environments.    
+Provide a community platform to quickly and seamlessly build high impact education and development environments.    
     
 ## Inspiration:
 
