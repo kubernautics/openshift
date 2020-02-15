@@ -20,7 +20,7 @@ playbook.
 # Part 00 -- Prepare Repo & Environment
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
-sudo dnf update -y && sudo dnf install git ansible -y
+sudo dnf install git ansible -y
 git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
 cd ~/.ccio/ocp-mini-stack/ansible/
 ```
