@@ -10,10 +10,10 @@
   package:
     name: "*"
     state: latest
-- name: Clean Up Packages
-  become: yes
-  package:
-    autoremove: yes
+# name: Clean Up Packages
+# become: yes
+# package:
+#   autoremove: yes
 - name: Enable & Start SSH Service
   become: yes
   service:

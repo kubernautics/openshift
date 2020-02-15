@@ -2,29 +2,44 @@
 # Configure All Networks
 - name: Build Networking Components - Libvirt Networks
   virt_net:
-    command: define
+    command: destroy
     name: default
-    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/default.xml') }}"
-    state: active
-    autostart: yes
+    state: absent
 - name: Define OVS Bridge 'external' from .xml
   virt_net:
     command: define
     name: external
-    autostart: yes
-    state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/external.xml') }}"
+- name: Build Networking Components - Libvirt Networks
+  virt_net:
+    command: define
+    name: default
+    xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/default.xml') }}"
 - name: Define OVS Bridge 'internal' from .xml
   virt_net:
     command: define
     name: internal
-    autostart: yes
-    state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/internal.xml') }}"
 - name: Define OVS Bridge 'ocp' from .xml
   virt_net:
     command: define
     name: ocp-mini-stack
-    autostart: yes
-    state: active
     xml: "{{ lookup('template', lookup('env','HOME') + '/.ccio/ocp-mini-stack/ansible/templates/libvirt/ocp-mini-stack.xml') }}"
+- name: Define OVS Bridge 'ocp' from .xml
+  virt_net:
+    autostart: yes
+    name: "{{ item }}"
+  with_items:
+    - default
+    - external
+    - internal
+    - ocp-mini-stack
+- name: Define OVS Bridge 'ocp' from .xml
+  virt_net:
+    state: active
+    name: "{{ item }}"
+  with_items:
+    - default
+    - external
+    - internal
+    - ocp-mini-stack
