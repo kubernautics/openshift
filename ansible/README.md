@@ -40,7 +40,7 @@ ln -s ~/Git/ocp-mini-stack ~/.ccio/ocp-mini-stack
 cd ~/.ccio/ocp-mini-stack/ansible/
 ./hypervisor-setup -i ~/.ccio/ocp-mini-stack/hosts.yml
 ```
-#### 02\. Run Hypervisor Setup Playbook
+#### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
  scp ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network root@10.0.0.4:/bin/
  ssh root@10.0.0.4 'TERM=screen init-hypervisor-network'
