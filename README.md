@@ -1,5 +1,5 @@
 # CCIO OCP MiniStack Education & Development Lab
-### Get Started:
+### Get Started Manual Method
   + [00 Introduction]
   + [01 Build Host]
   + [02 Build Bastion]
@@ -11,6 +11,8 @@
   + [08 Setup Tftpd]
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
+
+### Or Get Started [Ansible Method])
 ---------------------------------------------------------------------------------
      
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/master-ocp-mini-stack.svg)
@@ -58,7 +60,7 @@ number of criteria included in the following.
   + Physical & Virtual Switching Gear
 
 <!-- Markdown link & img dfn's -->
-<!-- Markdown link & img dfn's -->
+[Ansible Method]:/ansible/README.md
 [00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
 [02 Build Bastion]:/02_Build_Bastion.md
