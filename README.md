@@ -41,7 +41,7 @@ search of a paradigm that meets a number of criteria included in the following.
     
 ## Objectives:    
     
-#### Architecture -  must be consistent across hardware platforms including:    
+#### Architecture -  Must be consistent across hardware platforms including:    
   + Client Laptops
   + Client Desktops
   + Low cost Home Labs
@@ -49,7 +49,7 @@ search of a paradigm that meets a number of criteria included in the following.
   + 100% Virtual Tenants
   + Multi-Host Rack Systems
     
-#### Experience - Simple setup and management:    
+#### Experience - Must be accessible:    
   + Easy to setup
   + Logical to comprehend
   + Easy to manage & maintain
@@ -58,7 +58,7 @@ search of a paradigm that meets a number of criteria included in the following.
   + Easy to use behind Wifi connections
   + Capable of nesting multiple layers of networks
     
-#### Result - Demonstrate a fully integrated portfolio of technologies including:
+#### Result - Must demonstrate a fully integrated portfolio of technologies including:
   + Kubernetes
   + Bare Metal Hosts
   + LXD / LXC OS Container Runtimes
