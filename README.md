@@ -60,7 +60,7 @@ number of criteria included in the following.
   + Physical & Virtual Switching Gear
 
 <!-- Markdown link & img dfn's -->
-[Ansible Method]:/ansible/README.md
+[Ansible Method]:/ansible/
 [00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
 [02 Build Bastion]:/02_Build_Bastion.md
