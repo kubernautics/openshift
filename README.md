@@ -29,11 +29,15 @@ By following these guides you will be able to:
 
 ## Purpose:
 
-This tooling provides a common platform to quickly and seamlessly build virtual environments.    
+This tooling provides a common platform to quickly and seamlessly build high impact education and development environments.    
     
-The original inspiration for this project came from endless hours of testing different 
-virtual network building tools and strategies in search of a paradigm that meets a 
-number of criteria included in the following.
+## Inspiration:
+
+The original inspiration for this project came from a desire to have meaningful hands 
+on expreince with a platform that represents the leading edge of modern systems engineering 
+at scale. This design serves to solve for the frustrations and blockers encountered after endless 
+hours of testing different virtual network solutions, architectures, and strategies in 
+search of a paradigm that meets a number of criteria included in the following.
     
 ## Objectives:    
     
