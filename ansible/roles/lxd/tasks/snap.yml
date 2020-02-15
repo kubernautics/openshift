@@ -7,7 +7,7 @@
     state: restarted
   become: yes
 - name: Snapd Ready Workaround
-  command: snap list || echo
+  command: snap list || sleep 30
   ignore_errors: yes
 - name: install lxd snap
   become: yes
