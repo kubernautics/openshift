@@ -10,7 +10,6 @@ packages_base_fedora:
   - hostname
   - glances
   - ansible
-  - grubby
   - iperf3
   - fuse3
   - criu 

@@ -6,4 +6,4 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 Address=10.10.10.3/24
-Gateway=10.10.10.1
+#Gateway=10.10.10.1

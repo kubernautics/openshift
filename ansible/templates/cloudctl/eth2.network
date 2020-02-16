@@ -6,6 +6,6 @@ DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 Address=172.10.0.3/24
-Gateway=172.10.0.1
+#Gateway=172.10.0.1
 Domains=ocp.ministack.dev
 DNS=172.10.0.3

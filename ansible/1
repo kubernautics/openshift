@@ -206,9 +206,8 @@
     - name: CloudCtl - Clone MiniStack Git Repo
       tags: go
       command: "ssh -o 'StrictHostKeyChecking=no' {{ ministack_username }}@172.10.0.3 -i ~/.ssh/id_rsa 'git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack'"
-      become_user: "{{ ministack_username }}"
+      become_user: kmorgan
       become: true
-      ignore_errors: yes
 #   - name: CloudCtl - Clone MiniStack Git Repo
 #     copy:
 #       src: "{{ lookup('env','HOME') + '/.ccio' }}"
