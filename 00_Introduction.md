@@ -33,6 +33,14 @@ High Impact Fully POC Demonstrated RC2 Road Map Features:
 RC3 Final v1 Release Candidate Roadmap - Primary Objective:
  - Impliment entire stack on Red Hat official bits
 
+v2 Release Roadmap:
+ - Support VMWare Deployment
+ - Support Disconnected Deployment
+ - FRE Enable fully Deep Packet Inspection SSL MITM Proxied gateway (Disconnected & non)
+
+v3 Release Roadmap:
+ - Deploy via operator from minishift/CRC
+
 RC1 Development Cycle architecture objectives can be seen in the design below. All
 feature development for RC1 has been implimented in the project at this time and
 barring extenuating circumstances we are in a feature freeze. Additional FRE
