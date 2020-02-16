@@ -2,10 +2,15 @@
 --------------------------------------------------------------------------------
 ```
 Currently under heavy development this ocp ministack has been functionally
-tested extensively and is a mature v1 architecture design. Current development
-phase includes 85% functional manual documentation while the ansible playbook
-automation is predominantly proof of concept & immature products or entirely 
-unfinished.
+tested extensively and is a mature v1 architecture design. 
+
+Current development status:
+ - Manual setup method is over 90% complete & functional
+ - Ansible Development
+   - Host Hypervisor Playbook 100% functional (see issue board for rc1 tasks)
+   - VFW Gateway Playbook 90% functional - (see issue board for rc1 tasks)
+   - CloudCtl Bastion Playbook ~25% functional - incomplete -
+   - Infra Docker Container Playbook 0% complete, will be the most simple playbook
 
 RC1 Development Cycle architecture objectives can be seen in the design below. All
 feature development for RC1 has been implimented in the project at this and
