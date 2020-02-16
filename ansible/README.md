@@ -47,7 +47,23 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 --------------------------------------------------------------------------------
 # Part 03 -- Build Gateway
-#### 01\. Run OpenWRT LXD Gateway Setup Playbook
+#### 01\. Stage OpenWRT LXD Gateway Profile and Config Files
 ```sh
  ./gateway-setup -i hosts.yml
 ```
+#### 02\. Add Image Server & Initialize Gateway
+```sh
+ lxc remote add bcio https://images.braincraft.io --public --accept-certificate
+ lxc init bcio:beeef940cbcb gateway -p openwrt
+```
+#### 01\. Push Config directory to Gateway
+```sh
+ lxc file push -r /tmp/openwrt/config gateway/etc/
+```
+#### 01\. Start Gateway and monitor for Address Configuration
+```sh
+ lxc start gateway
+ watch -c lxc list
+```
+#### 01\. Start Gateway and monitor for Address Configuration
+  - Login to the OpenWRT WebUI @ the 'eth0' IP address with `http://${address}:8081`

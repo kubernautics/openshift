@@ -1,0 +1,41 @@
+#################################################################################
+# Bare Metal Host(s)
+10.10.20.2   base.ocp4.ministack.dev
+10.10.10.2        base.ministack.dev       base 
+10.10.10.62      ibane.ministack.dev       ibane 
+10.10.10.62    carrier.ministack.dev       carrier
+#################################################################################
+# Backend Infrastructure
+172.10.0.1    gateway.ocp4.ministack.dev   gateway
+172.10.0.3   cloudctl.ocp4.ministack.dev   cloudctl
+172.10.0.3    haproxy.ocp4.ministack.dev   haproxy 
+172.10.0.5        nfs.ocp4.ministack.dev   nfs 
+172.10.0.7    dnsmasq.ocp4.ministack.dev   dnsmasq
+172.10.0.8       tftp.ocp4.ministack.dev   tftp
+172.10.0.9      httpd.ocp4.ministack.dev   httpd 
+172.10.0.11  simpleca.ocp4.ministack.dev   simpleca 
+172.10.0.20     squid.ocp4.ministack.dev   squid
+172.10.0.20     proxy.ocp4.ministack.dev   proxy 
+172.10.0.21       ipa.ocp4.ministack.dev   ipa 
+#################################################################################
+# OCP Infra Nodes
+172.10.0.30 bootstrap.ocp4.ministack.dev   bootstrap
+172.10.1.31   master1.ocp4.ministack.dev   master1
+172.10.1.31    etcd-0.ocp4.ministack.dev   etcd-0
+172.10.1.32   master2.ocp4.ministack.dev   master2
+172.10.1.32    etcd-1.ocp4.ministack.dev   etcd-1
+172.10.1.33   master3.ocp4.ministack.dev   master3
+172.10.1.33    etcd-2.ocp4.ministack.dev   etcd-2
+#################################################################################
+# OCP Router Nodes
+
+#################################################################################
+# OCP Application Router Reserved DNS Spaces
+172.10.0.3    apps.ocp4.ministack.dev      apps
+172.10.0.3     api.ocp4.ministack.dev      api
+172.10.0.3 api-int.ocp4.ministack.dev      api-int
+#################################################################################
+# OCP Worker Nodes
+172.10.3.41  worker01.ocp4.ministack.dev   worker01
+172.10.3.42  worker02.ocp4.ministack.dev   worker02
+172.10.3.43  worker03.ocp4.ministack.dev   worker02

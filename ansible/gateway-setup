@@ -36,29 +36,14 @@
             path: /
             pool: default
             type: disk
-    - name: Gateway - Create Container
-      lxd_container:
-        name: gateway
-        state: started
-        source:
-          type: image
-          mode: pull
-          # lxc remote add bcio https://images.braincraft.io --public --accept-certificate
-          server: https://images.braincraft.io
-          protocol: lxd
-          fingerprint: beeef940cbcb
-        profiles: ["openwrt"]
-        wait_for_ipv4_addresses: false
-- hosts: 
-    - gateway
-  tasks:
-    - name: Gateway - Push Config 
-      copy:
-        src: templates/gateway/config
-        dest: /etc/config
-- hosts: localhost
-  tasks:
-    - name: Gateway - Restart to apply Networkd Config
-      lxd_container:
-        name: gateway
-        state: restarted
+    - name: Gateway - Prep OpenWRT Configuration (stage dir)
+      file:
+        path: /tmp/openwrt/config
+        state: directory
+    - name: Template files
+      template:
+        src: '{{ item.src }}'
+        dest: /tmp/openwrt/config/{{ item.path }}
+        mode: '{{ item.mode }}'
+      with_filetree: templates/openwrt/
+      when: item.state == 'file'

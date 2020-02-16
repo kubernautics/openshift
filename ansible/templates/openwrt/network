@@ -1,0 +1,29 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+
+config interface 'wan'
+	option ifname 'eth0'
+	option proto 'dhcp'
+	option peerdns '0'
+	option dns '8.8.8.8 8.8.4.4 1.1.1.1'
+
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'eth1'
+	option proto 'static'
+	option ipaddr '10.10.10.1'
+	option netmask '255.255.255.0'
+	option dns '10.10.10.1'
+
+config interface 'ocpministack'
+	option proto 'static'
+	option ifname 'eth2'
+	option ipaddr '{{ ministack_gateway_address_eth2 }}'
+	option netmask '255.255.0.0'
+

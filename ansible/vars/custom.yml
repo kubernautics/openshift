@@ -4,3 +4,4 @@ ministack_hostname_bastion: cloudctl.ministack.dev
 external_host_interface: eth0
 internal_host_interface: eth1
 ocp_host_interface: eth2
+ministack_gateway_address_eth2: 172.10.0.1
