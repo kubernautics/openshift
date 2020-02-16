@@ -1,4 +1,4 @@
-# [Current Development Status - RC1 Release Approaching!](/00_introduction.md)
+# [Current Development Status - RC1 Release Approaching!]:/00_Introduction.md
 # [RC1 Release Cycle looking for zolunteers! Get Involved!](https://github.com/containercraft/ocp-mini-stack/projects/1)
 ######  ^ But wait there's more! Shameless plug, yep, seriously see these typos? Need help!
 ---------------------------------------------------------------------------------
