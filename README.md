@@ -1,5 +1,5 @@
-# [RC1 Release Cycle looking for colunteers! Pick an issue and help out! :D](https://github.com/containercraft/ocp-mini-stack/projects/1)
-######  ^ Shameless Plug 
+# [RC1 Release Cycle looking for zolunteers! Pick an issue and help out! :D](https://github.com/containercraft/ocp-mini-stack/projects/1)
+######  ^ Guilty as charged for the shameless Plug, seriously see these typos? need help!
 ---------------------------------------------------------------------------------
 # CCIO OCP MiniStack Education & Development Lab
 ### Get Started Manual Method
