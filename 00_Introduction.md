@@ -47,6 +47,11 @@ v2 Release Roadmap:
 
 v3 Release Roadmap:
  - Deploy via operator from minishift/CRC
+
+Beyond v3:
+ - Develop failure based success education & enablement curriculum
+ - Develop "Deploy infrastructure via IaC" curriculum & Hands On DevOps Advocacy
+ - Develop DevSecOps featureset to integrate SecOps as a practice
 ```
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/rc1-design-goals/rc1-design-objectives.svg)
 
