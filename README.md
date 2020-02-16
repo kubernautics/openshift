@@ -1,4 +1,4 @@
-# [Current Development Status - RC1 Release Approaching!]:/00_Introduction.md
+# [Current Development Status - RC1 Release Approaching!]
 # [RC1 Release Cycle looking for zolunteers! Get Involved!](https://github.com/containercraft/ocp-mini-stack/projects/1)
 ######  ^ But wait there's more! Shameless plug, yep, seriously see these typos? Need help!
 ---------------------------------------------------------------------------------
@@ -85,3 +85,4 @@ search of a paradigm that meets a number of criteria included in the following.
 [08 Setup Tftpd]:/08_Setup_Tftpd.md
 [09 Deploy Cloud]:/09_Deploy_Cloud.md
 [10 Configure Cloud]:/10_Configure_Cloud.md
+[Current Development Status - RC1 Release Approaching!]:/00_Introduction.md
