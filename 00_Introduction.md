@@ -1,8 +1,15 @@
 # Stage 00 -- Introduction & Objectives
 --------------------------------------------------------------------------------
+# [RC1 Release Cycle Volunteer Project Board :D](https://github.com/containercraft/ocp-mini-stack/projects/1)
 ```
 Currently under heavy development this ocp ministack has been functionally
 tested extensively and is a mature v1 architecture design. 
+
+RC1 Development Cycle architecture objectives can be seen in the design below. All
+feature development for RC1 has been implimented in the project at this time and
+barring extenuating circumstances we are in a feature freeze. Additional FRE
+bugs are welcome and will immidiately be staged to RC2 development cycle 
+objectives. 
 
 Feature highlights of current gen design includes:
  - Completely self contained single host lab with multi host expandability options
@@ -40,14 +47,7 @@ v2 Release Roadmap:
 
 v3 Release Roadmap:
  - Deploy via operator from minishift/CRC
-
-RC1 Development Cycle architecture objectives can be seen in the design below. All
-feature development for RC1 has been implimented in the project at this time and
-barring extenuating circumstances we are in a feature freeze. Additional FRE
-bugs are welcome and will immidiately be staged to RC2 development cycle 
-objectives. 
 ```
-# [RC1 Release Cycle Volunteer Project Board :D](https://github.com/containercraft/ocp-mini-stack/projects/1)
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/rc1-design-goals/rc1-design-objectives.svg)
 
   + [00 Introduction]
