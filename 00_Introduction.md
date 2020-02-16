@@ -13,7 +13,7 @@ Current development status:
    - Infra Docker Container Playbook 0% complete, will be the most simple playbook
 
 RC1 Development Cycle architecture objectives can be seen in the design below. All
-feature development for RC1 has been implimented in the project at this and
+feature development for RC1 has been implimented in the project at this time and
 barring extenuating circumstances we are in a feature freeze. Additional FRE
 bugs are welcome and will immidiately be staged to RC2 development cycle 
 objectives. 

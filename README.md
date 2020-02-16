@@ -51,15 +51,17 @@ search of a paradigm that meets a number of criteria included in the following.
   + DevOps Lab Servers
   + 100% Virtual Tenants
   + Multi-Host Rack Systems
+  + Single Network Interface Devices
     
 #### Experience - Must be accessible to:    
   + Easy to setup
   + Logical to comprehend
   + Easy to manage & maintain
-  + Support Single Ethernet hosts
   + Capable of multi-host overlays
   + Easy to use behind Wifi connections
   + Capable of nesting multiple layers of networks
+  + Eliminate external network or infrastructure requirements
+  + Public Services Delivery enablement through low cost public cloud instance
     
 #### Result - Must demonstrate success in:
   + Kubernetes
