@@ -4,6 +4,13 @@
 Currently under heavy development this ocp ministack has been functionally
 tested extensively and is a mature v1 architecture design. 
 
+Feature highlights of current gen design includes:
+ - Ability to publicly deliver services via low cost ensign host.
+ - Zero network or service configuration dependencies external to the host
+ - Zero risk of dns/dhcp leakage onto external networks
+ - Fully featured and normal network implimentation & behavior
+ - Fully automated multi-node CoreOS provisioning
+
 Current development status:
  - Manual setup method is over 90% complete & functional
  - Ansible Development
