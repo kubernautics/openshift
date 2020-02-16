@@ -1,3 +1,6 @@
+# [RC1 Release Cycle looking for colunteers! Pick an issue and help out! :D](https://github.com/containercraft/ocp-mini-stack/projects/1)
+######  ^ Shameless Plug 
+---------------------------------------------------------------------------------
 # CCIO OCP MiniStack Education & Development Lab
 ### Get Started Manual Method
   + [00 Introduction]
