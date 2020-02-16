@@ -13,7 +13,7 @@ Feature highlights of current gen design includes:
  - Fully automated production like multi-node-cloud CoreOS provisioning (virtual guest nodes)
 
 Current development status:
- - Manual setup method is over 90% complete & functional
+ - Manual setup method documentation is over 90% complete & functional
  - Ansible Development
    - Host Hypervisor Playbook 100% functional (see issue board for rc1 tasks)
    - VFW Gateway Playbook 90% functional - (see issue board for rc1 tasks)
