@@ -12,6 +12,7 @@ Feature highlights of current gen design includes:
  - Fully automated production like multi-node-cloud CoreOS provisioning (virtual guest nodes)
 
 Current development status:
+ - Ansible and Manual deploy methods are fully forkable and release versionable
  - Manual setup method documentation is over 90% complete & functional
  - Ansible Development
    - Host Hypervisor Playbook 100% functional (see issue board for rc1 tasks)
