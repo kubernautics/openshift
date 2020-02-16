@@ -14,13 +14,13 @@ Feature highlights of current gen design includes:
 Current development status:
  - Ansible and Manual deploy methods are fully forkable and support release versioning
  - Manual setup method documentation is over 90% complete & functional
+ - Infrastructure Docker Container images & deployment steps are 100% complete & Functional
+ - All anticipated tasks & blockers now logged on RC1 project board as issues to be assigned
  - Ansible Development
    - Host Hypervisor Playbook 100% functional (see issue board for rc1 tasks)
    - VFW Gateway Playbook 90% functional - (see issue board for rc1 tasks)
    - CloudCtl Bastion Playbook ~25% functional - incomplete -
    - Infra Docker Container Playbook 0% complete, will be the most simple playbook
-   - Infrastructure Docker Container images & deployment steps are 100% complete & Functional
-   - All anticipated tasks & blockers now logged on RC1 project board as issues to be assigned
 
 High Impact Fully POC Demonstrated RC2 Road Map Features:
  - Integrated ACME Lets Encrypt Certificate Automation
