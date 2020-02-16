@@ -30,6 +30,9 @@ High Impact Fully POC Demonstrated RC2 Road Map Features:
  - Support for public service publishing via overlay over WWAN (Tested with Google Fi SIM)
  - WIFI only network access - IE: No hard wired ethernet connection (Tested with intel wifi module)
 
+RC3 Roadmap - Primary Objective:
+ - Impliment entire stack on Red Hat official bits
+
 RC1 Development Cycle architecture objectives can be seen in the design below. All
 feature development for RC1 has been implimented in the project at this time and
 barring extenuating circumstances we are in a feature freeze. Additional FRE
