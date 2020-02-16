@@ -19,6 +19,7 @@ Current development status:
    - VFW Gateway Playbook 90% functional - (see issue board for rc1 tasks)
    - CloudCtl Bastion Playbook ~25% functional - incomplete -
    - Infra Docker Container Playbook 0% complete, will be the most simple playbook
+   - Infrastructure Docker Container images & deployment steps are 100% complete & Functional
 
 RC1 Development Cycle architecture objectives can be seen in the design below. All
 feature development for RC1 has been implimented in the project at this time and
