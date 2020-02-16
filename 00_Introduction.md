@@ -10,9 +10,9 @@ Feature highlights of current gen design includes:
  - Zero risk of dns/dhcp leakage onto external networks
  - Fully featured and normal network implimentation & behavior
  - Fully automated production like multi-node-cloud CoreOS provisioning (virtual guest nodes)
+ - Ansible and Manual deploy methods are fully forkable and support release versioning
 
 Current development status:
- - Ansible and Manual deploy methods are fully forkable and support release versioning
  - Manual setup method documentation is over 90% complete & functional
  - Infrastructure Docker Container images & deployment steps are 100% complete & Functional
  - All anticipated tasks & blockers now logged on RC1 project board as issues to be assigned
