@@ -5,7 +5,6 @@ Currently under heavy development this ocp ministack has been functionally
 tested extensively and is a mature v1 architecture design. 
 
 Feature highlights of current gen design includes:
- - Ability to publicly deliver services via low cost public cloud ensign host. (EG: Digital Ocean Droplet)
  - Completely self contained single host lab with multi host expandability options
  - Zero network or service configuration dependencies external to the host
  - Zero risk of dns/dhcp leakage onto external networks
@@ -21,6 +20,14 @@ Current development status:
    - Infra Docker Container Playbook 0% complete, will be the most simple playbook
    - Infrastructure Docker Container images & deployment steps are 100% complete & Functional
    - All anticipated tasks & blockers now logged on RC1 project board as issues to be assigned
+
+High Impact Fully POC Demonstrated RC2 Road Map Features:
+ - Integrated ACME Lets Encrypt Certificate Automation
+ - Domain Name Registration & DNS API automation (VIA GCP API)
+ - Publicly publish services via overlay to low cost public cloud instance. (EG: Digital Ocean Droplet)
+ - Support for full stack build behind MAC Address controled ethernet (IE: corporate/hotel net)
+ - Support for public service publishing via overlay over WWAN (Tested with Google Fi SIM)
+ - WIFI only network access - IE: No hard wired ethernet connection (Tested with intel wifi module)
 
 RC1 Development Cycle architecture objectives can be seen in the design below. All
 feature development for RC1 has been implimented in the project at this time and
