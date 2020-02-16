@@ -1,3 +1,4 @@
+# [Current Development Status - RC1 Release Approaching!](/00_introduction.md)
 # [RC1 Release Cycle looking for zolunteers! Get Involved!](https://github.com/containercraft/ocp-mini-stack/projects/1)
 ######  ^ Guilty as charged for the shameless Plug, seriously see these typos? need help!
 ---------------------------------------------------------------------------------
