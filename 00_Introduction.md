@@ -1,6 +1,20 @@
 # Stage 00 -- Introduction & Objectives
-## [Ansible Automation]
 --------------------------------------------------------------------------------
+```
+Currently under heavy development this ocp ministack has been functionally
+tested extensively and is a mature v1 architecture design. Current development
+phase includes 85% functional manual documentation while the ansible playbook
+automation is predominantly proof of concept & immature products or entirely 
+unfinished.
+
+RC1 Development Cycle architec objectives can be seen in the design below. All
+feature development for RC1 has been implimented in the project at this and
+barring extenuating circumstances we are in a feature freeze. Additional FRE
+bugs are welcome and will immidiately be staged to RC2 development cycle 
+objectives. 
+```
+![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/rc1-design-goals/rc1-design-objectives.svg)
+
   + [00 Introduction]
   + [01 Build Host]
   + [02 Build Bastion]
