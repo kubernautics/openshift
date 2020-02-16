@@ -24,7 +24,7 @@ Current development status:
 High Impact Fully POC Demonstrated RC2 Road Map Features:
  - Integrated ACME Lets Encrypt Certificate Automation
  - Domain Name Registration & DNS API automation (VIA GCP API)
- - Publicly publish services via overlay to low cost public cloud instance. (EG: Digital Ocean Droplet)
+ - Publicly publish services via overlay to low cost public cloud (EG: Digital Ocean Droplet)
  - Support for full stack build behind MAC Address controled ethernet (IE: corporate/hotel net)
  - Support for public service publishing via overlay over WWAN (Tested with Google Fi SIM)
  - WIFI only network access - IE: No hard wired ethernet connection (Tested with intel wifi module)
