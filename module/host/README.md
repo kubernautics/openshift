@@ -417,7 +417,7 @@ Name=mgmt2
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-Domains=ministack.dev
+Domains=${ocp_CLUSTERDOMAIN}
 Address=${ocp_ministack_SUBNET}.2/24
 EOF
     
