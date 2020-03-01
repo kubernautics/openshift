@@ -182,6 +182,20 @@ LinkLocalAddressing=no
 EOF
     
 ```
+#### 06\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
+```sh
+cat <<EOF >/etc/systemd/network/mgmt2.network 
+[Match]
+Name=mgmt2
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Domains=${ocp_CLUSTERDOMAIN}
+Address=${ocp_ministack_SUBNET}.2/24
+EOF
+    
+```
 #### 08\. Write External Network Build & Hand Off OneShot Utility
 ```sh
 cat <<EOF >~/external-mgmt0-setup
@@ -221,9 +235,13 @@ EOF
 ```
 #### 10\. Write OCP-MINI-STACK Network Build OneShot Utility
 ```sh
-cat <<EOF >~/ocp-mini-stack-bridge-setup
+cat <<EOF >~/ocp-mini-stack-mgmt2-setup
 #!/bin/bash
-ovs-vsctl add-br ocp-mini-stack
+ovs-vsctl add-br ocp-mini-stack \
+ -- add-port ocp-mini-stack mgmt2 \
+ -- set interface mgmt2 type=internal \
+ -- set interface mgmt2 mac="$(echo "$HOSTNAME ocp-mini-stack mgmt2" | md5sum \
+ | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
 systemctl restart systemd-networkd.service
 ovs-clear
 EOF
@@ -248,8 +266,7 @@ chmod +x /usr/bin/ovs-clear
 ```
 #### 12\. Link OVS Network-Online.wants dependencies
 ```sh
-ln -s /usr/lib/systemd/system/ovsdb-server.service /etc/systemd/system/network-online.target.wants/ovdb-server.service
-ln -s /usr/lib/systemd/system/ovs-vswitchd.service /etc/systemd/system/network-online.target.wants/ovs-vswitchd.service
+systemctl enable --now openvswitch.service
 ```
 #### 13\. Disable NetworkManager & Link Configuration Files for easy refrence
 ```sh
@@ -260,7 +277,7 @@ systemctl disable NetworkManager
 ```sh
  . ~/external-mgmt0-setup
  . ~/internal-mgmt1-setup
- . ~/ocp-mini-stack-bridge-setup
+ . ~/ocp-mini-stack-mgmt2-setup
 
 ```
 #### 15\. Reboot
@@ -391,14 +408,14 @@ shutdown -r now
 ```
 --------------------------------------------------------------------------------
 # Optional Configuration Settings 
-#### 02\. Add secondary '$external_NIC' Bridge Interface
+#### 02\. Add secondary '$secondary_NIC' Bridge Interface
 ```sh
-export secondary_ETH="eth1"
+export secondary_NIC="eth1"
 ```
 ```sh
-cat <<EOF >/etc/systemd/network/${secondary_ETH}.network
+cat <<EOF >/etc/systemd/network/${secondary_NIC}.network
 [Match]
-Name=${secondary_ETH}
+Name=${secondary_NIC}
 [Network]
 DHCP=no
 IPv6AcceptRA=no
@@ -407,20 +424,7 @@ EOF
     
 ```
 ```sh
-ovs-vsctl add-port external ${secondary_ETH} && systemctl restart systemd-networkd
-```
-```sh
-cat <<EOF >/etc/systemd/network/mgmt2.network 
-[Match]
-Name=mgmt2
-[Network]
-DHCP=no
-IPv6AcceptRA=no
-LinkLocalAddressing=no
-Domains=${ocp_CLUSTERDOMAIN}
-Address=${ocp_ministack_SUBNET}.2/24
-EOF
-    
+ovs-vsctl add-port external ${secondary_NIC} && systemctl restart systemd-networkd
 ```
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
 ```sh
