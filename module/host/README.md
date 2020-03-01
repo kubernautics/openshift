@@ -29,7 +29,7 @@ mkdir ~/.bak 2>/dev/null ; mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
 #### 00\. Change to Root & Backup User Files
 ```sh
-systemctl set-hostname base.ministack.dev
+systemctl set-hostname base.${ccio_DOMAINNAME}
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
