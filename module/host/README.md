@@ -18,7 +18,7 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 ```
 #### 00\. Build CCIO User Profile
 ```sh
- . ~/.ccio/ocp-mini-stack/module/host/aux/bin/build-profile-ccio
+ . ~/.ccio/ocp-mini-stack/module/host/aux/bin/init-ccio-profile
 ```
 --------------------------------------------------------------------------------
 # Part 01 -- System Setup & User Access
@@ -68,10 +68,8 @@ snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 snap switch --channel edge lxd
-snap refresh lxd
+snap refresh lxd && bash
 lxc profile set default security.privileged=true
-lxc profile device set default eth0 nictype bridged
-lxc profile copy default original
 ```
 #### 07\. Configure Kernel Modules
 ```sh
@@ -393,6 +391,24 @@ shutdown -r now
 ```
 --------------------------------------------------------------------------------
 # Optional Configuration Settings 
+#### 02\. Add secondary '$external_NIC' Bridge Interface
+```sh
+export secondary_ETH="eth1"
+```
+```sh
+cat <<EOF >/etc/systemd/network/${secondary_ETH}.network
+[Match]
+Name=${secondary_ETH}
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+EOF
+    
+```
+```sh
+ovs-vsctl add-port external ${secondary_ETH}
+```
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
 ```sh
 systemctl set-default multi-user.target
