@@ -165,8 +165,8 @@ Name=mgmt1
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-Domains=ministack.dev
-Address=${ocp_ministack_SUBNET}.2/24
+Domains=${ccio_DOMAINNAME}
+Address=${int_ministack_SUBNET}.2/24
 EOF
     
 ```
@@ -407,7 +407,20 @@ EOF
     
 ```
 ```sh
-ovs-vsctl add-port external ${secondary_ETH}
+ovs-vsctl add-port external ${secondary_ETH} && systemctl restart systemd-networkd
+```
+```sh
+cat <<EOF >/etc/systemd/network/mgmt2.network 
+[Match]
+Name=mgmt2
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Domains=ministack.dev
+Address=${ocp_ministack_SUBNET}.2/24
+EOF
+    
 ```
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
 ```sh

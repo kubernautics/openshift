@@ -68,6 +68,31 @@ prompt_uname
 }
 
 #################################################################################
+prompt_domain_name () {
+echo "    
+    Please enter a base domain name for this environment
+    This may be an arbitrary local only domain, or a domain you own the rights to.
+      Example:             
+        homelab.lan         
+        mycloud.net
+        whiterice.dev"
+read -p '    Base Domain : ' ccio_DOMAINNAME ;
+echo "    
+    Please enter a cluster name which will be appended to the Base Domain
+    This is a unique and arbitrary name which will be appended as a subdomain.
+      Example entry:             
+        cluster
+      Which would append to become:
+        cluster.homelab.lan 
+        cluster.mycloud.net 
+        cluster.whiterice.dev"
+read -p '    username: ' ocp_CLUSTERNAME
+echo ""
+
+prompt_domain_name
+}
+
+#################################################################################
 salt_pwd () {
 if [[ ${new_pwd} == ${chk_pwd} ]]; then
     ministack_PWDSALT=$(mkpasswd --method=SHA-512 --rounds=4096 ${new_pwd})
@@ -98,12 +123,16 @@ cat <<EOF > ${profile_TARGET}
 # SSH Provider Configuration
 export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS gitlab:gl github:gh
 export ccio_SSH_UNAME="${provider_UNAME}"
+ccio_DOMAINNAME="${ccio_DOMAINNAME}"
 
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
 export int_ministack_SUBNET="${int_ministack_SUBNET}"
 export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
+export ocp_CLUSTERNAME="${ocp_CLUSTERNAME}"
+export ocp_CLUSTERDOMAIN="${ocp_CLUSTERNAME}.${ccio_DOMAINNAME}"
+
 
 echo '>>>> CCIO Profile Loaded!'
 EOF
