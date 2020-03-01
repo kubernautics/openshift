@@ -1,11 +1,12 @@
-# Stage 01 -- Host System Setup
-[Repo Module](/module/host/)
+# Stage 00 -- Host System Setup
+[Repo Module](./moduule/host/)
 ## Review checklist of prerequisites:
-1. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
-2. You have no critical data on this system
-3. You are familiar with and able to ssh between machines
-4. You have created an ssh key pair
-5. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
+0. You have a clean install of [Fedora Workstation](https://getfedora.org/en/workstation/)
+1. You have no data on this system
+2. You are familiar with and able to ssh between machines
+3. You have created an ssh key pair
+4. Your SSH Public key is uploaded to a git service such as [Gitlab](https://gitlab.com/) or [Github](https://github.com/)
+5. Recommended: Follow these guides using ssh to copy/paste commands as you read along    
     
 --------------------------------------------------------------------------------
 # Part 00 -- Clone Project
@@ -17,7 +18,7 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 ```
 #### 00\. Build CCIO User Profile
 ```sh
- . ~/.ccio/ocp-mini-stack/module/host/aux/bin/build-profile-ccio
+ . ~/.ccio/ocp-mini-stack/module/host/aux/bin/init-ccio-profile
 ```
 --------------------------------------------------------------------------------
 # Part 01 -- System Setup & User Access
@@ -28,7 +29,7 @@ mkdir ~/.bak 2>/dev/null ; mv ~/*.log ~/*.cfg ~/*.xml ~/.bak/ 2>/dev/null
 ```
 #### 00\. Change to Root & Backup User Files
 ```sh
-systemctl set-hostname base.ministack.dev
+systemctl set-hostname base.${ccio_DOMAINNAME}
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
@@ -67,10 +68,8 @@ snap install snapd
 ln -s /var/lib/snapd/snap /snap
 snap install lxd
 snap switch --channel edge lxd
-snap refresh lxd
+snap refresh lxd && bash
 lxc profile set default security.privileged=true
-lxc profile device set default eth0 nictype bridged
-lxc profile copy default original
 ```
 #### 07\. Configure Kernel Modules
 ```sh
@@ -166,8 +165,8 @@ Name=mgmt1
 DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
-Domains=ministack.dev
-Address=${ocp_ministack_SUBNET}.2/24
+Domains=${ccio_DOMAINNAME}
+Address=${int_ministack_SUBNET}.2/24
 EOF
     
 ```
@@ -392,6 +391,37 @@ shutdown -r now
 ```
 --------------------------------------------------------------------------------
 # Optional Configuration Settings 
+#### 02\. Add secondary '$external_NIC' Bridge Interface
+```sh
+export secondary_ETH="eth1"
+```
+```sh
+cat <<EOF >/etc/systemd/network/${secondary_ETH}.network
+[Match]
+Name=${secondary_ETH}
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+EOF
+    
+```
+```sh
+ovs-vsctl add-port external ${secondary_ETH} && systemctl restart systemd-networkd
+```
+```sh
+cat <<EOF >/etc/systemd/network/mgmt2.network 
+[Match]
+Name=mgmt2
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Domains=${ocp_CLUSTERDOMAIN}
+Address=${ocp_ministack_SUBNET}.2/24
+EOF
+    
+```
 #### 00\. Disable Desktop GUI Environment (CLI Console / Headless SSH Mode)
 ```sh
 systemctl set-default multi-user.target
@@ -405,27 +435,21 @@ update-alternatives --set editor /usr/bin/vim
 echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNAME}
 ```
 --------------------------------------------------------------------------------
-## Next Steps:
-  + [02 Build Bastion]
-  + [03 Build Gateway]
-  + [04 Setup_Dns]
-  + [05 Setup HAProxy]
-  + [06 Setup Dhcp]
-  + [07 Setup Nginx]
-  + [08 Setup Tftpd]
-  + [09 Deploy Cloud]
-  + [10 Configure Cloud]
+    
+  + [02 CloudCtl RDP Bastion - LXD Container]
+  + [03 VFW Firewall & Gateway - LXD Container]
+  + [04 DNS & DHCP Service			- OCI Podman Container]
+  + [05 Application Router Proxy - OCI Podman Container]
+  + [06 Simple Artifact Server - OCI Podman Container]
+  + [07 TFTP Boot Artifact Server - OCI Podman Container]
+  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+    
 --------------------------------------------------------------------------------
-[00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
-[00 Introduction]:/00_Introduction.md
-[01 Build Host]:/01_Build_Host.md
-[02 Build Bastion]:/02_Build_Bastion.md
-[03 Build Gateway]:/03_Build_Gateway.md
-[04 Setup_Dns]:/04_Setup_DNS.md
-[05 Setup HAProxy]:/05_Setup_HAProxy.md
-[06 Setup Dhcp]:/06_Setup_DHCP.md
-[07 Setup Nginx]:/07_Setup_Nginx.md
-[08 Setup Tftpd]:/08_Setup_Tftpd.md
-[09 Deploy Cloud]:/09_Deploy_Cloud.md
-[10 Configure Cloud]:/10_Configure_Cloud.md
+[01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
+[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
+[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
+[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
+[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
