@@ -454,9 +454,12 @@ echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNA
 --------------------------------------------------------------------------------
 <!-- Markdown link & img dfn's -->
 [01 Host Hypervisor				- Bare Metal]:/01_HostSetup.md
-[02 CloudCtl RDP Bastion		- LXD Container]:/02_CloudCTL.md
-[03 VFW Firewall & Gateway		- LXD Container]:/03_Gateway.md
-[04 DNS & DHCP Service			- OCI Podman Container]:/04_Dnsmasq.md
-[05 Application Router Proxy	- OCI Podman Container]:/05_HAProxy.md
-[06 Simple Artifact Server		- OCI Podman Container]:/06_Nginx.md
-[07 TFTP Boot Artifact Server	- OCI Podman Container]:/07_Tftpd.md
+[02 CloudCtl RDP Bastion		- LXD Container]:/02_Build_Bastion.md
+[03 VFW Firewall & Gateway		- LXD Container]:/03_Build_Gateway.md
+[04 DNS Service					- OCI Podman Container]:/04_Setup_DNS.md
+[05 Application Router Proxy	- OCI Podman Container]:/05_Setup_HAProxy.md
+[06 DHCP Service				- OCI Podman Container]:/06_Setup_DHCP.md
+[07 Simple Artifact Server		- OCI Podman Container]:/07_Setup_Nginx.md
+[08 TFTP Boot Artifact Server	- OCI Podman Container]:/08_Setup_Tftpd.md
+[09 Deploy Cloud				- OCI Podman Container]:/09_Deploy_Cloud.md
+[10 Configure Cloud          	- OCI Podman Container]:/10_Configure_Cloud.md
