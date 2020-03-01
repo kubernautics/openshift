@@ -445,11 +445,13 @@ echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNA
     
   + [02 CloudCtl RDP Bastion - LXD Container]
   + [03 VFW Firewall & Gateway - LXD Container]
-  + [04 DNS & DHCP Service			- OCI Podman Container]
+  + [04 DNS Service					- OCI Podman Container]
   + [05 Application Router Proxy - OCI Podman Container]
-  + [06 Simple Artifact Server - OCI Podman Container]
-  + [07 TFTP Boot Artifact Server - OCI Podman Container]
-  + [08 Deploy OpenShift Red Hat CoreOS Nodes]
+  + [06 DHCP Service				- OCI Podman Container]
+  + [07 Simple Artifact Server		- OCI Podman Container]
+  + [08 TFTP Boot Artifact Server	- OCI Podman Container]
+  + [09 Deploy Cloud				- OCI Podman Container]
+  + [10 Configure Cloud          	- OCI Podman Container]
     
 --------------------------------------------------------------------------------
 <!-- Markdown link & img dfn's -->
