@@ -182,7 +182,7 @@ LinkLocalAddressing=no
 EOF
     
 ```
-#### 06\. Write 'mgmt0' External Bridge Host Virtual Port Interface Configuration
+#### 06\. Write 'mgmt2' OCP Bridge Host Virtual Port Interface Configuration
 ```sh
 cat <<EOF >/etc/systemd/network/mgmt2.network 
 [Match]
@@ -276,6 +276,9 @@ systemctl disable NetworkManager
 #### 14\. Run Network Standup Utilities
 ```sh
  . ~/external-mgmt0-setup
+```
+  - If disconnected, ssh back to the host
+```sh
  . ~/internal-mgmt1-setup
  . ~/ocp-mini-stack-mgmt2-setup
 
