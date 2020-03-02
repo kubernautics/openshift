@@ -103,12 +103,13 @@ lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
 ```
 #### 00\. SSH to CloudCtl as User
 ```sh
-ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $1}')
+ssh ${ministack_UNAME}@${int_ministack_SUBNET}.3
+#ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $1}')
 ```
 #### 00\. Setup Libvirt Access && Add host ssh keys
 ```sh
 echo 'alias virsh="virsh -c qemu+ssh://root@${ocp_ministack_SUBNET}.2/system"' >>.bashrc && source ~/.bashrc
-ssh-keyscan -H ${ocp_ministack_SUBNET}.2 >>~/.ssh/known_hosts
+ssh-keyscan -H ${int_ministack_SUBNET}.2 >>~/.ssh/known_hosts
 ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname
 virsh list --all
 ```
