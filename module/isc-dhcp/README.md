@@ -20,7 +20,7 @@ sudo podman run \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/dhcp:/etc/dhcp/              \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/defaults:/etc/defaults       \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/var/lib/dhcp/:/var/lib/dhcp/ \
-  docker.io/containercraft/ccio-isc-dhcp:alpine-latest -4 -f -d --no-pid
+  docker.io/containercraft/ccio-isc-dhcp:alpine-latest 
 ```
     
     
