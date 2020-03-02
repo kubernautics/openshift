@@ -16,7 +16,7 @@ sudo podman run \
     --net=host                                                                              \
     --privileged                                                                            \
     --cap-add=NET_ADMIN                                                                     \
-    --publish 67:67/udp                                                                     \
+    --publish ${ocp_ministack_SUBNET}.3:67:67/udp                                           \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/dhcp:/etc/dhcp/              \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/defaults:/etc/defaults       \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/var/lib/dhcp/:/var/lib/dhcp/ \
