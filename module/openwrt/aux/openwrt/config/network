@@ -21,21 +21,6 @@ config interface 'lan'
 	option netmask '255.255.255.0'
 	option dns '10.10.10.1'
 
-config interface 'wg01'
-	option proto 'wireguard'
-	option private_key 'ACJWpoT2nYkUOxOXVcJCtoko+qSwOqiKleUi2eatOFw='
-	option listen_port '51820'
-	list addresses '10.10.100.2/24'
-
-config wireguard_wg01
-	option public_key 'cxZGijR32N2cMszCUwLe/Z1vfh1HDLuXgcxqej3yul0='
-	option route_allowed_ips '1'
-	option endpoint_port '51820'
-	option persistent_keepalive '25'
-	option endpoint_host '167.71.155.65'
-	list allowed_ips '10.10.100.1/24'
-	list allowed_ips '10.10.91.0/24'
-
 config interface 'ocpministack'
 	option proto 'static'
 	option ifname 'eth2'
