@@ -5,18 +5,19 @@
   + [01 Host Hypervisor - Bare Metal]
   + [02 CloudCtl RDP Bastion - LXD Container]
   + [03 VFW Firewall & Gateway - LXD Container]
+
 --------------------------------------------------------------------------------
     
 # Part 04 -- [Dnsmasq]: DHCP & DNS Service
 ####    Step.01 Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --cap-add=NET_ADMIN                                                                         \
+    --name    ocp-dnsmasq                                                                       \
     --detach                                                                                    \
     --net=host                                                                                  \
-    --name    ocp-dnsmasq                                                                       \
-    --publish 172.10.0.3:53:53/udp                                                              \
-    --publish 172.10.0.3:53:53/tcp                                                              \
+    --cap-add=NET_ADMIN                                                                         \
+    --publish ${ocp_ministack_SUBNET}.3:53:53/udp                                               \
+    --publish ${ocp_ministack_SUBNET}.3:53:53/tcp                                               \
     --volume   ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.conf:/etc/dnsmasq.conf  \
     --volume ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.resolv:/etc/resolv.conf   \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts         \
