@@ -12,10 +12,9 @@
 ```sh
 sudo podman run \
     --name      ocp-isc-dhcp                                                                \
-    --rm                                                                                    \
     --detach                                                                                \
     --net=host                                                                              \
-    --privileged \
+    --privileged                                                                            \
     --cap-add=NET_ADMIN                                                                     \
     --publish 67:67/udp                                                                     \
     --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/dhcp:/etc/dhcp/              \
