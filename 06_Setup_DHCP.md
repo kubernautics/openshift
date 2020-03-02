@@ -7,7 +7,7 @@
   + [03 VFW Firewall & Gateway - LXD Container]
 --------------------------------------------------------------------------------
     
-# Part 04 -- [isc-dhcp]: DHCP & DNS Service
+# Part 06 -- [isc-dhcp]: DHCP Service
 ####    Step.01 Launch [isc-dhcp] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
