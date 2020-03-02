@@ -9,6 +9,10 @@
 --------------------------------------------------------------------------------
     
 # Part 04 -- [Dnsmasq]: DHCP & DNS Service
+####    Step.01 Disable systemd-networkd to free port 53
+```sh
+sudo systemctl disable --now systemd-networkd
+```
 ####    Step.01 Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
