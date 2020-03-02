@@ -42,3 +42,6 @@ lxc profile create cloudctl
 
 echo ">   Loading CloudCTL Cloud Init Data"
 lxc profile edit cloudctl < <(cat /tmp/lxd-profile-cloudctl.yaml)
+
+echo ">   Created cloudctl profile"
+lxc profile list

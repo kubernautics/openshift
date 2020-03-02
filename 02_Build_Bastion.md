@@ -32,7 +32,7 @@ lxc exec cloudctl -- /bin/bash -c "passwd ${ministack_UNAME}"
 ```
 #### 00\. Add sudoer permissions
 ```sh
-lxc file push     /etc/sudoers.d/kmorgan cloudctl/etc/sudoers.d/kmorgan
+lxc file push     /etc/sudoers.d/${ministack_UNAME} cloudctl/etc/sudoers.d/${ministack_UNAME}
 ```
 #### 00\. Push SSH assets to 'ministack_UNAME' and set permissions
 ```sh
