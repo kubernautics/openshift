@@ -401,8 +401,9 @@ Again:
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes] yes
 Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: yes
 ```
-#### 00\. Backup original container profile
+#### 00\. Configure eth0 device type & Backup original container profile
 ```sh
+lxc profile device set default eth0 nictype bridged
 lxc profile copy default original
 ```
 #### 00\. Reboot

@@ -25,7 +25,7 @@ lxc snapshot gateway gateway-pre-config-base-n00
 ```
 #### 00\. Export Gateway Config Directory
 ```sh
-export gw_CONFIGDIR="~/.ccio/ocp-mini-stack/module/gateway/aux/lib/config"
+export gw_CONFIGDIR="${HOME}/.ccio/ocp-mini-stack/module/openwrt/aux/openwrt/config"
 ```
 #### 00\. Write network address variables to configuration files
 ```sh
