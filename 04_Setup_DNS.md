@@ -8,7 +8,7 @@
 
 --------------------------------------------------------------------------------
     
-# Part 04 -- [Dnsmasq]: DHCP & DNS Service
+# Part 04 -- [Dnsmasq]: DNS Service
   - Execute commands on the CloudCtl Bastion
 
 ####    Step.01 Disable systemd-networkd to free port 53
