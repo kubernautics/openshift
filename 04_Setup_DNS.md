@@ -13,7 +13,7 @@
 
 ####    Step.01 Disable systemd-networkd to free port 53
 ```sh
-sudo systemctl disable --now systemd-networkd
+sudo systemctl disable --now systemd-resolved
 ```
 ####    Step.02 Launch [Dnsmasq] on [Alpine Linux] Container with [Podman]
 ```sh
