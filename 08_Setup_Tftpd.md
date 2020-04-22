@@ -20,8 +20,8 @@ sudo podman run \
     --rm \
     --detach                                                                                        \
     --name    ocp-tftpd                                                                             \
-    --publish 172.10.0.3:69:69/udp                                                                  \
-    --publish 172.10.0.3:69:69/tcp                                                                  \
+    --publish ${ocp_ministack_SUBNET}.3:69:69/udp                                                   \
+    --publish ${ocp_ministack_SUBNET}.3:69:69/tcp                                                   \
     --volume  ~/.ccio/ocp-mini-stack/module/tftpd/aux/tftpboot/pxelinux.cfg/:/tftpboot/pxelinux.cfg \
   docker.io/containercraft/ccio-tftpd:alpine-latest
 ```
