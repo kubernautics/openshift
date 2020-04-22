@@ -52,7 +52,7 @@ lxc config device add cloudctl ccio-home disk source=~/.ccio path=/home/${minist
 lxc exec cloudctl -- /bin/bash -c "rpm --nodeps --allmatches -e fedora-release-container"
 lxc exec cloudctl -- /bin/bash -c "dnf update -y && dnf distrosync -y"
 lxc exec cloudctl -- /bin/bash -c "dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing"
-lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks && snap refresh virt-install syslinux lynx"
+lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks && snap refresh virt-install syslinux lynx tftp"
 ```
 #### 00\. Setup NetworkManager Configuration
 ```sh
