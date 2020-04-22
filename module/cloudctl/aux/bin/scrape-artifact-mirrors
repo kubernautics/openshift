@@ -4,7 +4,7 @@ dir_OCP_MODS="${HOME}/.ccio/ocp-mini-stack/module"
 dir_OCP_HTML="${dir_OCP_MODS}/nginx/aux/html"
 
 url_ARTIFACTS="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/"
-grep_ARTIFACTS='x86_64-metal.raw|x86_64-installer-kernel|x86_64-installer-initramfs.img'
+grep_ARTIFACTS='x86_64-metal|x86_64-installer-kernel|x86_64-installer-initramfs'
 
 run_list () {
 list_ARTIFACTS="$(\
