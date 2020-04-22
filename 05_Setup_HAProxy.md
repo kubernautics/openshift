@@ -13,7 +13,6 @@
 ####    Step.01 Launch Simple [HAProxy] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --rm                                                                                    \
     --detach                                                                                \
     --name     ocp-haproxy                                                                  \
     --publish  ${ocp_ministack_SUBNET}.3:2022:22                                            \
