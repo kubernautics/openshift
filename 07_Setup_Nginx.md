@@ -15,7 +15,6 @@
 ####    Step.01 Launch [Nginx] on [Alpine Linux] Container with [Podman]
 ```sh
 sudo podman run \
-    --rm                                                                                                  \
     --detach                                                                                              \
     --name     ocp-nginx                                                                                  \
     --publish  ${ocp_ministack_SUBNET}.3:8080:8080                                                        \
