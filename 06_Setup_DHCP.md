@@ -10,17 +10,16 @@
 # Part 06 -- [isc-dhcp]: DHCP Service
 ####    Step.01 Launch [isc-dhcp] on [Alpine Linux] Container with [Podman]
 ```sh
-sudo podman run \
-    --name      ocp-isc-dhcp                                                                \
+sudo podman run  \
+    --name ocp-isc-dhcp                                                                     \
     --detach                                                                                \
     --net=host                                                                              \
-    --privileged                                                                            \
     --cap-add=NET_ADMIN                                                                     \
     --publish ${ocp_ministack_SUBNET}.3:67:67/udp                                           \
-    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/dhcp:/etc/dhcp/              \
-    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/defaults:/etc/defaults       \
-    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/var/lib/dhcp/:/var/lib/dhcp/ \
-  docker.io/containercraft/ccio-isc-dhcp:alpine-latest 
+    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/dhcp:/etc/dhcp:z             \
+    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/var/lib/dhcp:/var/lib/dhcp:z \
+    --volume ~/.ccio/ocp-mini-stack/module/isc-dhcp/aux/config/defaults:/etc/defaults:z     \
+  docker.io/containercraft/ccio-isc-dhcp:alpine-latest
 ```
     
     
