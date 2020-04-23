@@ -11,6 +11,18 @@
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
 --------------------------------------------------------------------------------
+```sh
+ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
+ oc get csr -ojson | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
+```
+
+```sh
+ htpasswd -c -B -b users.htpasswd ocadmin admin
+ oc create secret generic htpass-secret --from-file=htpasswd=./users.htpasswd -n openshift-config
+ oc apply -f ~/.ccio/ocp-mini-stack/module/cloudctl/aux/config/htpasswd.yaml
+ oc adm policy add-cluster-role-to-user cluster-admin ocadmin
+```
+--------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
 [00 Introduction]:/00_Introduction.md
