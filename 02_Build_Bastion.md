@@ -55,8 +55,8 @@ lxc exec cloudctl -- /bin/bash -c "dnf group install 'Fedora Workstation' --excl
 lxc exec cloudctl -- /bin/bash -c "dnf install -y xz jq tar git sudo tmux htop snapd p7zip iperf3 podman skopeo glances buildah hostname neofetch net-tools squashfuse vim-enhanced openssh-server libvirt-client NetworkManager* xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux libvirt-client gnome-tweaks virt-install syslinux lynx tftp"
 ```
 ```
-lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install"
-lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.0.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc"
+lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install"
+lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc"
 ```
 #### 00\. Setup NetworkManager Configuration
 ```sh
