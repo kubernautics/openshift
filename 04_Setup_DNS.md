@@ -29,6 +29,11 @@ sudo podman run \
     --volume  ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/config/dnsmasq.hosts:/etc/hosts         \
   docker.io/containercraft/ccio-dnsmasq:latest
 ```
+
+####    Step.03 Configure local DNS Name Resolution
+```sh
+. ~/.ccio/ocp-mini-stack/module/dnsmasq/aux/resolv.sh
+```
     
 ---------------------------------------------------------------------------------
     
