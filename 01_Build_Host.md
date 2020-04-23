@@ -406,6 +406,11 @@ Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: y
 lxc profile device set default eth0 nictype bridged
 lxc profile copy default original
 ```
+#### 00\. Set permissions on artifacts
+```sh
+chown root:ccio -R ~/.ccio
+chmod 775 -R ~/.ccio
+```
 #### 00\. Reboot
 ```sh
 shutdown -r now
