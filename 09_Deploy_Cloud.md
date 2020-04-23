@@ -26,7 +26,7 @@
  cp ~/.ccio/ocp-mini-stack/build/install-config.yaml   ~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition
  openshift-install create manifests        --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
  openshift-install create ignition-configs --dir=${HOME}/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/
- cp -f ~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/auth/kubeconfig ~/.kube/config
+ mkdir ~/.kube ; cp -f ~/.ccio/ocp-mini-stack/module/nginx/aux/html/ignition/auth/kubeconfig ~/.kube/config
 ```
 
 ####    Step.04 Set CCIO Group Permissions
