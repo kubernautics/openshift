@@ -45,9 +45,10 @@
  sudo podman stop ocp-isc-dhcp ; sleep 3 ; sudo podman start ocp-isc-dhcp
 ```
 
-####    Step.07 Initialize Cluster Libvirt Virtual Machines
+####    Step.07 Initialize Cluster Libvirt Virtual Machines && watch cluster operator status
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/start-nodes
+ watch -c oc get co
 ```
 
 ####    Step.08 Initialize Cluster Libvirt Virtual Machines & Restart Services
