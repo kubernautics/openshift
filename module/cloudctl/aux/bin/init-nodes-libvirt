@@ -7,7 +7,6 @@ name_RHCOS_INST_INITRAMFS="rhcos-${ocpVers}-x86_64-installer-initramfs.x86_64.im
 target_ARTIFACTS_IGN="http://nginx.ocp.ministack.dev:8080/ignition"
 target_ARTIFACTS_BOOT="http://nginx.ocp.ministack.dev:8080/boot"
 
-target_ARTIFACTS_BOOT="$${target_ARTIFACTS_BOOT}"
 dir_OCP4_MODULES="${HOME}/.ccio/ocp-mini-stack/module"
 dir_OCP4_DNSMASQ="${dir_OCP4_MODULES}/dnsmasq/aux"
 dir_OCP4_HTML="${dir_OCP4_MODULES}/nginx/aux/html"
