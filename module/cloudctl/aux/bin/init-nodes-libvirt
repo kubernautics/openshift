@@ -1,4 +1,13 @@
 #!/bin/bash -x
+ocpVers="4.3.8"
+name_RHCOS_IMG="rhcos-${ocpVers}-x86_64-metal.x86_64.raw.gz"
+name_RHCOS_INST_KERNEL="rhcos-${ocpVers}-x86_64-installer-kernel-x86_64"
+name_RHCOS_INST_INITRAMFS="rhcos-${ocpVers}-x86_64-installer-initramfs.x86_64.img"
+
+target_ARTIFACTS_IGN="http://nginx.ocp.ministack.dev:8080/ignition"
+target_ARTIFACTS_BOOT="http://nginx.ocp.ministack.dev:8080/boot"
+
+target_ARTIFACTS_BOOT="$${target_ARTIFACTS_BOOT}"
 dir_OCP4_MODULES="${HOME}/.ccio/ocp-mini-stack/module"
 dir_OCP4_DNSMASQ="${dir_OCP4_MODULES}/dnsmasq/aux"
 dir_OCP4_HTML="${dir_OCP4_MODULES}/nginx/aux/html"
@@ -114,8 +123,8 @@ prompt 0
 default worker
 label   worker
   menu  worker
-  kernel http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img
-  append coreos.inst=yes coreos.inst.install_dev=vda ip=dhcp rd.neednet=1 coreos.first_boot=1 console=tty0 console=ttyS0 coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/worker.ign 
+  kernel ${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_KERNEL} initrd=${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_INITRAMFS}
+  append coreos.inst=yes coreos.inst.install_dev=vda ip=dhcp rd.neednet=1 coreos.first_boot=1 console=tty0 console=ttyS0 coreos.inst.image_url=${target_ARTIFACTS_BOOT}/${name_RHCOS_IMG} coreos.inst.ignition_url=${target_ARTIFACTS_IGN}/worker.ign coreos.config.url=${target_ARTIFACTS_IGN}/worker.ign 
 EOF
 echo_log  0 "Boot configuration file written to ${dir_OCP4_TFTP}/worker.cfg"
 }
@@ -129,8 +138,8 @@ prompt 0
 default master
 label   master
   menu  master
-  kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
-  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/master.ign
+  kernel  ${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_KERNEL} ip=dhcp rd.neednet=1 initrd=${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_INITRAMFS} console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=${target_ARTIFACTS_BOOT}/${name_RHCOS_IMG} coreos.inst.ignition_url=${target_ARTIFACTS_IGN}/master.ign
+  append coreos.first_boot=1 coreos.config.url=${target_ARTIFACTS_IGN}/master.ign
 EOF
 
 echo_log 0 "Boot configuration file written to ${dir_OCP4_TFTP}/infra.cfg"
@@ -146,8 +155,8 @@ timeout 0
 default bootstrap
 label   bootstrap
   menu  bootstrap
-  kernel  http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=http://nginx.ocp.ministack.dev:8080/boot/rhcos-4.3.0-x86_64-metal.raw.gz coreos.inst.ignition_url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
-  append coreos.first_boot=1 coreos.config.url=http://nginx.ocp.ministack.dev:8080/ignition/bootstrap.ign
+  kernel  ${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_KERNEL} ip=dhcp rd.neednet=1 initrd=${target_ARTIFACTS_BOOT}/${name_RHCOS_INST_INITRAMFS} console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=vda coreos.inst.image_url=${target_ARTIFACTS_BOOT}/${name_RHCOS_IMG} coreos.inst.ignition_url=${target_ARTIFACTS_IGN}/bootstrap.ign
+  append coreos.first_boot=1 coreos.config.url=${target_ARTIFACTS_IGN}/bootstrap.ign
 EOF
 
 echo_log 0 "Boot configuration file written to ${dir_OCP4_TFTP}/bootstrap.cfg"
