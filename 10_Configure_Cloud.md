@@ -28,6 +28,15 @@
 ```sh
 https://github.com/raffaelespazzoli/openshift-enablement-exam/tree/master/misc4.0/ServiceMesh
 ```
+#### Palemoon
+```sh
+dnf install -y https://download.copr.fedorainfracloud.org/results/bgstack15/palemoon/fedora-30-x86_64/00979202-palemoon/palemoon-28.6.1-1.src.rpm
+```
+#### Open OCP Console with Palemoon
+  - USER:PASSWD: ocpadmin:admin
+```sh
+palemoon https://console-openshift-console.apps.ocp.ministack.dev &
+```
 --------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
