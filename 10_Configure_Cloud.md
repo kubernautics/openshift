@@ -38,6 +38,11 @@ palemoon https://console-openshift-console.apps.ocp.ministack.dev &
 #### Istio
 ```sh
 https://github.com/raffaelespazzoli/openshift-enablement-exam/tree/master/misc4.0/ServiceMesh
+oc get pods -n istio-system 
+```
+```
+https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_install/customizing-installation-ossm.html#customize-installation-ossm
+https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_day_two/prepare-to-deploy-applications-ossm.html#deploying-applications-ossm
 ```
 --------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
