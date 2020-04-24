@@ -23,12 +23,8 @@
  oc adm policy add-cluster-role-to-user cluster-admin ocadmin
 ```
 --------------------------------------------------------------------------------
-## Testing
-#### Istio
-```sh
-https://github.com/raffaelespazzoli/openshift-enablement-exam/tree/master/misc4.0/ServiceMesh
-```
-#### Palemoon
+#### Install Palemoon on CloudCtl
+  - Workaround for self signed certificate complaints
 ```sh
 dnf install -y https://download.copr.fedorainfracloud.org/results/bgstack15/palemoon/fedora-30-x86_64/00979202-palemoon/palemoon-28.6.1-1.src.rpm
 ```
@@ -36,6 +32,12 @@ dnf install -y https://download.copr.fedorainfracloud.org/results/bgstack15/pale
   - USER:PASSWD: ocpadmin:admin
 ```sh
 palemoon https://console-openshift-console.apps.ocp.ministack.dev &
+```
+--------------------------------------------------------------------------------
+## Testing
+#### Istio
+```sh
+https://github.com/raffaelespazzoli/openshift-enablement-exam/tree/master/misc4.0/ServiceMesh
 ```
 --------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
