@@ -23,6 +23,12 @@
  oc adm policy add-cluster-role-to-user cluster-admin ocadmin
 ```
 --------------------------------------------------------------------------------
+## Testing
+#### Istio
+```sh
+https://github.com/raffaelespazzoli/openshift-enablement-exam/tree/master/misc4.0/ServiceMesh
+```
+--------------------------------------------------------------------------------
 [00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
 [00 Introduction]:/00_Introduction.md
