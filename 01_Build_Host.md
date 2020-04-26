@@ -14,7 +14,7 @@
 ```sh
 sudo -i 
 dnf update -y && dnf install git -y
-git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
+git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack
 ```
 #### 00\. Build CCIO User Profile
 ```sh
