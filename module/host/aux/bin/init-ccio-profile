@@ -123,7 +123,8 @@ cat <<EOF > ${profile_TARGET}
 # SSH Provider Configuration
 export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS gitlab:gl github:gh
 export ccio_SSH_UNAME="${provider_UNAME}"
-ccio_DOMAINNAME="${ccio_DOMAINNAME}"
+#ccio_DOMAINNAME="${ccio_DOMAINNAME}"
+ccio_DOMAINNAME="ministack.dev"
 
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
