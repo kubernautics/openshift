@@ -6,6 +6,13 @@
   + [02 Build Bastion]
     
 --------------------------------------------------------------------------------
+# Part 00 -- Build Gateway
+#### 00\. Build & Import OpenWRT LXD Image
+```sh
+mkdir /tmp/openwrt
+sudo podman run --privileged --rm -it --name openwrt_builder --volume /tmp/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2
+lxc image import /tmp/openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt/19.07.2/x86_64
+```
 # Part 00 -- Build Gateway Container
 #### 00\. Write 'openwrt' LXD Profile
 ```sh
@@ -20,7 +27,7 @@ lxc profile device add openwrt eth2 nic nictype=bridged parent=ocp-mini-stack na
 ```
 #### 00\. Initialize OpenWRT Gateway Container & Snapshot pre-config Image
 ```sh
-lxc init bcio:beeef940cbcb gateway -p openwrt
+lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 lxc snapshot gateway gateway-pre-config-base-n00
 ```
 #### 00\. Export Gateway Config Directory
