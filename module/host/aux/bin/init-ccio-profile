@@ -124,15 +124,17 @@ cat <<EOF > ${profile_TARGET}
 export ccio_SSH_SERVICE="${provider_SSHPUBKEY}" # OPTIONS gitlab:gl github:gh
 export ccio_SSH_UNAME="${provider_UNAME}"
 #ccio_DOMAINNAME="${ccio_DOMAINNAME}"
+#export ocp_CLUSTERNAME="${ocp_CLUSTERNAME}"
+#export ocp_CLUSTERDOMAIN="${ocp_CLUSTERNAME}.${ccio_DOMAINNAME}"
 ccio_DOMAINNAME="ministack.dev"
+export ocp_CLUSTERNAME="ocp"
+export ocp_CLUSTERDOMAIN="ocp.ministack.dev"
 
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
 export int_ministack_SUBNET="${int_ministack_SUBNET}"
 export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
-export ocp_CLUSTERNAME="${ocp_CLUSTERNAME}"
-export ocp_CLUSTERDOMAIN="${ocp_CLUSTERNAME}.${ccio_DOMAINNAME}"
 
 
 echo '>>>> CCIO Profile Loaded!'
