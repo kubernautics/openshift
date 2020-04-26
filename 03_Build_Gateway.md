@@ -1,4 +1,4 @@
-# Part 03 -- [OpenWRT]: LXD Virtual Firewall Gateway
+# Part 03 -- [CCIO OpenWRT]: LXD Virtual Firewall Gateway
      
 ### Prerequisites:
   + [00 Introduction]
@@ -6,15 +6,13 @@
   + [02 Build Bastion]
     
 --------------------------------------------------------------------------------
-# Part 00 -- Build Gateway
 #### 00\. Build & Import OpenWRT LXD Image
 ```sh
 mkdir /tmp/openwrt
 sudo podman run --privileged --rm -it --name openwrt_builder --volume /tmp/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2
 lxc image import /tmp/openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt/19.07.2/x86_64
 ```
-# Part 00 -- Build Gateway Container
-#### 00\. Write 'openwrt' LXD Profile
+#### 01\. Write 'openwrt' LXD Profile
 ```sh
 lxc profile copy original openwrt
 lxc profile set openwrt boot.autostart true
@@ -25,37 +23,34 @@ lxc profile device set openwrt eth0 parent external
 lxc profile device add openwrt eth1 nic nictype=bridged parent=internal name=eth1
 lxc profile device add openwrt eth2 nic nictype=bridged parent=ocp-mini-stack name=eth2
 ```
-#### 00\. Initialize OpenWRT Gateway Container & Snapshot pre-config Image
+#### 02\. Initialize OpenWRT Gateway Container & Snapshot pre-config Image
 ```sh
 lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 lxc snapshot gateway gateway-pre-config-base-n00
 ```
-#### 00\. Export Gateway Config Directory
+#### 03\. Export Gateway Config Directory
 ```sh
 export gw_CONFIGDIR="${HOME}/.ccio/ocp-mini-stack/module/openwrt/aux/openwrt/config"
 ```
-#### 00\. Write network address variables to configuration files
+#### 04\. Write network address variables to configuration files
 ```sh
 sed -i "s/ocp_ministack_SUBNET/${ocp_ministack_SUBNET}/g" ${gw_CONFIGDIR}/*
 sed -i "s/int_ministack_SUBNET/${int_ministack_SUBNET}/g" ${gw_CONFIGDIR}/*
 ```
-#### 00\. Export Gateway Config Directory & Load Config Files
+#### 05\. Export Gateway Config Directory & Load Config Files
 ```sh
 for cfg in $(ls ${gw_CONFIGDIR}); do echo "Loading Config: $cfg "; lxc file push ${gw_CONFIGDIR}/$cfg gateway/etc/config/ ; done
 ```
-#### 00\. Launch Gateway
+#### 06\. Launch Gateway
 ```sh
 lxc start gateway
 ```
-#### 00\. Check IP Addresses 
+#### 07\. Check IP Addresses 
   - a. network initialization may take a few moments
   - b. OpenWRT WebUI should be available on port 8081 of the eth0 external address
   - c. OpenWRT WebUI should be available on port 80 of all internal networks
 ```sh
 watch -c lxc list
-```
-#### 00\. 
-```sh
 ```
 ---------------------------------------------------------------------------------
     
@@ -111,3 +106,4 @@ watch -c lxc list
 [08 Setup Tftpd]:/08_Setup_Tftpd.md
 [09 Deploy Cloud]:/09_Deploy_Cloud.md
 [10 Configure Cloud]:/10_Configure_Cloud.md
+[CCIO OpenWRT]:https://github.com/containercraft/ccio-openwrt
