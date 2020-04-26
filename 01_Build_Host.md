@@ -57,6 +57,7 @@ dnf  install -y libvirt qemu-kvm virt-top qemu-kvm qemu-img edk2-ovmf virt-viewe
 dnf install -y openvswitch network-scripts-openvswitch
 ```
 #### 05\. Install Wireguard Packages for Ensign Kingpin Overlay Network
+  - temporary dependency, kernel 5.6+ includes wireguard
 ```sh
 sudo dnf copr enable jdoss/wireguard -y && sudo dnf update -y
 sudo dnf install -y wireguard-dkms wireguard-tools
