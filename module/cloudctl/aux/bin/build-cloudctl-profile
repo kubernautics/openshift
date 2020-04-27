@@ -109,7 +109,7 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
-      - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio
+      - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
       - ["systemctl", "enable", "--now", "sshd.service"]
