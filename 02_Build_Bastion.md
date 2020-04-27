@@ -12,7 +12,6 @@
 #### 00\. Create & Start CloudCtl Container
 ```sh
 lxc init images:fedora/31/cloud/amd64 cloudctl -p cloudctl
-lxc start cloudctl
 ```
 #### 00\. Push host bashrc & SSH assets to CloudCtl
 ```sh
