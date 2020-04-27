@@ -111,7 +111,7 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
-      - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
       - ["systemctl", "enable", "--now", "sshd.service"]
@@ -129,7 +129,7 @@ config:
       - ["systemctl", "enable", "--now", "NetworkManager.service"]
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["sleep", "3"]
-      - ["snap", "install", "snapd"]
+      - ["snap", "install", "--edge", "snapd"]
       - ["sleep", "3"]
       - ["snap", "refresh"]
       - ["snap", "install", "--edge", "core"]
@@ -167,12 +167,14 @@ devices:
     source: /etc/ccio
     type: disk
   ccio-home:
-    path: /home/${ministack_UNAME}/.ccio
+    path: /root/.ccio
     source: /root/.ccio
     type: disk
 description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
+
+#     - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
 
 # Detect && Purge 'cloudctl' Profile
 echo ">   Checking for & Removing Pre-Existing CloudCTL Profile ..."
