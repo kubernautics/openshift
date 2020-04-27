@@ -135,7 +135,7 @@ config:
       - ["snap", "install", "--edge", "core"]
       - ["snap", "refresh"]
       - ["groupmod", "-g", "${ccioGid}", "ccio"]
-      - ["cp", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
+      - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
