@@ -56,7 +56,7 @@ config:
       - libvirt-client
       - xrdp
       - libvirt
-      - xorgrdp
+      - xorgxrdp
       - xrdp-devel
       - virt-viewer
       - virt-manager
