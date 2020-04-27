@@ -1,7 +1,14 @@
 #!/bin/bash
 
 
+ocpVers="4.3.13"
+binInst="openshift-install-linux-${ocpVers}.tar.gz"
+binClient="openshift-client-linux-${ocpVers}.tar.gz"
+urlInst="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binInst}"
+urlClient="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binClient}"
+
 chown root:ccio -R /root/.ccio
+
 echo ">   Staging Cloudctl Profile ..."
 
 cat <<EOF >/tmp/lxd-profile-cloudctl.yaml
@@ -132,14 +139,29 @@ config:
       - ["systemctl", "disable", "--now", "libvirtd.service"]
       - ["systemctl", "mask", "libvirtd.service"]
       - ["systemctl", "disable", "--now", "systemd-networkd"]
-      - ["systemctl", "enable", "--now", "NetworkManager.service"]
       - ["groupmod", "-g", "$(grep ccio /etc/group | cut -d ':' -f 3)", "ccio"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
+      - ["chown", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
+      - ["systemctl", "enable", "NetworkManager"]
+      - ["systemctl", "start", "NetworkManager"]
+      - ["dnf", "update", "-y"]
+      - ["dnf", "install", "-y", "'dnf-command(copr)'"]
+      - ["dnf", "update", "-y"]
+      - ["dnf", "install", "-y", "lxd"]
+      - ["dnf", "remote", "list"]
+      - ["su", "-l", "${ministack_UNAME}", "-c", "/bin/bash -c 'ssh-keyscan -H ${int_ministack_SUBNET}.2 >>~/.ssh/known_hosts'"]
+      - ["su", "-l", "${ministack_UNAME}", "-c", "/bin/bash -c 'ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname'"]
+      - ["su", "-l", "${ministack_UNAME}", "-c", "/bin/bash -c 'echo YWxpYXMgdmlyc2g9InZpcnNoIC1jIHFlbXUrc3NoOi8vcm9vdEAxNzIuMTAuMC4yL3N5c3RlbSIK | base64 -d | tee -a test3'"]
+      - ["virsh", "net-list", "--all"]
+      - ["curl", "-L", "${urlInst}", "--output", "/tmp/${binInst}]
+      - ["curl", "-L", "${urlClient}", "--output", "/tmp/${binClient}]
+      - ["tar",  "-xzvf", "/tmp/${binInst}", "--directory", "/usr/local/bin", "openshift-install"]
+      - ["tar",  "-xzvf", "/tmp/${binClient}", "--directory", "/usr/local/bin", "kubectl", "oc"]
 devices:
   eth0:
     name: eth0
