@@ -177,7 +177,7 @@ devices:
     name: eth0
     parent: external
     nictype: bridged
-    hwaddr: $(echo "cloudctl $(echo ${cluster_NAME}) ministack eth0" | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')
+    hwaddr: $(echo cloudctl_$(echo ${cluster_NAME})_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/')
   eth1:
     name: eth1
     nictype: bridged
