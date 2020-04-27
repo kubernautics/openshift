@@ -82,6 +82,18 @@ config:
     write_files:
       - encoding: b64
         content: |
+          $(base64 -w0 /etc/ccio/ocp-mini-stack/profile)
+        owner: root:ccio
+        path: /etc/ccio/ocp-mini-stack/profile
+        permissions: '0755'
+      - encoding: b64
+        content: |
+          $(base64 -w0 /root/.bashrc)
+        owner: root:root
+        path: /root/.bashrc
+        permissions: '0744'
+      - encoding: b64
+        content: |
           $(base64 -w0 /root/.ssh/authorized_keys)
         owner: root:root
         path: /root/.ssh/authorized_keys
@@ -111,16 +123,23 @@ config:
       - ["virsh", "net-destroy", "default"]
       - ["virsh", "net-undefine", "default"]
       - ["systemctl", "disable", "--now", "libvirtd.service"]
+      - ["systemctl", "disable", "--now", "systemd-networkd"]
+      - ["systemctl", "enable", "--now", "NetworkManager.service"]
       - ["systemctl", "mask", "libvirtd.service"]
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["sleep", "3"]
-      - ["snap", "install", "lxd", "--edge"]
-      - ["mv", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
+      - ["snap", "install", "snapd"]
+      - ["sleep", "3"]
+      - ["snap", "refresh"]
+      - ["snap", "install", "--edge", "core"]
+      - ["snap", "refresh"]
+      - ["cp", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
+      - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
+      - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
       - ["groupmod", "-g", "${ccioGid}", "ccio"]
       - ["sed", "-i", "'s/SELINUX=enforcing/SELINUX=permissive/g'", "/etc/selinux/config"]
-      - ["snap", "install", "snapd"]
-      - ["touch", "/root/test1"]
+      - ["snap", "install", "lxd", "--edge"]
       - ["touch", "/root/test2"]
 devices:
   eth0:
