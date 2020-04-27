@@ -62,6 +62,7 @@ config:
       - virt-manager
       - xrdp-selinux
       - gnome-tweaks
+      - speedtest-cli
     users:
       - name: ccio
         system: true
