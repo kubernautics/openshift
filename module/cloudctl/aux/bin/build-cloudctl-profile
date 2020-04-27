@@ -99,7 +99,7 @@ config:
         permissions: '0600'
     runcmd:
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
-      - ["systemctl", "umask", "systemd-logind"]
+      - ["systemctl", "unmask", "systemd-logind"]
       - ["systemctl", "enable", "--now", "sshd.service"]
       - ["systemctl", "enable", "--now", "systemd-logind"]
       - ["systemctl", "enable", "--now", "xrdp.service"]
@@ -112,14 +112,15 @@ config:
       - ["systemctl", "disable", "--now", "libvirtd.service"]
       - ["systemctl", "mask", "libvirtd.service"]
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
-      - ["snap", "install", "snapd"]
       - ["sleep", "3"]
       - ["snap", "install", "lxd", "--edge"]
       - ["mv", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["groupmod", "-g", "${ccioGid}", "ccio"]
       - ["sed", "-i", "'s/SELINUX=enforcing/SELINUX=permissive/g'", "/etc/selinux/config"]
-      - ["touch", "/root/test.log"]
+      - ["snap", "install", "snapd"]
+      - ["touch", "/root/test1"]
+      - ["touch", "/root/test2"]
 devices:
   eth0:
     name: eth0

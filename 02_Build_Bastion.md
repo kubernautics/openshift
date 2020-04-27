@@ -16,6 +16,7 @@ lxc init images:fedora/31/cloud/amd64 cloudctl -p cloudctl
 #### 00\. Push host bashrc & SSH assets to CloudCtl
 ```sh
 lxc file push -r ~/.bashrc cloudctl/home/${ministack_UNAME}/
+lxc file push -r ~/.bashrc cloudctl/root/
 ```
 ```sh
 lxc start cloudctl
