@@ -142,6 +142,14 @@ config:
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
+      - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["snap", "install", "--edge", "core"]
+      - ["sleep", "30"]
+      - ["snap", "refresh"]
+      - ["snap", "install", "--edge", "snapd"]
+      - ["sleep", "30"]
+      - ["snap", "refresh"]
+      - ["snap", "install", "--edge", "lxd"]
 devices:
   eth0:
     name: eth0
@@ -174,10 +182,6 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
-#     - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
-#     - ["snap", "install", "--edge", "core"]
-#     - ["snap", "install", "--edge", "snapd"]
-#     - ["snap", "install", "--edge", "lxd"]
 #       passwd: ${ministack_PWD_SALT}
 #       lock_passwd: false
 
