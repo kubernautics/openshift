@@ -11,30 +11,15 @@
 ```
 #### 00\. Create & Start CloudCtl Container
 ```sh
-lxc init images:fedora/31/cloud/amd64 cloudctl -p cloudctl
+lxc start images:fedora/31/cloud/amd64 cloudctl -p cloudctl
 ```
-#### 00\. Push host bashrc & SSH assets to CloudCtl
-```sh
-lxc file push -r ~/.bashrc cloudctl/home/${ministack_UNAME}/
-lxc file push -r ~/.bashrc cloudctl/root/
-```
-```sh
-lxc start cloudctl
-```
-#### 00\. Install CloudCtl instance package requirements
+#### 00\. Install CloudCtl Fedora Workstation Desktop packages
+  - (used for RDP access)
 ```sh
 lxc exec cloudctl -- /bin/bash -c "dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing"
-lxc exec cloudctl -- /bin/bash -c "dnf install -y xrdp xorgxrdp xrdp-devel virt-viewer virt-manager xrdp-selinux gnome-tweaks"
-```
-```
-lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install"
-lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc"
 ```
 #### 00\. Setup NetworkManager Configuration
 ```sh
-lxc exec cloudctl -- /bin/bash -c "systemctl disable systemd-networkd"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now NetworkManager"
-
 lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth0 ifname eth0 ipv4.method auto ipv4.dns '8.8.8.8 8.8.4.4' connection.autoconnect yes"
 lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth1 ifname eth1 ip4 ${int_ministack_SUBNET}.3/24 connection.autoconnect yes"
 lxc exec cloudctl -- /bin/bash -c "nmcli connection add type ethernet con-name eth2 ifname eth2 ip4 ${ocp_ministack_SUBNET}.3/16 connection.autoconnect yes"
@@ -44,38 +29,11 @@ lxc exec cloudctl -- /bin/bash -c "nmcli con up eth0"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth1"
 lxc exec cloudctl -- /bin/bash -c "nmcli con up eth2"
 ```
-#### 00\. Set System Services
-```sh
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now sshd"
-lxc exec cloudctl -- /bin/bash -c "systemctl unmask systemd-logind"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable systemd-logind"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp.service"
-lxc exec cloudctl -- /bin/bash -c "systemctl enable xrdp-sesman.service"
-lxc exec cloudctl -- /bin/bash -c "systemctl set-default graphical.target"
-lxc exec cloudctl -- /bin/bash -c "systemctl disable firewalld"
-```
-#### 00\. Destroy local libvirt network bridge & mask services
-```sh
-lxc exec cloudctl -- /bin/bash -c "systemctl enable --now libvirtd.service"
-lxc exec cloudctl -- /bin/bash -c "virsh net-destroy default"
-lxc exec cloudctl -- /bin/bash -c "virsh net-undefine default"
-lxc exec cloudctl -- /bin/bash -c "virsh net-list --all"
-lxc exec cloudctl -- /bin/bash -c "systemctl disable libvirtd.service"
-lxc exec cloudctl -- /bin/bash -c "systemctl mask libvirtd.service"
-```
 #### 00\. Install LXC / LXD Stack
 ```sh
 lxc exec cloudctl -- /bin/bash -c "ln -s /var/lib/snapd/snap /snap"
 lxc exec cloudctl -- /bin/bash -c "snap refresh ; snap install snapd ; sleep 2 ; snap install snapd"
 lxc exec cloudctl -- /bin/bash -c "snap install lxd"
-```
-#### 00\. Add user to required groups
-```sh
-lxc exec cloudctl -- /bin/bash -c "usermod -a -G wheel,ccio,kvm,libvirt,lxd ${ministack_UNAME}"
-```
-#### 00\. Disable SELINUX for development purposes
-```sh
-lxc exec cloudctl -- /bin/bash -c "sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config"
 ```
 #### 00\. Reboot CloudCtl
 ```sh
@@ -99,6 +57,10 @@ virsh list --all
 ```sh
 lxc remote add msbase ${ocp_ministack_SUBNET}.2
 lxc remote switch msbase
+```
+```
+lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ openshift-install"
+lxc exec cloudctl -- /bin/bash -c "curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.3.13.tar.gz | sudo tar xzvf - --directory /usr/local/bin/ kubectl oc"
 ```
 ---------------------------------------------------------------------------------
     

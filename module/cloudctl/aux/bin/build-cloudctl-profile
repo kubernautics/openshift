@@ -71,8 +71,6 @@ config:
         shell: /bin/bash
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         ssh_import_id: gh:${ccio_SSH_UNAME}
-        passwd: ${ministack_PWD_SALT}
-        lock_passwd: false
         groups:
           - ccio
           - wheel
@@ -175,6 +173,8 @@ name: cloudctl
 EOF
 
 #     - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
+#       passwd: ${ministack_PWD_SALT}
+#       lock_passwd: false
 
 # Detect && Purge 'cloudctl' Profile
 echo ">   Checking for & Removing Pre-Existing CloudCTL Profile ..."
