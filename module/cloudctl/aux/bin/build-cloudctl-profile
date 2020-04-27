@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ccioGid="$(grep ccio /etc/group | cut -d ':' -f 3)"
+
 echo ">   Staging Cloudctl Profile ..."
 
 cat <<EOF >/tmp/lxd-profile-cloudctl.yaml
@@ -37,7 +37,6 @@ config:
       - lnav
       - tftp
       - lynx
-      - snapd
       - p7zip
       - iperf3
       - podman
@@ -133,7 +132,7 @@ config:
       - ["systemctl", "mask", "libvirtd.service"]
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "enable", "--now", "NetworkManager.service"]
-      - ["groupmod", "-g", "${ccioGid}", "ccio"]
+      - ["groupmod", "-g", "$(grep ccio /etc/group | cut -d ':' -f 3)", "ccio"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
@@ -172,6 +171,7 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
+#     - snapd
 #     - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
 #     - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
 #     - ["snap", "install", "--edge", "core"]
