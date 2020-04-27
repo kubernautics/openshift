@@ -80,14 +80,20 @@ config:
     write_files:
       - encoding: b64
         content: |
+          $(base64 -w0 /root/.bashrc)
+        owner: root:root
+        path: /root/.bashrc
+        permissions: '0744'
+      - encoding: b64
+        content: |
           $(base64 -w0 /etc/selinux/config)
-        owner: root:ccio
+        owner: root:root
         path: /etc/selinux/config
         permissions: '0644'
       - encoding: b64
         content: |
           $(base64 -w0 /etc/ccio/ocp-mini-stack/profile)
-        owner: root:ccio
+        owner: root:root
         path: /etc/ccio/ocp-mini-stack/profile
         permissions: '0755'
       - encoding: b64
@@ -108,15 +114,11 @@ config:
         owner: root:root
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
-      - encoding: b64
-        content: |
-          $(base64 -w0 /root/.bashrc)
-        owner: root:root
-        path: /root/.bashrc
-        permissions: '0744'
     runcmd:
-      - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
+      - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
       - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
@@ -133,9 +135,10 @@ config:
       - ["systemctl", "mask", "libvirtd.service"]
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "enable", "--now", "NetworkManager.service"]
-      - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["sleep", "3"]
+      - ["snap", "refresh"]
       - ["snap", "install", "--edge", "snapd"]
+      - ["snap", "refresh"]
       - ["sleep", "3"]
       - ["snap", "refresh"]
       - ["snap", "install", "--edge", "core"]
@@ -145,7 +148,10 @@ config:
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
+      - ["snap", "refresh"]
+      - ["sleep", "3"]
       - ["snap", "install", "--edge", "lxd"]
+      - ["snap", "refresh"]
       - ["touch", "/root/test2"]
 devices:
   eth0:
