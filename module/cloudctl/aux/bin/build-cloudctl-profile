@@ -70,6 +70,7 @@ config:
       - gnome-tweaks
       - speedtest-cli
       - NetworkManager
+      - NetworkManager-tui
     users:
       - name: ccio
         system: true
@@ -127,11 +128,11 @@ config:
       - ["systemctl", "enable", "NetworkManager"]
       - ["systemctl", "start", "NetworkManager"]
       - ["systemctl", "restart", "NetworkManager"]
-      - [nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes"]
-      - [nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
-      - [nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
-      - [nmcli", "connection", "con", "up", "eth1"]
-      - [nmcli", "connection", "con", "up", "eth2"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "con", "up", "eth1"]
+      - ["nmcli", "connection", "con", "up", "eth2"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
