@@ -83,8 +83,7 @@ lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
 ```
 #### 00\. SSH to CloudCtl as User
 ```sh
-ssh ${ministack_UNAME}@${int_ministack_SUBNET}.3
-#ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/eth0/{print $2}')
+ssh ${ministack_UNAME}@$(lxc list -c n,4 --format=csv | awk -F'[, ]' '/cloudctl/{print $2}')
 ```
 #### 00\. Setup Libvirt Access && Add host ssh keys
 ```sh
