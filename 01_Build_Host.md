@@ -292,6 +292,10 @@ systemctl disable NetworkManager
 ```sh
 shutdown -r now
 ```
+#### 16\. Acquire root again
+```sh
+sudo -i
+```
 --------------------------------------------------------------------------------
 # Part 03 -- Create Libvirt OpenVSwitch Configurations
 #### 00\. Enable Libvirt Service
