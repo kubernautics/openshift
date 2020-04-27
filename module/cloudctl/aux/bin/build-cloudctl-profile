@@ -72,6 +72,7 @@ config:
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         ssh_import_id: gh:${ccio_SSH_UNAME}
         passwd: ${ministack_PWD_SALT}
+        lock_passwd: false
         groups:
           - ccio
           - wheel
