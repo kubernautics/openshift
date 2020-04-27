@@ -141,7 +141,7 @@ config:
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
-      - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
       - ["snap", "install", "--edge", "core"]
       - ["sleep", "30"]
       - ["snap", "refresh"]
