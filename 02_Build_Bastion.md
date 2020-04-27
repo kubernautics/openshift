@@ -20,6 +20,9 @@ lxc file push -r ~/.ssh    cloudctl/root/
 lxc file push -r ~/.bashrc cloudctl/root/
 lxc file push -r ~/.bashrc cloudctl/etc/skel/
 ```
+```sh
+lxc start cloudctl
+```
 #### 00\. Create CCIO Group & Add 'root' to group 'ccio'
 ```sh
 lxc exec cloudctl -- /bin/bash -c "groupadd ccio -f --gid $(grep ccio /etc/group | cut -d ':' -f 3)"
