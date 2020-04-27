@@ -119,7 +119,6 @@ config:
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
-      - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
       - ["systemctl", "enable", "--now", "sshd.service"]
@@ -175,7 +174,7 @@ devices:
     source: /etc/ccio
     type: disk
   ccio-home:
-    path: /root/.ccio
+    path: /home/${ministack_UNAME}/.ccio
     source: /root/.ccio
     type: disk
 description: ccio mini-stack fedora cloudctl container profile
