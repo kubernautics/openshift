@@ -5,6 +5,7 @@ binInst="openshift-install-linux-${ocpVers}.tar.gz"
 binClient="openshift-client-linux-${ocpVers}.tar.gz"
 urlInst="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binInst}"
 urlClient="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binClient}"
+hwAddr="echo cloudctl_$(echo ${cluster_NAME})_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/'"
 
 chown root:ccio -R /root/.ccio
 
@@ -128,7 +129,7 @@ config:
       - ["systemctl", "enable", "NetworkManager"]
       - ["systemctl", "start", "NetworkManager"]
       - ["systemctl", "restart", "NetworkManager"]
-      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "hwaddr=${hwAddr}"]
       - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
       - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
       - ["nmcli", "connection", "up", "eth0"]
@@ -177,7 +178,7 @@ devices:
     name: eth0
     parent: external
     nictype: bridged
-    hwaddr: $(echo cloudctl_$(echo ${cluster_NAME})_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/')
+    hwaddr: ${hwAddr}
   eth1:
     name: eth1
     nictype: bridged
