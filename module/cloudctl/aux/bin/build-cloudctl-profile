@@ -1,5 +1,8 @@
 #!/bin/bash
+
+ccioGid="$(grep ccio /etc/group | cut -d ':' -f 3)"
 echo ">   Staging Cloudctl Profile ..."
+
 cat <<EOF >/tmp/lxd-profile-cloudctl.yaml
 config:
   linux.kernel_modules: ip6table_filter,iptable_filter
@@ -24,25 +27,75 @@ config:
     package_upgrade: true
     packages:
       - jq
+      - xz
       - git
-      - vim
+      - tar
       - tree
+      - sudo
       - tmux
+      - htop
       - lnav
-      - byobu
+      - tftp
+      - lynx
       - snapd
-      - apache2
-      - maas-cli
+      - p7zip
+      - iperf3
+      - podman
+      - skopeo
+      - buildah
+      - glances
+      - ansible
+      - hostname
+      - neofetch
+      - syslinux
+      - net-tools
       - squashfuse
-      - libvirt-bin
-      - python-pip
+      - virt-install
+      - vim-enhanced
+      - openssh-server
+      - libvirt-client
     users:
+      - name: ccio
+        system: true
+      - name: lxd
+        system: true
       - name: ${ministack_UNAME}
         shell: /bin/bash
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
-        ssh_import_id: ${ccio_SSH_SERVICE}:${ccio_SSH_UNAME}
+        ssh_import_id: gh:${ccio_SSH_UNAME}
+        passwd: ${ministack_PWD_SALT}
+        groups:
+          - ccio
+          - wheel
+          - kvm
+          - libvirt
+          - lxd
+    write_files:
+      - encoding: b64
+        content: |
+          $(base64 -w0 /root/.ssh/authorized_keys)
+        owner: root:root
+        path: /root/.ssh/authorized_keys
+        permissions: '0600'
+      - encoding: b64
+        content: |
+          $(base64 -w0 /root/.ssh/id_rsa)
+        owner: root:root
+        path: /root/.ssh/id_rsa
+        permissions: '0600'
+      - encoding: b64
+        content: |
+          $(base64 -w0 /root/.ssh/id_rsa.pub)
+        owner: root:root
+        path: /root/.ssh/id_rsa.pub
+        permissions: '0600'
     runcmd:
-      - [echo, "'testing 123...'", ">", "/root/test.log"]
+      - ["systemctl", "enable", "--now", "sshd.service"]
+      - ["mv", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
+      - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
+      - ["groupmod", "-g", "${ccioGid}", "ccio"]
+      - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
+      - ["touch", "/root/test.log"]
 devices:
   eth0:
     name: eth0
