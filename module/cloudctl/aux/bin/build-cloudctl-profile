@@ -115,7 +115,6 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
-      - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
@@ -135,24 +134,13 @@ config:
       - ["systemctl", "mask", "libvirtd.service"]
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "enable", "--now", "NetworkManager.service"]
-      - ["sleep", "3"]
-      - ["snap", "refresh"]
-      - ["snap", "install", "--edge", "snapd"]
-      - ["snap", "refresh"]
-      - ["sleep", "3"]
-      - ["snap", "refresh"]
-      - ["snap", "install", "--edge", "core"]
-      - ["snap", "refresh"]
       - ["groupmod", "-g", "${ccioGid}", "ccio"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
-      - ["snap", "refresh"]
-      - ["sleep", "3"]
-      - ["snap", "install", "--edge", "lxd"]
-      - ["snap", "refresh"]
-      - ["touch", "/root/test2"]
+      - ["passwd", "-u", "-f", "root"]
+      - ["passwd", "-u", "-f", "${ministack_UNAME}"]
 devices:
   eth0:
     name: eth0
@@ -185,6 +173,10 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
+#     - ["ln", "/usr/libexec/snapd", "/usr/lib/snapd"]
+#     - ["snap", "install", "--edge", "core"]
+#     - ["snap", "install", "--edge", "snapd"]
+#     - ["snap", "install", "--edge", "lxd"]
 #       passwd: ${ministack_PWD_SALT}
 #       lock_passwd: false
 
