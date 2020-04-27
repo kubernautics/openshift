@@ -93,6 +93,10 @@ grubby --update-kernel=ALL --args="intel_iommu=on iommu=pt kvm-intel.nested=1 kv
 ```sh
 shutdown -r now
 ```
+#### 11\. Acquire root again
+```sh
+sudo -i
+```
 --------------------------------------------------------------------------------
 ## Part 02 -- Create Host Virtual Network Architecture
 #### 00\. Create Network Config Directory
