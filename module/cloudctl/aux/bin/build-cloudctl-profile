@@ -6,7 +6,6 @@ binClient="openshift-client-linux-${ocpVers}.tar.gz"
 urlInst="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binInst}"
 urlClient="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binClient}"
 hwAddr="$(echo cloudctl_${cluster_NAME}_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/')"
-echo ${hwAddr}
 
 chown root:ccio -R /root/.ccio
 
@@ -23,6 +22,8 @@ config:
       eth0:
         dhcp4: true
         dhcp6: false
+        match:
+          macaddress: ${hwAddr}
       eth1:
         dhcp4: false
         dhcp6: false
@@ -126,16 +127,6 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
-      - ["systemctl", "disable", "--now", "systemd-networkd"]
-      - ["systemctl", "enable", "NetworkManager"]
-      - ["systemctl", "start", "NetworkManager"]
-      - ["systemctl", "restart", "NetworkManager"]
-      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "802-3-ethernet.mac-address", "${hwAddr}"]
-      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
-      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
-      - ["nmcli", "connection", "up", "eth0"]
-      - ["nmcli", "connection", "up", "eth1"]
-      - ["nmcli", "connection", "up", "eth2"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
@@ -173,6 +164,17 @@ config:
       - ["curl", "-L", "${urlClient}", "--output", "/tmp/${binClient}"]
       - ["tar",  "-xzvf", "/tmp/${binInst}", "--directory", "/usr/local/bin", "openshift-install"]
       - ["tar",  "-xzvf", "/tmp/${binClient}", "--directory", "/usr/local/bin", "kubectl", "oc"]
+      - ["systemctl", "enable", "NetworkManager"]
+      - ["systemctl", "disable", "--now", "systemd-networkd"]
+      - ["systemctl", "start", "NetworkManager"]
+      - ["systemctl", "restart", "NetworkManager"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "802-3-ethernet.mac-address", "${hwAddr}", "ipv4.never-default", "falise"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
+      - ["nmcli", "connection", "down", "eth0"]
+      - ["nmcli", "connection", "up", "eth0"]
+      - ["nmcli", "connection", "up", "eth1"]
+      - ["nmcli", "connection", "up", "eth2"]
 devices:
   eth0:
     type: nic
