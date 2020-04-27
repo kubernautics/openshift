@@ -9,20 +9,18 @@
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/build-cloudctl-profile
 ```
-#### 00\. Add CCIO Image Repository
-```sh
-lxc remote add bcio https://images.braincraft.io --public --accept-certificate
-```
 #### 00\. Create & Start CloudCtl Container
 ```sh
 lxc init images:fedora/31 cloudctl -p cloudctl
-lxc start cloudctl
 ```
 #### 00\. Push host bashrc & SSH assets to CloudCtl
 ```sh
 lxc file push -r ~/.ssh    cloudctl/root/
 lxc file push -r ~/.bashrc cloudctl/root/
 lxc file push -r ~/.bashrc cloudctl/etc/skel/
+```
+```sh
+lxc start cloudctl
 ```
 #### 00\. Create CCIO Group & Add 'root' to group 'ccio'
 ```sh

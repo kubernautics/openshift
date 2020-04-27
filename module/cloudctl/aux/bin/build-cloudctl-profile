@@ -5,7 +5,44 @@ config:
   linux.kernel_modules: ip6table_filter,iptable_filter
   security.nesting: "true"
   security.privileged: "true"
-description: ccio mini-stack fedora cloudctl container profile
+  user.network-config: |
+    version: 2
+    ethernets:
+      eth0:
+        dhcp4: true
+        dhcp6: false
+      eth1:
+        dhcp4: false
+        dhcp6: false
+        addresses: [ ${int_ministack_SUBNET}.3/24 ]
+      eth2:
+        dhcp4: false
+        dhcp6: false
+        addresses: [ ${ocp_ministack_SUBNET}.3/24 ]
+  user.user-data: |
+    #cloud-config
+    package_upgrade: true
+    packages:
+      - jq
+      - git
+      - vim
+      - tree
+      - tmux
+      - lnav
+      - byobu
+      - snapd
+      - apache2
+      - maas-cli
+      - squashfuse
+      - libvirt-bin
+      - python-pip
+    users:
+      - name: ${ministack_UNAME}
+        shell: /bin/bash
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        ssh_import_id: ${ccio_SSH_SERVICE}:${ccio_SSH_UNAME}
+    runcmd:
+      - [echo, "'testing 123...'", ">", "/root/test.log"]
 devices:
   eth0:
     name: eth0
@@ -30,6 +67,7 @@ devices:
     path: /etc/ccio
     source: /etc/ccio
     type: disk
+description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
