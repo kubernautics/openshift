@@ -80,16 +80,16 @@ config:
     write_files:
       - encoding: b64
         content: |
+          $(base64 -w0 /etc/selinux/config)
+        owner: root:ccio
+        path: /etc/selinux/config
+        permissions: '0644'
+      - encoding: b64
+        content: |
           $(base64 -w0 /etc/ccio/ocp-mini-stack/profile)
         owner: root:ccio
         path: /etc/ccio/ocp-mini-stack/profile
         permissions: '0755'
-      - encoding: b64
-        content: |
-          $(base64 -w0 /root/.bashrc)
-        owner: root:root
-        path: /root/.bashrc
-        permissions: '0744'
       - encoding: b64
         content: |
           $(base64 -w0 /root/.ssh/authorized_keys)
@@ -108,7 +108,15 @@ config:
         owner: root:root
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
+      - encoding: b64
+        content: |
+          $(base64 -w0 /root/.bashrc)
+        owner: root:root
+        path: /root/.bashrc
+        permissions: '0744'
     runcmd:
+      - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
+      - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["ln", "-s", "/root/.ccio", "/home/${ministack_UNAME}/.ccio"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
@@ -137,7 +145,6 @@ config:
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
-      - ["sed", "-i", "'s/SELINUX=enforcing/SELINUX=permissive/g'", "/etc/selinux/config"]
       - ["snap", "install", "--edge", "lxd"]
       - ["touch", "/root/test2"]
 devices:
@@ -172,7 +179,6 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
-#     - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
 #       passwd: ${ministack_PWD_SALT}
 #       lock_passwd: false
 
