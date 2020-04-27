@@ -5,7 +5,7 @@ binInst="openshift-install-linux-${ocpVers}.tar.gz"
 binClient="openshift-client-linux-${ocpVers}.tar.gz"
 urlInst="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binInst}"
 urlClient="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${binClient}"
-hwAddr="echo cloudctl_${cluster_NAME}_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/'"
+hwAddr="$(echo cloudctl_${cluster_NAME}_ministack_eth0 | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\:\1\:\2\:\3\:\4\:\5/')"
 echo ${hwAddr}
 
 chown root:ccio -R /root/.ccio
