@@ -173,10 +173,11 @@ config:
       - ["tar",  "-xzvf", "/tmp/${binClient}", "--directory", "/usr/local/bin", "kubectl", "oc"]
 devices:
   eth0:
-    name: eth0
-    nictype: bridged
-    parent: external
     type: nic
+    name: eth0
+    parent: external
+    nictype: bridged
+    hwaddr: $(echo "cloudctl $(echo ${cluster_NAME}) ministack eth0" | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')
   eth1:
     name: eth1
     nictype: bridged
