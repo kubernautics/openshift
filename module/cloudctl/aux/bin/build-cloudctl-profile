@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+chown root:ccio -R /root/.ccio
 echo ">   Staging Cloudctl Profile ..."
 
 cat <<EOF >/tmp/lxd-profile-cloudctl.yaml
