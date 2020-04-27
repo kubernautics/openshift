@@ -116,7 +116,6 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
-      - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["chown", "-R", "root:ccio", "/root/.ccio"]
       - ["chown", "-R", "root:ccio", "/etc/ccio/ocp-mini-stack/profile"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
@@ -141,14 +140,6 @@ config:
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
-      - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
-      - ["snap", "install", "--edge", "core"]
-      - ["sleep", "30"]
-      - ["snap", "refresh"]
-      - ["snap", "install", "--edge", "snapd"]
-      - ["sleep", "30"]
-      - ["snap", "refresh"]
-      - ["snap", "install", "--edge", "lxd"]
 devices:
   eth0:
     name: eth0
@@ -181,6 +172,15 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
+#     - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
+#     - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
+#     - ["snap", "install", "--edge", "core"]
+#     - ["sleep", "30"]
+#     - ["snap", "refresh"]
+#     - ["snap", "install", "--edge", "snapd"]
+#     - ["sleep", "30"]
+#     - ["snap", "refresh"]
+#     - ["snap", "install", "--edge", "lxd"]
 #       passwd: ${ministack_PWD_SALT}
 #       lock_passwd: false
 
