@@ -168,7 +168,8 @@ config:
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "start", "NetworkManager"]
       - ["systemctl", "restart", "NetworkManager"]
-      - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "802-3-ethernet.mac-address", "${hwAddr}", "ipv4.never-default", "falise"]
+      - ["/bin/bash", "-c", 'nmcli con mod \$(nmcli con | awk "/eth0/{print \$3}") con-name eth0'
+      - ["nmcli", "connection", "mod", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.ignore-auto-dns", "yes", "ipv6.ignore-auto-dns", "yes", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "802-3-ethernet.mac-address", "${hwAddr}", "ipv4.never-default", "falise", "ipv6.never-default", "true"]
       - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
       - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth2", "ifname", "eth2", "ip4", "${ocp_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
       - ["nmcli", "connection", "down", "eth0"]
