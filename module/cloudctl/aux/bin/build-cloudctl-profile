@@ -111,6 +111,7 @@ config:
         path: /root/.ssh/id_rsa.pub
         permissions: '0600'
     runcmd:
+      - ["ln", "-s",  "/usr/libexec/snapd", "/usr/lib/snapd"]
       - ["rpm", "--nodeps", "--allmatches", "-e", "fedora-release-container"]
       - ["systemctl", "unmask", "systemd-logind"]
       - ["systemctl", "enable", "--now", "sshd.service"]
@@ -123,9 +124,9 @@ config:
       - ["virsh", "net-destroy", "default"]
       - ["virsh", "net-undefine", "default"]
       - ["systemctl", "disable", "--now", "libvirtd.service"]
+      - ["systemctl", "mask", "libvirtd.service"]
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "enable", "--now", "NetworkManager.service"]
-      - ["systemctl", "mask", "libvirtd.service"]
       - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
       - ["sleep", "3"]
       - ["snap", "install", "snapd"]
@@ -133,13 +134,13 @@ config:
       - ["snap", "refresh"]
       - ["snap", "install", "--edge", "core"]
       - ["snap", "refresh"]
+      - ["groupmod", "-g", "${ccioGid}", "ccio"]
       - ["cp", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
-      - ["groupmod", "-g", "${ccioGid}", "ccio"]
       - ["sed", "-i", "'s/SELINUX=enforcing/SELINUX=permissive/g'", "/etc/selinux/config"]
-      - ["snap", "install", "lxd", "--edge"]
+      - ["snap", "install", "--edge", "lxd"]
       - ["touch", "/root/test2"]
 devices:
   eth0:
