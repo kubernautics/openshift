@@ -149,7 +149,7 @@ config:
       - ["systemctl", "enable", "NetworkManager"]
       - ["systemctl", "start", "NetworkManager"]
       - ["dnf", "update", "-y"]
-      - ["dnf", "install", "-y", "'dnf-command(copr)'"]
+      - ["dnf", "install", "-y", "\'dnf-command(copr)\'"]
       - ["dnf", "update", "-y"]
       - ["dnf", "install", "-y", "lxd"]
       - ["dnf", "remote", "list"]
