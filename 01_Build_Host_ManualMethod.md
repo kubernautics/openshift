@@ -13,7 +13,7 @@
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo -i 
-dnf update -y && dnf install git -y
+dnf update -y && dnf install git ansible -y
 git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack
 ```
 #### 00\. Build CCIO User Profile
@@ -33,7 +33,7 @@ systemctl set-hostname base.${ccio_DOMAINNAME}
 ```
 #### 01\. Run System Updates & Install Base Packages
 ```sh
-dnf update -y && dnf install -y xz tar tmux htop grubby iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
+dnf update -y && dnf install -y xz tar tmux htop grubby ansible iperf3 glances hostname neofetch net-tools vim-enhanced openssh-server
 ```
 #### 02\. Configure SSH & Keys
 ```sh
