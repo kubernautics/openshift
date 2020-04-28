@@ -21,7 +21,8 @@ playbook.
 # Part 00 -- Prepare Repo & Environment
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
-sudo dnf install git ansible -y
+sudo -i
+dnf install git ansible -y
 git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
