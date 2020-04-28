@@ -154,11 +154,13 @@ config:
       - ["mkdir", "-p", "/home/${ministack_UNAME}/.kube"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
+      - ["cp", "-r", "/root/.config", "/home/${ministack_UNAME}/.config"]
       - ["cp", "/root/.bash_profile", "/home/${ministack_UNAME}/.bash_profile"]
       - ["chown", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.kube"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
+      - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.config"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bash_profile"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
@@ -184,7 +186,15 @@ config:
       - ["nmcli", "connection", "up", "eth0"]
       - ["nmcli", "connection", "up", "eth1"]
       - ["nmcli", "connection", "up", "eth2"]
+      - ["lxc", "config", "trust", "add", ".config/lxc/client.crt"]
+      - ["lxc", "remote", "add", "host", "${oc_ministack_SUBNET}.3", "--password", "${ocp_ministack_SUBNET}.3"]
+      - ["lxc", "remote", "switch", "host"]
+      - ["lxc", "list"]
       - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
+      - ["sudo", "dnf", "upgrade", "--refresh"]
+      - ["sudo", "dnf", "install", "dnf-plugin-system-upgrade", "-y"]
+      - ["sudo", "dnf", "system-upgrade", "download", "--releasever=32", "-y", "--allowerasing"]
+      - ["sudo", "dnf", "system-upgrade", "reboot"]
 devices:
   eth0:
     type: nic
@@ -213,6 +223,10 @@ devices:
   ccio-home:
     path: /home/${ministack_UNAME}/.ccio
     source: /root/.ccio
+    type: disk
+  root-home:
+    path: /root/
+    source: /root/
     type: disk
 description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
