@@ -67,10 +67,8 @@ Beyond v3:
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
 --------------------------------------------------------------------------------
-[00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
 [Ansible Automation]:/ansible/README.md
-[00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
 [02 Build Bastion]:/02_Build_Bastion.md
 [03 Build Gateway]:/03_Build_Gateway.md
