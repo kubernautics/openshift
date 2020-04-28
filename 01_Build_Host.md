@@ -37,7 +37,7 @@ git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-
 ```
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
- sudo /bin/bash bin/init-hypervisor-network
+ sudo /bin/bash -c ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
 ```
 --------------------------------------------------------------------------------
 # Part 03 -- Build Gateway
