@@ -38,7 +38,9 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
 ```
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
- sudo /bin/bash -c ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
+ sudo -i
+ cd /root/.ccio/ocp-mini-stack/ansible
+ /bin/bash -c ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
 ```
 --------------------------------------------------------------------------------
 # Part 03 -- Build Gateway
