@@ -1,18 +1,18 @@
 #!/bin/ansible-playbook
 - name: Build CCIO OCP MiniStack Hypervisor Base
-  hosts: hypervisors
+  hosts: base
   become: true
   gather_facts: yes
   vars_files:
     - vars/custom.yml
     - vars/grub.yml
     - vars/user.yml
-  pre_tasks:
-    - name: Enable WireGuard Copr Repo
-      command: 
-        cmd: "dnf copr enable jdoss/wireguard -y"
-        creates: /etc/yum.repos.d/_copr\:copr.fedorainfracloud.org\:jdoss\:wireguard.repo
-        warn: false
+# pre_tasks:
+#   - name: Enable WireGuard Copr Repo
+#     command: 
+#       cmd: "dnf copr enable jdoss/wireguard -y"
+#       creates: /etc/yum.repos.d/_copr\:copr.fedorainfracloud.org\:jdoss\:wireguard.repo
+#       warn: false
   roles:
     - role: base
       tags: base
