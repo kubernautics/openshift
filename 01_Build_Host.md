@@ -25,6 +25,10 @@ sudo -i
 dnf install git ansible -y
 git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; cd ~/.ccio/ocp-mini-stack/ansible/
 ```
+#### 00\. Build MiniStack OpenShift Profile
+```sh
+ . ~/.ccio/ocp-mini-stack/module/host/aux/bin/init-ccio-profile
+```
 #### 02\. Configure Ansible Values
 ```sh
  vi ~/.ccio/ocp-mini-stack/ansible/vars/user.yml
