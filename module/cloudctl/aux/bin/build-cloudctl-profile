@@ -185,10 +185,11 @@ config:
       - ["nmcli", "connection", "up", "eth1"]
       - ["nmcli", "connection", "up", "eth2"]
       - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
-      - ["lxc", "config", "trust", "add", ".config/lxc/client.crt"]
       - ["lxc", "remote", "add", "host", "${ocp_ministack_SUBNET}.2", "--accept-certificate", "--password", "${ocp_ministack_SUBNET}.2"]
       - ["lxc", "remote", "switch", "host"]
       - ["lxc", "list"]
+      - ["lxc", "list"]
+      - ["sleep", "4"]
       - ["sudo", "shutdown", "-r", "now"]
 devices:
   eth0:
