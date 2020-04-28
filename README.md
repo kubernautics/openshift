@@ -3,8 +3,8 @@
 ######  ^ But wait there's more! Shameless plug, yep, seriously see these typos? Need help!
 ---------------------------------------------------------------------------------
 # CCIO OCP MiniStack Education & Development Lab
-### Or Get Started [Ansible Method]    
-### Get Started Manual Method
+### Get Started [Ansible Method]    
+### Or Get Started Manual Method
   + [00 Introduction]
   + [01 Build Host]
   + [02 Build Bastion]
