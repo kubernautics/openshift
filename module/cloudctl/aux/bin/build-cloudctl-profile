@@ -143,6 +143,8 @@ config:
       - ["systemctl", "disable", "--now", "libvirtd.service"]
       - ["systemctl", "mask", "libvirtd.service"]
       - ["groupmod", "-g", "$(grep ccio /etc/group | cut -d ':' -f 3)", "ccio"]
+      - ["/bin/bash", "-c", "'ssh-keyscan -H ${int_ministack_SUBNET}.2 >>~/.ssh/known_hosts'"]
+      - ["/bin/bash", "-c", "'ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname'"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
       - ["chown", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}"]
@@ -156,8 +158,6 @@ config:
       - ["dnf", "update", "-y"]
       - ["dnf", "install", "-y", "lxd"]
       - ["lxc", "remote", "list"]
-      - ["su", "-l", "${ministack_UNAME}", "-c", "/bin/bash -c 'ssh-keyscan -H ${int_ministack_SUBNET}.2 >>~/.ssh/known_hosts'"]
-      - ["su", "-l", "${ministack_UNAME}", "-c", "/bin/bash -c 'ssh -oStrictHostKeyChecking=accept-new root@${ocp_ministack_SUBNET}.2 hostname'"]
       - ["virsh", "net-list", "--all"]
       - ["curl", "-L", "${urlInst}", "--output", "/tmp/${binInst}"]
       - ["curl", "-L", "${urlClient}", "--output", "/tmp/${binClient}"]
@@ -167,7 +167,6 @@ config:
       - ["systemctl", "disable", "--now", "systemd-networkd"]
       - ["systemctl", "start", "NetworkManager"]
       - ["systemctl", "restart", "NetworkManager"]
-      - ["/bin/bash" "-c", "echo", "'YWxpYXMgdmlyc2g9InZpcnNoIC1jIHFlbXUrc3NoOi8vcm9vdEAxNzIuMTAuMC4yL3N5c3RlbSIK | base64 -d | tee -a test3'"]
       - ["/bin/bash", "-c", "'echo bm1jbGkgY29uIG1vZCAkKG5tY2xpIGNvbiB8IGF3ayAnL2V0aDAve3ByaW50ICQzfScpIGNvbi1uYW1lIGV0aDA= | base64 -d'"]
       - ["nmcli", "connection", "mod", "eth0", "ifname", "eth0", "ipv4.method", "auto", "ipv4.ignore-auto-dns", "yes", "ipv6.ignore-auto-dns", "yes", "ipv4.dns", "8.8.8.8", "connection.autoconnect", "yes", "802-3-ethernet.mac-address", "${hwAddr}", "ipv4.never-default", "falise", "ipv6.never-default", "true"]
       - ["nmcli", "connection", "add", "type", "ethernet", "con-name", "eth1", "ifname", "eth1", "ip4", "${int_ministack_SUBNET}.3/24", "connection.autoconnect", "yes"]
@@ -209,6 +208,7 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
+#     - ["/bin/bash" "-c", "echo", "'YWxpYXMgdmlyc2g9InZpcnNoIC1jIHFlbXUrc3NoOi8vcm9vdEAxNzIuMTAuMC4yL3N5c3RlbSIK | base64 -d | tee -a test3'"]
 #     - snapd
 #     - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
 #     - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
