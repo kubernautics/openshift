@@ -184,7 +184,7 @@ config:
       - ["nmcli", "connection", "up", "eth0"]
       - ["nmcli", "connection", "up", "eth1"]
       - ["nmcli", "connection", "up", "eth2"]
-      - ["sudo", "dnf", "group", "install", "'Fedora Workstation'", "--excludepkg", "fedora-release-container", "-y", "--allowerasing"
+      - ["sudo", "dnf", "group", "install", "'Fedora Workstation'", "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
 devices:
   eth0:
     type: nic
