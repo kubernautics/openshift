@@ -187,7 +187,7 @@ config:
       - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
       - ["lxc", "remote", "add", "host", "${ocp_ministack_SUBNET}.2", "--accept-certificate", "--password", "${ocp_ministack_SUBNET}.2"]
       - ["lxc", "remote", "switch", "host"]
-      - ["lxc", "list"]
+      - ["sleep", "3"]
       - ["lxc", "list"]
       - ["lxc", "remote", "list"]
       - ["sleep", "30"]
