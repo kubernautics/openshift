@@ -184,11 +184,12 @@ config:
       - ["nmcli", "connection", "up", "eth0"]
       - ["nmcli", "connection", "up", "eth1"]
       - ["nmcli", "connection", "up", "eth2"]
+      - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
       - ["lxc", "config", "trust", "add", ".config/lxc/client.crt"]
-      - ["lxc", "remote", "add", "host", "${oc_ministack_SUBNET}.3", "--password", "${ocp_ministack_SUBNET}.3"]
+      - ["lxc", "remote", "add", "host", "${ocp_ministack_SUBNET}.3", "--password", "${ocp_ministack_SUBNET}.3"]
       - ["lxc", "remote", "switch", "host"]
       - ["lxc", "list"]
-      - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
+      - ["sudo", "shutdown", "-r", "now"]
 devices:
   eth0:
     type: nic
