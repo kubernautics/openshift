@@ -165,6 +165,9 @@ cat <<EOF >> $1
 case \$- in *i*)
         source /etc/ccio/ocp-mini-stack/profile
 esac
+
+# Custom Alias'
+alias virsh="virsh -c qemu+ssh://root@172.10.0.2/system"
 EOF
 }
 
