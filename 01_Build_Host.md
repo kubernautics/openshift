@@ -40,6 +40,10 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
 ```sh
  ./hypervisor-setup -i hosts.yml
 ```
+```
+reboot
+```
+  - DELAY: network start may be slow on this first reboot
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
  sudo -i
