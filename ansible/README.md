@@ -9,7 +9,7 @@
 --------------------------------------------------------------------------------
 #### Ansible Playbook Notes:
 ````
-This playbook is a rough work in progress and stubs out the future automation
+These playbooks are a rough work in progress and stubs out the future automation
 of ministack setup with the goal of full CI/CD IaC implimentation in the future.
 To date this playbook has been predominantly run locally on the target machine 
 and executed against localhost. The following instructions loosely direct the
@@ -21,8 +21,7 @@ playbook.
 #### 00\. Clone the ocp-mini-stack repo
 ```sh
 sudo dnf install git ansible -y
-git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack
-cd ~/.ccio/ocp-mini-stack/ansible/
+git clone https://github.com/containercraft/ocp-mini-stack.git ~/.ccio/ocp-mini-stack && cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Configure Ansible Values
 ```sh
@@ -40,12 +39,6 @@ cd ~/.ccio/ocp-mini-stack/ansible/
  sudo /bin/bash bin/init-hypervisor-network
 ```
 --------------------------------------------------------------------------------
-# Part 02 -- Build RDP Enabled Bastion
-#### 01\. Run Fedora LXD CloudCtl Bastion Setup Playbook
-```sh
- ./bastion-setup -i hosts.yml
-```
---------------------------------------------------------------------------------
 # Part 03 -- Build Gateway
 #### 01\. Stage OpenWRT LXD Gateway Profile and Config Files
 ```sh
@@ -53,8 +46,10 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 02\. Add Image Server & Initialize Gateway
 ```sh
- lxc remote add bcio https://images.braincraft.io --public --accept-certificate
- lxc init bcio:beeef940cbcb gateway -p openwrt
+mkdir /tmp/openwrt
+sudo podman run --privileged --rm -it --name openwrt_builder --volume /tmp/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2
+lxc image import /tmp/openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt/19.07.2/x86_64
+lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 ```
 #### 03\. Push Config directory to Gateway
 ```sh
@@ -67,3 +62,27 @@ cd ~/.ccio/ocp-mini-stack/ansible/
 ```
 #### 05\. Start Gateway and monitor for Address Configuration
   - Login to the OpenWRT WebUI @ the 'eth0' IP address with `http://${address}:8081`
+---------------------------------------------------------------------------------
+### Next Steps:
+  + [02 Build Bastion]
+  + [04 Setup_Dns]
+  + [05 Setup HAProxy]
+  + [06 Setup Dhcp]
+  + [07 Setup Nginx]
+  + [08 Setup Tftpd]
+  + [09 Deploy Cloud]
+  + [10 Configure Cloud]
+--------------------------------------------------------------------------------
+<!-- Markdown link & img dfn's -->
+[Ansible Automation]:/ansible/README.md
+[00 Introduction]:/00_Introduction.md
+[01 Build Host]:/01_Build_Host.md
+[02 Build Bastion]:/02_Build_Bastion.md
+[03 Build Gateway]:/03_Build_Gateway.md
+[04 Setup_Dns]:/04_Setup_DNS.md
+[05 Setup HAProxy]:/05_Setup_HAProxy.md
+[06 Setup Dhcp]:/06_Setup_DHCP.md
+[07 Setup Nginx]:/07_Setup_Nginx.md
+[08 Setup Tftpd]:/08_Setup_Tftpd.md
+[09 Deploy Cloud]:/09_Deploy_Cloud.md
+[10 Configure Cloud]:/10_Configure_Cloud.md

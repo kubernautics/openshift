@@ -36,7 +36,6 @@ lxc exec cloudctl -- /bin/bash -c "shutdown -r now" ; sleep 3
 lxc list
 ```
 ---------------------------------------------------------------------------------
-    
 ### Next Steps:
   + [03 Build Gateway]
   + [04 Setup_Dns]
