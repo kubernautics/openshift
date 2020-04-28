@@ -3,6 +3,7 @@
 ######  ^ But wait there's more! Shameless plug, yep, seriously see these typos? Need help!
 ---------------------------------------------------------------------------------
 # CCIO OCP MiniStack Education & Development Lab
+### Or Get Started [Ansible Method]    
 ### Get Started Manual Method
   + [00 Introduction]
   + [01 Build Host]
@@ -16,7 +17,6 @@
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
 
-### Or Get Started [Ansible Method]
 ---------------------------------------------------------------------------------
      
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/master-ocp-mini-stack.svg)
