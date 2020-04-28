@@ -98,6 +98,12 @@ config:
         permissions: '0744'
       - encoding: b64
         content: |
+          $(base64 -w0 /root/.bash_profile)
+        owner: root:root
+        path: /root/.bash_profile
+        permissions: '0744'
+      - encoding: b64
+        content: |
           $(base64 -w0 /etc/selinux/config)
         owner: root:root
         path: /etc/selinux/config
@@ -148,10 +154,12 @@ config:
       - ["mkdir", "-p", "/home/${ministack_UNAME}/.kube"]
       - ["cp", "-r", "/root/.ssh", "/home/${ministack_UNAME}/.ssh"]
       - ["cp", "/root/.bashrc", "/home/${ministack_UNAME}/.bashrc"]
+      - ["cp", "/root/.bash_profile", "/home/${ministack_UNAME}/.bash_profile"]
       - ["chown", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.ssh"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.kube"]
       - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bashrc"]
+      - ["chown", "-R", "${ministack_UNAME}:${ministack_UNAME}", "/home/${ministack_UNAME}/.bash_profile"]
       - ["passwd", "-u", "-f", "root"]
       - ["passwd", "-u", "-f", "${ministack_UNAME}"]
       - ["dnf", "update", "-y"]
