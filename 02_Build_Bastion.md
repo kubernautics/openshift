@@ -4,33 +4,34 @@
   + [01 Host Hypervisor				- Bare Metal]
     
 --------------------------------------------------------------------------------
-# Part 00 -- Build LXD CloudCtl Container
-#### 00\. Write LXD CloudCtl Profile
+#### 01\. Write LXD CloudCtl Profile
 ```sh
  . ~/.ccio/ocp-mini-stack/module/cloudctl/aux/bin/build-cloudctl-profile
 ```
-#### 00\. Create & Start CloudCtl Container
+#### 02\. Create & Start CloudCtl Container
 ```sh
 lxc start images:fedora/31/cloud/amd64 cloudctl -p cloudctl
 ```
-#### 00\. SSH to CloudCtl as User
+#### 03\. Follow progress until cloud-init finish
+  - NOTE: this process takes considerable time and may be anywhere from 5-30 minutes
+```sh
+lxc exec cloudctl -- tail -f /var/log/cloud-init-output.log
+```
+  - WARN: Do not proceed until cloud-init completes
+#### 04\. SSH to CloudCtl as User
 ```sh
 lxc list
 ```
 ```sh
 ssh ${ministack_UNAME}@${int_ministack_SUBNET}.3
 ```
-#### 00\. Setup LXD Access
+#### 05\. Setup LXD Access
+  - PASSWD: use the password created at previous step `lxd init`
 ```sh
-lxc remote add msbase ${ocp_ministack_SUBNET}.2
-lxc remote switch msbase
+lxc remote add host ${ocp_ministack_SUBNET}.2 --accept-certificate
+lxc remote switch host 
 ```
-#### 00\. Install CloudCtl Fedora Workstation Desktop packages
-  - (used for RDP access)
-```sh
-dnf group install 'Fedora Workstation' --excludepkg xorg-x11-drv-omap --excludepkg totem-nautilus --excludepkg xorg-x11-drv-armsoc --excludepkg powerpc-utils --excludepkg lsvpd --excludepkg fedora-release-container -y --allowerasing
-```
-#### 00\. Reboot CloudCtl
+#### 06\. Reboot CloudCtl
 ```sh
 lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
 ```
