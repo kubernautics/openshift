@@ -190,6 +190,9 @@ config:
       - ["sleep", "3"]
       - ["lxc", "list"]
       - ["lxc", "remote", "list"]
+      - ["sleep", "30"]
+      - ["lxc", "remote", "add", "host", "${ocp_ministack_SUBNET}.2", "--accept-certificate", "--password", "${ocp_ministack_SUBNET}.2"]
+      - ["lxc", "remote", "switch", "host"]
 devices:
   eth0:
     type: nic
