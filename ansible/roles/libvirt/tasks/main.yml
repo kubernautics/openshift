@@ -6,5 +6,7 @@
   when: ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_version']|int <= 8
 - include: install_Fedora.yml
   when: ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_version']|int == 31
+- include: install_Fedora.yml
+  when: ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_version']|int == 32
 - include: configure.yml
 

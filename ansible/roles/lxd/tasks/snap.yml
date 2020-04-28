@@ -1,5 +1,10 @@
 ---
 # Install lxd from snap
+- name: install lxd snap
+  become: yes
+  snap:
+    name: lxd
+    channel: latest/edge
 - name: restart the snapd service
   systemd:
     name: snapd.service
@@ -12,11 +17,6 @@
 - name: Snapd Ready Workaround - part2
   command: sleep 30
   ignore_errors: yes
-- name: install lxd snap
-  become: yes
-  snap:
-    name: lxd
-    channel: latest/edge
 - name: install lxd snap
   become: yes
   snap:

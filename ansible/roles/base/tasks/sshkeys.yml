@@ -1,4 +1,11 @@
 ---
+- name: Make SSH directory
+  file:
+    path: /root/.ssh
+    state: directory
+    owner: root
+    group: root
+    mode: '1600'
 - name: SSH Keys - Create New Key Pair
   openssh_keypair:
     path: /root/.ssh/id_rsa

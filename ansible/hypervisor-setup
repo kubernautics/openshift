@@ -20,12 +20,14 @@
       tags: ovs
     - role: libvirt
       tags: virt
-    - role: lxd
-      tags: lxd
     - role: networking
       tags: net
     - role: grub
       tags: grub
+    - role: lxd
+      tags: lxd
+    - role: wireguard
+      tags: wg
   tasks:
     - hostname:
         name: "{{ ministack_hostname_base }}"
