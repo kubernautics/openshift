@@ -191,10 +191,6 @@ config:
       - ["lxc", "remote", "switch", "host"]
       - ["lxc", "list"]
       - ["sudo", "dnf", "group", "install", 'Fedora Workstation', "--excludepkg", "fedora-release-container", "-y", "--allowerasing"]
-      - ["sudo", "dnf", "upgrade", "--refresh"]
-      - ["sudo", "dnf", "install", "dnf-plugin-system-upgrade", "-y"]
-      - ["sudo", "dnf", "system-upgrade", "download", "--releasever=32", "-y", "--allowerasing"]
-      - ["sudo", "dnf", "system-upgrade", "reboot"]
 devices:
   eth0:
     type: nic
@@ -232,6 +228,10 @@ description: ccio mini-stack fedora cloudctl container profile
 name: cloudctl
 EOF
 
+#     - ["sudo", "dnf", "upgrade", "--refresh"]
+#     - ["sudo", "dnf", "install", "dnf-plugin-system-upgrade", "-y"]
+#     - ["sudo", "dnf", "system-upgrade", "download", "--releasever=32", "-y", "--allowerasing"]
+#     - ["sudo", "dnf", "system-upgrade", "reboot"]
 #     - snapd
 #     - ["ln", "-s", "/var/lib/snapd/snap", "/snap"]
 #     - ["ln", "-s", "/usr/libexec/snapd", "/usr/lib/snapd"]
