@@ -55,7 +55,6 @@ Beyond v3:
 ```
 ![CCIO_OCP MiniStack Lab_Diagram](zweb/drawio/rc1-design-goals/rc1-design-objectives.svg)
 
-  + [00 Introduction]
   + [01 Build Host]
   + [02 Build Bastion]
   + [03 Build Gateway]
