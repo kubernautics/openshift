@@ -37,7 +37,6 @@ lxc list
 ```
 ---------------------------------------------------------------------------------
 ### Next Steps:
-  + [03 Build Gateway]
   + [04 Setup_Dns]
   + [05 Setup HAProxy]
   + [06 Setup Dhcp]

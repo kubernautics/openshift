@@ -64,7 +64,7 @@ lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
   - Login to the OpenWRT WebUI @ the 'eth0' IP address with `http://${address}:8081`
 ---------------------------------------------------------------------------------
 ### Next Steps:
-  + [02 Build Bastion]
+  + [03 Build Bastion]
   + [04 Setup_Dns]
   + [05 Setup HAProxy]
   + [06 Setup Dhcp]
@@ -77,8 +77,8 @@ lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 [Ansible Automation]:/ansible/README.md
 [00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
-[02 Build Bastion]:/02_Build_Bastion.md
-[03 Build Gateway]:/03_Build_Gateway.md
+[02 Build Gateway]:/02_Build_Gateway.md
+[03 Build Bastion]:/03_Build_Bastion.md
 [04 Setup_Dns]:/04_Setup_DNS.md
 [05 Setup HAProxy]:/05_Setup_HAProxy.md
 [06 Setup Dhcp]:/06_Setup_DHCP.md

@@ -3,7 +3,6 @@
 ### Prerequisites:
   + [00 Introduction]
   + [01 Build Host]
-  + [02 Build Bastion]
     
 --------------------------------------------------------------------------------
 #### 00\. Build & Import OpenWRT LXD Image
@@ -55,6 +54,7 @@ watch -c lxc list
 ---------------------------------------------------------------------------------
     
 ### Next Steps:
+  + [03 Build Bastion]
   + [04 Setup_Dns]
   + [05 Setup HAProxy]
   + [06 Setup Dhcp]
@@ -63,33 +63,6 @@ watch -c lxc list
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
     
----------------------------------------------------------------------------------
-######  + [Repo Module] Index
-```sh
-.
-├── bin
-│   └── run-gateway-config
-├── build.log
-├── config
-│   ├── dnsmasq.conf
-│   └── profile-lxd-openwrt.yaml
-└── openwrt
-    └── config
-        ├── dhcp
-        ├── dropbear
-        ├── firewall
-        ├── hosts
-        ├── luci
-        ├── network
-        ├── ocp4
-        ├── rpcd
-        ├── script
-        ├── squid
-        ├── system
-        ├── ucitrack
-        └── uhttpd
-```
-    
 <!-- Markdown link & img dfn's -->
 [Repo Module]:/module/openwrt
 --------------------------------------------------------------------------------
@@ -97,8 +70,8 @@ watch -c lxc list
 <!-- Markdown link & img dfn's -->
 [00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
-[02 Build Bastion]:/02_Build_Bastion.md
-[03 Build Gateway]:/03_Build_Gateway.md
+[03 Build Gateway]:/02_Build_Gateway.md
+[03 Build Bastion]:/03_Build_Bastion.md
 [04 Setup_Dns]:/04_Setup_DNS.md
 [05 Setup HAProxy]:/05_Setup_HAProxy.md
 [06 Setup Dhcp]:/06_Setup_DHCP.md
