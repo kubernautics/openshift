@@ -458,8 +458,8 @@ echo "${ministack_UNAME} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${ministack_UNA
 ```
 --------------------------------------------------------------------------------
     
-  + [02 CloudCtl RDP Bastion - LXD Container]
-  + [03 VFW Firewall & Gateway - LXD Container]
+  + [02 VFW Firewall & Gateway - LXD Container]
+  + [03 CloudCtl RDP Bastion - LXD Container]
   + [04 DNS Service					- OCI Podman Container]
   + [05 Application Router Proxy - OCI Podman Container]
   + [06 DHCP Service				- OCI Podman Container]
