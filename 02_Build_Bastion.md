@@ -20,9 +20,6 @@ lxc exec cloudctl -- tail -f /var/log/cloud-init-output.log
   - WARN: Do not proceed until cloud-init completes
 #### 04\. SSH to CloudCtl as User
 ```sh
-lxc list
-```
-```sh
 ssh ${ministack_UNAME}@${int_ministack_SUBNET}.3
 ```
 #### 05\. Setup LXD Access
@@ -33,7 +30,10 @@ lxc remote switch host
 ```
 #### 06\. Reboot CloudCtl
 ```sh
-lxc exec cloudctl -- /bin/bash -c "shutdown -r now"
+lxc exec cloudctl -- /bin/bash -c "shutdown -r now" ; sleep 3
+```
+```sh
+lxc list
 ```
 ---------------------------------------------------------------------------------
     
