@@ -1,7 +1,7 @@
 # Stage 01 -- CloudCtl Bastion Setup
 
 ### Prerequisites:
-  + [01 Host Hypervisor				- Bare Metal]
+  + [01 Build Host]
     
 --------------------------------------------------------------------------------
 #### 01\. Write LXD CloudCtl Profile
@@ -47,7 +47,6 @@ lxc list
   + [09 Deploy Cloud]
   + [10 Configure Cloud]
 --------------------------------------------------------------------------------
-[00 Introduction]:/00_Introduction.md
 <!-- Markdown link & img dfn's -->
 [Ansible Automation]:/ansible/README.md
 [00 Introduction]:/00_Introduction.md
