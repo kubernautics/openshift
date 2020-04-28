@@ -3,3 +3,4 @@
 !/module/nginx/aux/html/ignition/.gitignore
 /module/nginx/aux/html/boot/*
 !/module/nginx/aux/html/boot/.gitignore
+*.swp
