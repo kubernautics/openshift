@@ -13,4 +13,5 @@ packages_base_fedora:
  - neofetch
  - net-tools
  - vim-enhanced
+ - speedtest-cli
  - openssh-server

@@ -1,5 +1,6 @@
 ---
 # tasks file for kvm
+- include: tasks/assets.yml
 - include: tasks/sshkeys.yml
 - include: tasks/set_selinux.yml
 - include: install_RedHat.yml

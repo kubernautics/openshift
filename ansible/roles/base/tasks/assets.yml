@@ -1,0 +1,14 @@
+---
+
+- name: Base | Assets | Create Group 'CCIO'
+  group:
+    name: ccio
+    gid: 7000
+    state: present
+- name: Base | Assets | Chown Assets with 'CCIO' Group
+  file:
+    dest: /root/.ccio
+    owner: root
+    group: ccio
+    mode: '1664'
+    recurse: yes

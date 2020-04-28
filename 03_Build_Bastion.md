@@ -10,7 +10,7 @@
 ```
 #### 02\. Create & Start CloudCtl Container
 ```sh
-lxc start images:fedora/31/cloud/amd64 cloudctl -p cloudctl
+lxc launch images:fedora/31/cloud/amd64 cloudctl -p cloudctl
 ```
 #### 03\. Follow progress until cloud-init finish
   - NOTE: this process takes considerable time and may be anywhere from 5-30 minutes
