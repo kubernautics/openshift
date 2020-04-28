@@ -189,8 +189,9 @@ config:
       - ["lxc", "remote", "switch", "host"]
       - ["lxc", "list"]
       - ["lxc", "list"]
-      - ["sleep", "4"]
-      - ["sudo", "shutdown", "-r", "now"]
+      - ["lxc", "remote", "list"]
+      - ["sleep", "30"]
+      - ["sudo", "reboot"]
 devices:
   eth0:
     type: nic
