@@ -16,6 +16,7 @@ and executed against localhost. The following instructions loosely direct the
 user on the steps required to build the full ocp stack with the aid of this
 playbook. 
 ````
+#### Alternatively, use the fully tested [Manual Method]
 --------------------------------------------------------------------------------
 # Part 00 -- Prepare Repo & Environment
 #### 00\. Clone the ocp-mini-stack repo
@@ -75,6 +76,7 @@ lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 --------------------------------------------------------------------------------
 <!-- Markdown link & img dfn's -->
 [Ansible Automation]:/ansible/README.md
+[Manual Method]:/01_Build_Host_ManualMethod.md
 [00 Introduction]:/00_Introduction.md
 [01 Build Host]:/01_Build_Host.md
 [02 Build Gateway]:/02_Build_Gateway.md
