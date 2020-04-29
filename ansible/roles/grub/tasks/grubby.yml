@@ -2,4 +2,4 @@
 
 - name: Grub | Grubby | Add kernel parameters
   command: grubby --args="{ item}" --update-kernel=ALL
-  with_items: "{{ grub_args_fedora }}"
+  with_items: "{{ args_grub_fedora }}"

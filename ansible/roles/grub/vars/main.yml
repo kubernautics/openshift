@@ -1,7 +1,7 @@
 ---
 packages_grub_fedora:
   - grubby
-packages_base_fedora:
+args_grub_fedora:
   - intel_iommu=on
   - iommu=pt
   - kvm-intel.nested=1
