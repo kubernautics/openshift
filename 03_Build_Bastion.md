@@ -37,12 +37,10 @@ virsh net-list --all
 #### 05\. Import all required docker images
 ```sh
 podman image import docker.io/containercraft/ccio-dnsmasq:latest
-podman image import 
-podman image import 
-podman image import 
-podman image import 
-podman image import 
-podman image import 
+podman image import docker.io/containercraft/ccio-haproxy:latest
+podman image import docker.io/containercraft/ccio-isc-dhcp:alpine-latest
+podman image import docker.io/containercraft/ccio-nginx
+podman image import docker.io/containercraft/ccio-tftpd:alpine-latest
 ```
 #### 06\. Reboot CloudCtl
 ```sh
