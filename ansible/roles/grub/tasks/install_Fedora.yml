@@ -1,0 +1,7 @@
+---
+# Install Base Packages on Fedora
+- name: Grub | Fedora | Install Base Packages
+  become: yes
+  package:
+    name: "{{ packages_grub_fedora }}"
+    state: present
