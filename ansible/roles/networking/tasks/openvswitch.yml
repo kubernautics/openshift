@@ -9,11 +9,11 @@
 - openvswitch_bridge:
     bridge: ocp-mini-stack
     state: present
-- openvswitch_port:
-    bridge: external
-    state: present
-    port: "{{ external_host_interface }}"
-- openvswitch_port:
-    bridge: external
-    state: present
-    port: "{{ internal_host_interface }}"
+#- openvswitch_port:
+#    bridge: external
+#    state: present
+#    port: "{{ external_host_interface }}"
+#- openvswitch_port:
+#    bridge: external
+#    state: present
+#    port: "{{ internal_host_interface }}"
