@@ -193,6 +193,7 @@ config:
       - ["sleep", "30"]
       - ["lxc", "remote", "add", "host", "${ocp_ministack_SUBNET}.2", "--accept-certificate", "--password", "${ocp_ministack_SUBNET}.2"]
       - ["lxc", "remote", "switch", "host"]
+      - ["chown", "-R", "root:ccio", "/home/${ministack_UNAME}/.ccio"]
 devices:
   eth0:
     type: nic

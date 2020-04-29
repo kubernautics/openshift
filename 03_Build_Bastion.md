@@ -22,18 +22,31 @@ lxc exec cloudctl -- tail -f /var/log/cloud-init-output.log
 ```sh
 ssh ${ministack_UNAME}@${int_ministack_SUBNET}.3
 ```
-#### 05\. Setup LXD Access
-  - PASSWD: use the password created at previous step `lxd init`
+#### 05\. Enable access to control the host LXD daemon
 ```sh
-lxc remote add host ${ocp_ministack_SUBNET}.2 --accept-certificate
+lxc remote add host ${ocp_ministack_OCP}.2 --accept-certificate --password ${ocp_ministack_OCP}.2
 lxc remote switch host 
-```
-#### 06\. Reboot CloudCtl
-```sh
-lxc exec cloudctl -- /bin/bash -c "shutdown -r now" ; sleep 3
 ```
 ```sh
 lxc list
+```
+#### 05\. Enable access to control the host Libvirt daemon
+```sh
+virsh net-list --all
+```
+#### 05\. Import all required docker images
+```sh
+podman image import docker.io/containercraft/ccio-dnsmasq:latest
+podman image import 
+podman image import 
+podman image import 
+podman image import 
+podman image import 
+podman image import 
+```
+#### 06\. Reboot CloudCtl
+```sh
+sudo shutdown -r now
 ```
 ---------------------------------------------------------------------------------
 ### Next Steps:
