@@ -9,4 +9,3 @@ args_grub_fedora:
   - net.ifnames=0
   - biosdevname=0
   - pci=noaer
-  - console=ttyS0,115200n8
