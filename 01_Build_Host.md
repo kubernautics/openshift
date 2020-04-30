@@ -43,12 +43,11 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
 ```
 reboot
 ```
-  - DELAY: network start may be slow on this first reboot
 #### 02\. Run Network Systemd-Networkd Handoff script
 ```sh
  sudo -i
  cd /root/.ccio/ocp-mini-stack/ansible
- /bin/bash -c ~/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
+ ./network-setup -i hosts.yml
 ```
 --------------------------------------------------------------------------------
 # Part 03 -- Build Gateway
