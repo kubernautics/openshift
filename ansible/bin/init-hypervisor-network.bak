@@ -1,0 +1,61 @@
+#!/bin/bash
+
+external_NIC="eth0"
+
+restart_services () {
+systemctl enable  --now systemd-networkd.service
+systemctl restart systemd-networkd.service
+systemctl restart ovs-vswitchd.service
+}
+
+run_net_setup_external () {
+ ovs-vsctl \
+     add-port external ${external_NIC} \
+  -- add-port external mgmt0           \
+  -- set interface mgmt0 type=internal \
+  -- set interface mgmt0 mac="$(echo "${HOSTNAME} ocp external mgmt0" \
+  | md5sum \
+  | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+}
+
+run_net_setup_internal () {
+ovs-vsctl \
+ -- add-port internal mgmt1 \
+ -- set interface mgmt1 type=internal \
+ -- set interface mgmt1 mac="$(echo "$HOSTNAME internal mgmt1" | md5sum \
+ | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+}
+
+run_net_setup_ocp () {
+ovs-vsctl \
+ -- add-port ocp-mini-stack mgmt2 \
+ -- set interface mgmt2 type=internal \
+ -- set interface mgmt2 mac="$(echo "$HOSTNAME ocp-mini-stack mgmt2" | md5sum \
+ | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02\\:\1\\:\2\\:\3\\:\4\\:\5/')"
+}
+
+   
+stage_ovs_clear_utility () {
+cat <<EOF >/usr/bin/ovs-clear
+#!/bin/bash
+run_ovs_clear () {
+for i in \$(ovs-vsctl show | awk '/error: /{print \$7}'); do
+  ovs-vsctl del-port \$i;
+done
+clear && ovs-vsctl show
+}
+run_ovs_clear
+EOF
+ovs-clear
+chmod +x /usr/bin/ovs-clear
+}
+
+run () {
+stage_ovs_clear_utility
+run_net_setup_ocp
+run_net_setup_internal
+run_net_setup_external
+restart_services
+}
+
+run

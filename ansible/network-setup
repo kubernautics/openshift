@@ -5,15 +5,12 @@
   gather_facts: yes
   vars_files:
     - vars/custom.yml
-    - vars/grub.yml
     - vars/user.yml
   roles:
     - role: openvswitch
       tags: ovs
-    - role: libvirt
-      tags: virt
     - role: networking
       tags: net
   tasks:
-    - hostname:
-        name: "{{ ministack_hostname_base }}"
+    - name: Network Handoff
+      shell: /root/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network

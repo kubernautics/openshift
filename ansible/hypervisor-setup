@@ -20,8 +20,6 @@
       tags: ovs
     - role: libvirt
       tags: virt
-    - role: networking
-      tags: net
     - role: grub
       tags: grub
     - role: lxd
