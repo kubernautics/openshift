@@ -3,6 +3,7 @@
 external_NIC="eth0"
 
 restart_services () {
+systemctl disable  --now NetworkManager.service
 systemctl enable  --now systemd-networkd.service
 systemctl restart systemd-networkd.service
 systemctl restart ovs-vswitchd.service
