@@ -7,7 +7,7 @@
     state: present
 - name: Base | Assets | Chown Assets with 'CCIO' Group
   file:
-    dest: /root/.ccio
+    dest: /root/.ccio/ocp-mini-stack/module
     owner: root
     group: ccio
     mode: '1664'
