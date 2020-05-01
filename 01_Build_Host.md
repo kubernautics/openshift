@@ -38,9 +38,12 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
 ```sh
  ./network-setup -i hosts.yml
 ```
+  - NOTE: you will loose SSH access if you are connected via ssh at this time
+  - Resolution: ssh back to the same IP and start a new ssh session
 --------------------------------------------------------------------------------
 # Part 01 -- Build Hypervisor Virtualization Layer
 ```sh
+ cd ~/.ccio/ocp-mini-stack/ansible/
  ./hypervisor-setup -i hosts.yml
 ```
 --------------------------------------------------------------------------------
