@@ -1,4 +1,7 @@
 ---
+- name: MSIO | Networking | OpenVSwitch | Install Packages
+  include: openvswitch_install_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
 - name: Networking | OpenVSwitch | Build Bridges (external,internal,ocp-mini-stack)
   openvswitch_bridge:
     bridge: external
@@ -9,11 +12,3 @@
 - openvswitch_bridge:
     bridge: ocp-mini-stack
     state: present
-#- openvswitch_port:
-#    bridge: external
-#    state: present
-#    port: "{{ external_host_interface }}"
-#- openvswitch_port:
-#    bridge: external
-#    state: present
-#    port: "{{ internal_host_interface }}"

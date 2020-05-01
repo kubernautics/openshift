@@ -25,7 +25,6 @@
     dest: "/etc/systemd/network/{{ item }}.network"
   with_items:
     - "{{ external_interface }}"
-    - "{{ internal_interface }}"
 - name: Disable Network Scripts and NetworkManager
   service:
     name: "{{ item }}"

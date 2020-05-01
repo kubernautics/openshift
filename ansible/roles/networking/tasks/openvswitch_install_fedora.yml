@@ -3,5 +3,5 @@
 - name: Install Base Packages on Fedora OS
   become: yes
   package:
-    name: "{{ packages_ovs_fedora }}"
+    name: "{{ packages_openvswitch_fedora }}"
     state: present

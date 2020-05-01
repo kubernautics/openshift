@@ -1,6 +1,9 @@
 ---
 # Configure All Networks
-- name: Build Networking Components - Libvirt Networks
+- name: MSIO | Networking | Libvirt | Install Min2Config Packages
+  include: libvirt_install_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_version']|int <= 32
+- name: MSIO | Networking | Libvirt | Define Networks
   virt_net:
     command: destroy
     name: default

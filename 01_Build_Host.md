@@ -31,7 +31,6 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
 ```
 #### 02\. Configure Ansible Values
 ```sh
- vi ~/.ccio/ocp-mini-stack/ansible/vars/user.yml
  vi ~/.ccio/ocp-mini-stack/ansible/hosts.yml
 ```
 --------------------------------------------------------------------------------

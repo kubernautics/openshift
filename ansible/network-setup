@@ -5,7 +5,6 @@
   gather_facts: yes
   vars_files:
     - vars/custom.yml
-    - vars/user.yml
   roles:
     - role: openvswitch
       tags: ovs

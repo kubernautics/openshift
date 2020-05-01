@@ -1,6 +1,7 @@
 ---
 packages_libvirt_fedora:
   - libvirt
+  - libvirt-client
   - qemu-kvm
   - virt-top
   - qemu-kvm
@@ -12,7 +13,6 @@ packages_libvirt_fedora:
   - virt-manager
   - python3-lxml
   - virt-install
-  - libvirt-client
   - python3-libvirt
   - libguestfs-tools
   - libguestfs-tools-c
