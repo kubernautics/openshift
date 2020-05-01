@@ -63,6 +63,8 @@ run_net_setup_internal
 run_net_setup_external
 run_net_add_external 
 restart_services
+cp /root/.ccio/ocp-mini-stack/ansible/bin/add-port /usr/bin/add-port
+chmod +x /usr/bin/add-port
 }
 
 run

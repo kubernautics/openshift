@@ -64,9 +64,22 @@ lxc init openwrt/19.07.2/x86_64 gateway -p openwrt
 ```sh
  lxc start gateway
  watch -c lxc list
+ lxc exec gateway -- passwd root
 ```
 #### 05\. Start Gateway and monitor for Address Configuration
   - Login to the OpenWRT WebUI @ the 'eth0' IP address with `http://${address}:8081`
+---------------------------------------------------------------------------------
+## Optional:
+#### Connect additional physical host interfaces to OVS bridges
+  - Example: attaching port 'eth1' to ovs bridge 'external'
+```sh
+ add-port external eth1
+```
+  - Example: attaching port 'enp2s0' to ovs bridge 'internal'
+```sh
+ add-port internal enp2s0
+```
+
 ---------------------------------------------------------------------------------
 ### Next Steps:
   + [03 Build Bastion]

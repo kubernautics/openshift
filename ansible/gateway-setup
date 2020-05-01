@@ -4,8 +4,6 @@
   connection: local
   vars_files:
     - vars/custom.yml
-    - vars/grub.yml
-    - vars/user.yml
   tasks:
     - name: Gateway - Build Profile
       lxd_profile:
