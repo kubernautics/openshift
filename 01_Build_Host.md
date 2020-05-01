@@ -34,19 +34,14 @@ git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; c
  vi ~/.ccio/ocp-mini-stack/ansible/hosts.yml
 ```
 --------------------------------------------------------------------------------
-# Part 01 -- Build Hypervisor
-#### 01\. Run Hypervisor Setup Playbook
+# Part 01 -- Build Hypervisor Networking Layer
+```sh
+ ./network-setup -i hosts.yml
+```
+--------------------------------------------------------------------------------
+# Part 01 -- Build Hypervisor Virtualization Layer
 ```sh
  ./hypervisor-setup -i hosts.yml
-```
-```
-reboot
-```
-#### 02\. Run Network Systemd-Networkd Handoff script
-```sh
- sudo -i
- cd /root/.ccio/ocp-mini-stack/ansible
- ./network-setup -i hosts.yml
 ```
 --------------------------------------------------------------------------------
 # Part 03 -- Build Gateway

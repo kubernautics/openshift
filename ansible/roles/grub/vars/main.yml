@@ -6,6 +6,6 @@ args_grub_fedora:
   - iommu=pt
   - kvm-intel.nested=1
   - kvm_intel.nested=1
-  - net.ifnames=0
-  - biosdevname=0
   - pci=noaer
+# - net.ifnames=0
+# - biosdevname=0
