@@ -21,7 +21,7 @@
     - mgmt2
 - name: Write Networkd OVS External Port Configuration
   template:
-    src: "{{ item }}.network"
+    src: interface.network
     dest: "/etc/systemd/network/{{ item }}.network"
   with_items:
     - "{{ external_interface }}"

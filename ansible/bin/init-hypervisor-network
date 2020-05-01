@@ -1,6 +1,7 @@
 #!/bin/bash
 
-external_NIC="eth0"
+PortName="$2"
+BridgeName="$1"
 
 restart_services () {
 systemctl disable  --now NetworkManager.service
@@ -9,9 +10,13 @@ systemctl restart systemd-networkd.service
 systemctl restart ovs-vswitchd.service
 }
 
+run_net_add_external () {
+ ovs-vsctl del-port ${PortName} 2>/dev/null
+ ovs-vsctl add-port ${BridgeName} ${PortName} 
+}
+
 run_net_setup_external () {
  ovs-vsctl \
-     add-port external ${external_NIC} \
   -- add-port external mgmt0           \
   -- set interface mgmt0 type=internal \
   -- set interface mgmt0 mac="$(echo "${HOSTNAME} ocp external mgmt0" \
@@ -56,6 +61,7 @@ stage_ovs_clear_utility
 run_net_setup_ocp
 run_net_setup_internal
 run_net_setup_external
+run_net_add_external 
 restart_services
 }
 

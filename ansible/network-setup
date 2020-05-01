@@ -15,5 +15,5 @@
       file:
         path: /root/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
         mode: '0775'
-    - name: Network Handoff
-      shell: /root/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network
+    - name: Network 
+      shell: "/root/.ccio/ocp-mini-stack/ansible/bin/init-hypervisor-network external {{ external_host_interface }}"
