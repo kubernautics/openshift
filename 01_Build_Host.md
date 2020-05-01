@@ -55,7 +55,7 @@ reboot
 ```sh
  ./gateway-setup -i hosts.yml
 ```
-#### 02\. Add Image Server & Initialize Gateway
+#### 02\. Build OpenWRT Image & Initialize Gateway
 ```sh
 mkdir /tmp/openwrt
 sudo podman run --privileged --rm -it --name openwrt_builder --volume /tmp/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2

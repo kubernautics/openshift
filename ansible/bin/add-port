@@ -1,0 +1,38 @@
+#!/bin/bash
+# OVS Port Add Utility
+# Usage:
+#  - ./add-port $BridgeName $PortName
+#
+# Example:
+#  - ./add-port external eth1
+
+PortName="$2"
+BridgeName="$1"
+
+restart_services () {
+systemctl restart systemd-networkd.service
+}
+
+run_net_add_external () {
+ ovs-vsctl del-port ${PortName} 2>/dev/null
+ ovs-vsctl add-port ${BridgeName} ${PortName} 
+}
+
+write_cfg_networkd_ovs_iface () {
+cat <<EOF >/etc/systemd/network/${PortName}.network
+[Match]
+Name=${PortName}
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+EOF
+}
+
+run () {
+write_cfg_networkd_ovs_iface 
+run_net_add_external 
+restart_services
+}
+
+run

@@ -1,0 +1,12 @@
+#!/bin/ansible-playbook
+- name: test
+  hosts: base
+  become: true
+  gather_facts: yes
+  vars_files:
+    - vars/custom.yml
+    - vars/grub.yml
+    - vars/user.yml
+  tasks:
+    - hostname:
+        name: "{{ ministack_hostname_base }}"

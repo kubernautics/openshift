@@ -1,7 +1,13 @@
 ---
 ministack_hostname_base: base.ministack.dev
 ministack_hostname_bastion: cloudctl.ministack.dev
-external_host_interface: eth0
-internal_host_interface: eth1
-ocp_host_interface: eth2
-ministack_gateway_address_eth2: 172.10.0.1
+external_host_interface: "{{ ansible_default_ipv4.interface }}"
+ministack_gateway_address_eth2: "{{ lookup('env', 'ocp_ministack_SUBNET') }}.1"
+msio_int_subnet: "{{ lookup('env', 'int_ministack_SUBNET') }}"
+msio_ocp_subnet: "{{ lookup('env', 'ocp_ministack_SUBNET') }}"
+ministack_username: "{{ lookup('env', 'ministack_UNAME') }}"
+git_ssh_pubkey_provider: "{{ lookup('env', 'ccio_SSH_SERVICE') }}"
+git_ssh_pubkey_username: "{{ lookup('env', 'ccio_SSH_UNAME') }}"
+external_host_address: "{{ ansible_default_ipv4.address }}"
+external_gateway_address: "{{ ansible_default_ipv4.gateway }}"
+github_username: "{{ git_ssh_pubkey_username }}"
