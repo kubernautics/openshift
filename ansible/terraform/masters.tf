@@ -39,8 +39,10 @@ resource "libvirt_domain" "coreos-machine" {
 
   # Wait for network lease requires qemu-agent container if network is not native to libvirt
   network_interface {
+    network_name   = "external"
+  # mac            = "$libvirt_master_mac_var[0]"
+  # mac            = "52:54:00:00:00:a${count.index + 1}"
   # wait_for_lease = true
-    network_name = "external"
   }
   ## mounts filesystem local to the kvm host. used to patch in the
   ## qemu-guest-agent as docker container
