@@ -61,6 +61,7 @@ config:
       - squashfuse
       - virt-install
       - vim-enhanced
+      - p7zip-plugins
       - openssh-server
       - libvirt-client
       - xrdp
