@@ -23,7 +23,8 @@ playbook.
 ```sh
 sudo -i
 dnf install git ansible -y
-git clone https://github.com/ministackio/openshift.git ~/.ccio/ocp-mini-stack; cd ~/.ccio/ocp-mini-stack/ansible/
+mkdir ~/.ccio 2>/dev/null && ln -s ~/.ccio ~/ccio
+git clone https://github.com/ministackio/hypervisor.git ~/.ccio/hypervisor; cd ~/.ccio/Git/hypervisor/ansible/
 ```
 #### 00\. Build MiniStack OpenShift Profile
 ```sh
