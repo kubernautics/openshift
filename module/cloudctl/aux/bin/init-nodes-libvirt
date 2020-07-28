@@ -1,5 +1,5 @@
 #!/bin/bash -x
-ocpVers="4.3.8"
+ocpVers="4.5.3"
 name_RHCOS_IMG="rhcos-${ocpVers}-x86_64-metal.x86_64.raw.gz"
 name_RHCOS_INST_KERNEL="rhcos-${ocpVers}-x86_64-installer-kernel-x86_64"
 name_RHCOS_INST_INITRAMFS="rhcos-${ocpVers}-x86_64-installer-initramfs.x86_64.img"
